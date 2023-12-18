@@ -18,6 +18,7 @@ const MyInfo = () => {
     gender: "",
     age: "",
     people: "",
+    major: "",
   });
 
   ////////// 현재 유저 정보 불러오기
@@ -47,21 +48,23 @@ const MyInfo = () => {
 
   ////////// 수정 완료
   const setMyInfo = async () => {
-    if((form.name)&&(form.gender)&&(form.age)&&(form.people)){
-        await setDoc(doc(db, "users", Uid), {
-            ...form, // 입력값이 갱신된 유저 정보로 문서를 덮어 씌운다
-          });
-          alert("수정완료"); // 수정완료 메시지
-    }
-    else{
-        alert("회원정보를 모두 작성해주세요😥");
+    if (form.name && form.gender && form.age && form.people && form.major) {
+      await setDoc(doc(db, "users", Uid), {
+        ...form, // 입력값이 갱신된 유저 정보로 문서를 덮어 씌운다
+      });
+      alert("수정완료"); // 수정완료 메시지
+    } else {
+      alert("회원정보를 모두 작성해주세요😥");
     }
   };
 
+  ////////// 마운트
   useEffect(() => {
     ReadUserData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  ////////// 성별 변경(남자)
 
   const ChangeGenderMale = () => {
     // "남자"로 gender를 업데이트
@@ -71,8 +74,9 @@ const MyInfo = () => {
     }));
   };
 
+  ////////// 성별 변경(여자)
   const ChangeGenderFemale = () => {
-    // "남자"로 gender를 업데이트
+    // "여자"로 gender를 업데이트
     setForm((prevForm) => ({
       ...prevForm,
       gender: "여자",
@@ -88,6 +92,13 @@ const MyInfo = () => {
           label="이름"
           value={form.name} // form 객체의 username 키의 value에 해당하는 값을 value로 사용
           name="name" // name을 username으로 설정하여 form 객체의 username 키의 값을 변경할 수 있도록한다
+          onChange={onChange} // onChange 시에 onChange 함수 호출
+        />
+        <TextField
+          id="outlined-required"
+          label="학과"
+          value={form.major} // form 객체의 username 키의 value에 해당하는 값을 value로 사용
+          name="major" // name을 username으로 설정하여 form 객체의 username 키의 값을 변경할 수 있도록한다
           onChange={onChange} // onChange 시에 onChange 함수 호출
         />
         <button onClick={ChangeGenderMale}>남자</button>
