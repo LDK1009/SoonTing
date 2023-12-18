@@ -1,21 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { auth, db, provider } from "../firebaseConfig";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { collection, addDoc, setDoc, doc, getDoc } from "firebase/firestore";
+import { setDoc, doc, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router";
 
 const SignIn = () => {
-  const [readData, setReadData] = useState(null);
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // 네비게이트 변수
 
-  //로그인 함수
+  ////////// 구글 로그인
   const GoogleSignIn = () => {
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken; // 토큰
+    signInWithPopup(auth, provider) // 로그인 팝업을 띄운다.
+      .then((result) => { //로그인 성공 시
+        // const credential = GoogleAuthProvider.credentialFromResult(result); // 모름
+        // const token = credential.accessToken; // 토큰을 받는다.
         const user = result.user; // 유저 데이터
         // console.log("유저 데이터!!!" + JSON.stringify(user, null, 2));
+        setCookie("uid", user.uid, 7); // 쿠키 저장(7일) // uid라는 이름으로 유저의 uid를 쿠키에 7일 동안 저장한다.
         isUserSignUp(user); // 회원가입 여부 판단
       })
       .catch((error) => {
@@ -32,58 +32,80 @@ const SignIn = () => {
       });
   };
 
-  // 회원가입파이어스토어 문서 추가하기
-  const addDoc = async (userId) => {
-    await setDoc(doc(db, "cities", userId), {
-      //컬렉션과 문서명을 지정한다
-      name: "Los Angeles",
-      state: "CA5",
-      country: "USA",
-    });
-  };
-  // testFunc();
-
-  // 파이어스토어 문서 읽기
-  const firestoreRead = async () => {
-    const docRef = doc(db, "cities", "LA");
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
-      setReadData(docSnap.data());
-    } else {
-      // docSnap.data() will be undefined in this case
-      console.log("No such document!");
-    }
-  };
-
-  // 회원가입 여부 판단
+  ////////// 회원가입 여부
   const isUserSignUp = async (userData) => {
-    const docRef = doc(db, "cities", userData.uid);
-    const docSnap = await getDoc(docRef);
+    const docRef = doc(db, "users", userData.uid); // DB의 users 컬렉션에서 문서명이 유저의 uid인 문서를 참조한다.
+    const docSnap = await getDoc(docRef); // 참조한 문서를 가져온다
 
-    // 기존 유저의 경우
+    // 기존 유저의 경우(문서명이 유저의 uid인 문서가 존재할 경우)
     if (docSnap.exists()) {
-      // OnSignIn 페이지로 로드하면서 props로 저장되어 있던 기존 유저 데이터를 전달한다.
+      // Main 페이지로 로드하면서 uid를 네비게이트 프롭스로 전달한다.
       // console.log("유저 아이디" + userData.uid);
-      navigate("/OnSignIn", {
+      navigate("/Main", {
         state: { uid: userData.uid },
       });
     }
-    // 신규 유저의 경우
+    // 신규 유저의 경우(문서명이 유저의 uid인 문서가 존재하지 않을 경우)
     else {
-      // cities 컬렉션에 uid 이름의 문서를 생성하고 유저의 정보를 저장한다.
-      await setDoc(doc(db, "cities", userData.uid), {
-        //컬렉션과 문서명을 지정한다
+      // users 컬렉션에 uid 이름의 문서를 생성하고 유저의 정보를 저장한다.
+      await setDoc(doc(db, "users", userData.uid), {
+        uid:userData.uid,
         name: userData.displayName,
         email: userData.email,
       });
-      navigate("/OnSignIn", {
+      // 유저 정보 저장을 마친 후 Main 페이지로 로드하면서 uid를 네비게이트 프롭스로 전달한다.
+      navigate("/Main", {
         state: { uid: userData.uid },
       });
     }
   };
 
+  ////////// 쿠키 저장
+  const setCookie = (name, value, daysToExpire) => {
+    let expirationDate = new Date();
+    expirationDate.setDate(expirationDate.getDate() + daysToExpire);
+
+    let cookieString =
+      name +
+      "=" +
+      encodeURIComponent(value) +
+      "; expires=" +
+      expirationDate.toUTCString() +
+      "; path=/";
+    document.cookie = cookieString;
+  };
+
+  ////////// 쿠키 읽어오기
+  const getCookie = (name) => {
+    let cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      let cookie = cookies[i].trim();
+      if (cookie.indexOf(name + "=") === 0) {
+        return decodeURIComponent(cookie.substring(name.length + 1));
+      }
+    }
+    return null;
+  };
+
+  ////////// 쿠키 보유 여부
+  const isHaveCookie = () => {
+    // 쿠키에 저장된 uid를 가져온다
+    const userUid = getCookie("uid");
+    // 쿠기에 저장된 uid가 있다면 Main 페이지로 로드하면서 uid를 네비게이트 프롭스로 전달한다.
+    if(userUid){
+      navigate("/Main", {
+        state: { uid: userUid },
+      });
+    }
+  };
+
+  ////////// 마운트
+  useEffect(() => {
+    isHaveCookie();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
   return (
     <div>
       {/* {userData && userData.uid} */}
