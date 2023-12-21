@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import styled from "styled-components";
@@ -7,40 +7,36 @@ import { doc, setDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 
 const AddArticle = ({ userData }) => {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  console.log("이거이거!!", userData);
-  // 게시글 정보
-  const [form, setForm] = useState({
-    uid: userData.uid,
-    name: userData.name,
-    gender: userData.gender,
-    age: userData.age,
-    people: userData.people,
-    major: userData.major,
-    title: "",
-    content: "",
-    expiration: false,
-  });
+  const [open, setOpen] = React.useState(false); // 모달창 열기/닫기
+  const [submitForm, setSubmitForm] = useState({}); // 게시글 정보
 
-  ////////// 입력 감지
+  ////////// 모달 열기 함수
+  const handleOpen = () => setOpen(true);
+  ////////// 모달 닫기 함수
+  const handleClose = () => setOpen(false);
+
+  ////////// 프롭스 데이터 변경(ex) 유저정보 로드 등으로 인한 데이터 변경) 시 submitForm 에 변경된 데이터 반영
+  useEffect(() => {
+    setSubmitForm({ ...userData, title: "", content: "", expiration: false });
+  }, [userData]);
+
+  ////////// 입력폼 입력 감지 함수
   const onChange = (e) => {
     const nextForm = {
-      ...form, // 기존 form을 복사하여
+      ...submitForm, // 기존 submitForm을 복사하여
       [e.target.name]: e.target.value, // event가 발생한 input 요소의 name 값을 입력값으로 변경
     };
-    setForm(nextForm); // 수정 내용 갱신
-    console.log(form.title);
+    setSubmitForm(nextForm); // 수정 내용 갱신
+    // console.log(submitForm.title);
   };
 
-  ////////// 게시글 등록
+  ////////// 게시글 등록 함수
   const addArticle = async () => {
-    if (form.title && form.content) {
+    if (submitForm.title && submitForm.content) {
       const timeStamp = currentTime();
-      const docName = `${form.uid}_${timeStamp}`; // 수정된 부분
+      const docName = `${submitForm.uid}_${timeStamp}`; // 수정된 부분
       await setDoc(doc(db, "articles", docName), {
-        ...form,
+        ...submitForm,
         time: timeStamp,
       });
       alert("게시글이 등록되었습니다😉");
@@ -50,16 +46,18 @@ const AddArticle = ({ userData }) => {
     }
   };
 
+  ////////// 입력 폼 초기화 함수
   const clearForm = () => {
     const nextForm = {
-      ...form, // 기존 form을 복사하여
+      ...submitForm, // 기존 submitForm을 복사하여
       title: "",
       content: "",
     };
-    setForm(nextForm); // 수정 내용 갱신
-    console.log(form.title);
+    setSubmitForm(nextForm); // 수정 내용 갱신
+    // console.log(submitForm.title);
   };
 
+  ////////// 현재 시간 반환 함수
   const currentTime = () => {
     // 현재 시각을 나타내는 JavaScript Date 객체 생성
     const t = new Date();
@@ -80,15 +78,15 @@ const AddArticle = ({ userData }) => {
       <Modal open={open} onClose={handleClose}>
         <StyledModalBox>
           <div>모달 창 테스트!</div>
-          <div> 이름 : {userData.name}</div>
-          <div> 학과 : {userData.major}</div>
-          <div> 성별 : {userData.gender}</div>
-          <div> 나이 : {userData.age}</div>
-          <div> 팀원 수 : {userData.people}</div>
+          <div> 이름 : {submitForm.name}</div>
+          <div> 학과 : {submitForm.major}</div>
+          <div> 성별 : {submitForm.gender}</div>
+          <div> 나이 : {submitForm.age}</div>
+          <div> 팀원 수 : {submitForm.people}</div>
           <TextField
             label="제목"
             name="title"
-            value={form.title}
+            value={submitForm.title}
             multiline
             maxRows={1}
             onChange={onChange}
@@ -96,7 +94,7 @@ const AddArticle = ({ userData }) => {
           <TextField
             label="내용"
             name="content"
-            value={form.content}
+            value={submitForm.content}
             multiline
             rows={6}
             onChange={onChange}

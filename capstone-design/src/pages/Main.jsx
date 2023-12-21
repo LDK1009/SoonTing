@@ -8,6 +8,7 @@ import {
   query,
   where,
   getDocs,
+  orderBy,
 } from "firebase/firestore";
 import AddArticle from "../components/AddArticle";
 
@@ -15,6 +16,8 @@ const Main = () => {
   const location = useLocation(); // useNavigate 프롭스 전달 받기(uid)
   const userUid = location.state.uid; // uid
   const navigate = useNavigate(); // 네비게이트 변수
+  const [loadedArticles, setLoadedArticles] = useState([]); // 로드한 게시글
+
   // 유저아이디를 기반으로 회원 정보 가져오기
   const [userData, setUserData] = useState({
     uid: "",
@@ -25,8 +28,8 @@ const Main = () => {
     people: "",
     major: "",
   });
-
-  const [loadedArticles, setLoadedArticles] = useState([]);
+  
+  
 
   ////////// 유저 정보 불러오기
   const firestoreRead = async () => {
@@ -36,7 +39,9 @@ const Main = () => {
 
     if (docSnap.exists()) {
       console.log("Document data:", docSnap.data());
-      setUserData(() => docSnap.data());
+      setUserData(()=>docSnap.data());
+      console.log("docSnap.data():", docSnap.data());
+      
     } else {
       // docSnap.data() will be undefined in this case
       alert("회원정보를 찾을 수 없습니다.");
@@ -51,34 +56,28 @@ const Main = () => {
     });
   };
 
-  ////////// 마운트
-  useEffect(() => {
-    firestoreRead();
-    GetDocs();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // location.state로 접근해서 필요한 데이터 사용
-  // console.log("네비게이트 전달 데이터\n"+ JSON.stringify(location.uid, null, 2));
-  console.log("네비게이트 전달 데이터\n" + location.state.uid);
 
   ////////// 게시글 불러오기
-  const collectionRef = collection(db, "articles");
-  const q = query(collectionRef, where("expiration", "==", false));
+  const articlesRef = collection(db, "articles");
+  // const q = query(articlesRef, where("expiration", "==", false)); // 정렬 없음
+  // const q = query(articlesRef, where("expiration", "==", false), orderBy("time")); // 최근 게시글이 최히단에 위치
+  const q = query(articlesRef, where("expiration", "==", false), orderBy("time", "desc")); // 최근 게시글이 최상단에 위치
 
   const GetDocs = async () => {
     const newData = [];
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
-      console.log(doc.id, " => ", doc.data().expiration);
+      // console.log(doc.id, " => ", doc.data().expiration);
       newData.push(doc.data());
     });
     setLoadedArticles(() => newData);
   };
 
-  console.log(loadedArticles);
-
+  // console.log(loadedArticles);
+  useEffect(() => {
+    console.log("유저데이터가 변경됨 : ", userData);
+  }, [userData]);
   // 게시글 렌더링
   const renderArticles = (arr) => {
     return (
@@ -98,6 +97,13 @@ const Main = () => {
       </>
     );
   };
+
+  ////////// 마운트
+  useEffect(() => {
+    firestoreRead();
+    GetDocs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div>
