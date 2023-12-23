@@ -11,6 +11,7 @@ import {
   orderBy,
 } from "firebase/firestore";
 import AddArticle from "../components/AddArticle";
+import DetailedArticle from "../components/DetailedArticle";
 
 const Main = () => {
   const location = useLocation(); // useNavigate 프롭스 전달 받기(uid)
@@ -28,20 +29,15 @@ const Main = () => {
     people: "",
     major: "",
   });
-  
-  
 
   ////////// 유저 정보 불러오기
-  const firestoreRead = async () => {
+  const readUserInfo = async () => {
     // DB에 문서명이 uid인 문서가 있는지 확인하고 있다면 해당 유저 정보를 가져오기
     const docRef = doc(db, "users", userUid);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
-      setUserData(()=>docSnap.data());
-      console.log("docSnap.data():", docSnap.data());
-      
+      setUserData(() => docSnap.data());
     } else {
       // docSnap.data() will be undefined in this case
       alert("회원정보를 찾을 수 없습니다.");
@@ -56,14 +52,23 @@ const Main = () => {
     });
   };
 
-
-  ////////// 게시글 불러오기
-  const articlesRef = collection(db, "articles");
-  // const q = query(articlesRef, where("expiration", "==", false)); // 정렬 없음
-  // const q = query(articlesRef, where("expiration", "==", false), orderBy("time")); // 최근 게시글이 최히단에 위치
-  const q = query(articlesRef, where("expiration", "==", false), orderBy("time", "desc")); // 최근 게시글이 최상단에 위치
+  ////////// 내가 쓴 글 페이지로 이동
+  const toMyArticle = () => {
+    navigate("/MyArticle", {
+      state: { uid: userUid },
+    });
+  };
 
   const GetDocs = async () => {
+    ////////// 게시글 불러오기
+    const articlesRef = collection(db, "articles");
+    // const q = query(articlesRef, where("expiration", "==", false)); // 정렬 없음
+    // const q = query(articlesRef, where("expiration", "==", false), orderBy("time")); // 최근 게시글이 최히단에 위치
+    const q = query(
+      articlesRef,
+      where("expiration", "==", false),
+      orderBy("time", "desc")
+    ); // 최근 게시글이 최상단에 위치
     const newData = [];
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
@@ -74,10 +79,6 @@ const Main = () => {
     setLoadedArticles(() => newData);
   };
 
-  // console.log(loadedArticles);
-  useEffect(() => {
-    console.log("유저데이터가 변경됨 : ", userData);
-  }, [userData]);
   // 게시글 렌더링
   const renderArticles = (arr) => {
     return (
@@ -85,13 +86,10 @@ const Main = () => {
         {arr.map((item, index) => (
           <div key={index}>
             <h1>{index}번째 게시글</h1>
-            <div>이름 : {item.name}</div>
-            <div>나이 : {item.age}</div>
-            <div>학과 : {item.major}</div>
-            <div>성별 : {item.gender}</div>
-            <div>인원 : {item.people}</div>
-            <div>제목 : {item.title}</div>
-            <div>내용 : {item.content}</div>
+            <DetailedArticle
+              articleInfo={item}
+              userInfo={userData}
+            ></DetailedArticle>
           </div>
         ))}
       </>
@@ -100,7 +98,7 @@ const Main = () => {
 
   ////////// 마운트
   useEffect(() => {
-    firestoreRead();
+    readUserInfo();
     GetDocs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -115,6 +113,7 @@ const Main = () => {
       <div> 나이 : {userData.age}</div>
       <div> 팀원 수 : {userData.people}</div>
       <button onClick={toMyInfo}>내정보 수정</button>
+      <button onClick={toMyArticle}>내가 쓴 글</button>
       <AddArticle userData={userData} />
       <h3>불러온 데이터</h3>
       {renderArticles(loadedArticles)}
