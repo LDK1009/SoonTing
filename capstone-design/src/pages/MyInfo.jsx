@@ -19,6 +19,7 @@ const MyInfo = () => {
     age: "",
     people: "",
     major: "",
+    number: "",
   });
 
   ////////// 현재 유저 정보 불러오기
@@ -48,7 +49,7 @@ const MyInfo = () => {
 
   ////////// 수정 완료
   const setMyInfo = async () => {
-    if (form.name && form.gender && form.age && form.people && form.major) {
+    if (form.name && form.gender && form.age && form.people && form.major && form.number) {
       await setDoc(doc(db, "users", Uid), {
         ...form, // 입력값이 갱신된 유저 정보로 문서를 덮어 씌운다
       });
@@ -117,6 +118,14 @@ const MyInfo = () => {
           type="number"
           value={form.people} // form 객체의 username 키의 value에 해당하는 값을 value로 사용
           name="people" // name을 username으로 설정하여 form 객체의 username 키의 값을 변경할 수 있도록한다
+          onChange={onChange} // onChange 시에 onChange 함수 호출
+        />
+        <TextField
+          id="outlined-number"
+          label="전화번호 ('-' 없이 작성)"
+          type="number"
+          value={form.number} // form 객체의 username 키의 value에 해당하는 값을 value로 사용
+          name="number" // name을 username으로 설정하여 form 객체의 username 키의 값을 변경할 수 있도록한다
           onChange={onChange} // onChange 시에 onChange 함수 호출
         />
       </div>

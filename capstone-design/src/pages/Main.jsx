@@ -28,6 +28,7 @@ const Main = () => {
     age: "",
     people: "",
     major: "",
+    number: "",
   });
 
   ////////// 유저 정보 불러오기
@@ -85,7 +86,7 @@ const Main = () => {
       <>
         {arr.map((item, index) => (
           <div key={index}>
-            <h1>{index}번째 게시글</h1>
+            <h3>{index}번째 게시글</h3>
             <DetailedArticle
               articleInfo={item}
               userInfo={userData}
@@ -106,16 +107,18 @@ const Main = () => {
   return (
     <div>
       <div>로그인 성공!, 메인페이지 입니다.</div>
+      <h1>로그인 유저 정보</h1>
       <div> 이름 : {userData.name}</div>
       <div> 학과 : {userData.major}</div>
       <div> 이메일 : {userData.email}</div>
       <div> 성별 : {userData.gender}</div>
       <div> 나이 : {userData.age}</div>
       <div> 팀원 수 : {userData.people}</div>
+      <div> 전화번호 : {userData.number}</div>
       <button onClick={toMyInfo}>내정보 수정</button>
       <button onClick={toMyArticle}>내가 쓴 글</button>
       <AddArticle userData={userData} />
-      <h3>불러온 데이터</h3>
+      <h1>불러온 데이터</h1>
       {renderArticles(loadedArticles)}
     </div>
   );
