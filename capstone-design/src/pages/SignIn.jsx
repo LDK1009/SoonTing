@@ -3,6 +3,8 @@ import { auth, db, provider } from "../firebaseConfig";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { setDoc, doc, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router";
+import styled from "styled-components";
+import google from "../assets/google.png";
 
 const SignIn = () => {
   const navigate = useNavigate(); // 네비게이트 변수
@@ -10,7 +12,8 @@ const SignIn = () => {
   ////////// 구글 로그인
   const GoogleSignIn = () => {
     signInWithPopup(auth, provider) // 로그인 팝업을 띄운다.
-      .then((result) => { //로그인 성공 시
+      .then((result) => {
+        //로그인 성공 시
         // const credential = GoogleAuthProvider.credentialFromResult(result); // 모름
         // const token = credential.accessToken; // 토큰을 받는다.
         const user = result.user; // 유저 데이터
@@ -49,7 +52,7 @@ const SignIn = () => {
     else {
       // users 컬렉션에 uid 이름의 문서를 생성하고 유저의 정보를 저장한다.
       await setDoc(doc(db, "users", userData.uid), {
-        uid:userData.uid,
+        uid: userData.uid,
         name: userData.displayName,
         email: userData.email,
       });
@@ -66,12 +69,7 @@ const SignIn = () => {
     expirationDate.setDate(expirationDate.getDate() + daysToExpire);
 
     let cookieString =
-      name +
-      "=" +
-      encodeURIComponent(value) +
-      "; expires=" +
-      expirationDate.toUTCString() +
-      "; path=/";
+      name + "=" + encodeURIComponent(value) + "; expires=" + expirationDate.toUTCString() + "; path=/";
     document.cookie = cookieString;
   };
 
@@ -92,7 +90,7 @@ const SignIn = () => {
     // 쿠키에 저장된 uid를 가져온다
     const userUid = getCookie("uid");
     // 쿠기에 저장된 uid가 있다면 Main 페이지로 로드하면서 uid를 네비게이트 프롭스로 전달한다.
-    if(userUid){
+    if (userUid) {
       navigate("/Main", {
         state: { uid: userUid },
       });
@@ -107,12 +105,49 @@ const SignIn = () => {
 
   //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
   return (
-    <div>
-      {/* {userData && userData.uid} */}
-      <button onClick={() => GoogleSignIn()}>로그인</button>
-      {/* <div>{readData && readData.name}</div> */}
-    </div>
+    <Container>
+      <MainText>순천향대 학우들과 함께하는 새로운 이야기의 시작!</MainText>
+      <LoginButton onClick={() => GoogleSignIn()}>
+        <GoogleImg src={google} alt="google" />
+        구글로 로그인 하기
+      </LoginButton>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  height: 100%;
+  display: flex;
+  background-color: #0066CC;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const LoginButton = styled.div`
+  background-color: white;
+  border-radius: 20px;
+  font-size: 20px;
+  width: 80%;
+  height: 50px;
+  font-family: "omyu_pretty";
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const MainText = styled.div`
+  width: 80%;
+  margin-bottom: 30px;
+  font-size: 30px;
+  color: white;
+  text-align: center;
+`;
+
+const GoogleImg = styled.img`
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+`;
 
 export default SignIn;
