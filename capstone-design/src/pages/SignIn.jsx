@@ -134,6 +134,9 @@ const LoginButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  &:hover{
+    cursor: pointer;
+  }
 `;
 
 const MainText = styled.div`
