@@ -5,6 +5,7 @@ import SignIn from "./pages/SignIn";
 import Main from "./pages/Main";
 import MyInfo from "./pages/MyInfo";
 import MyArticle from "./pages/MyArticle";
+import Notice from "./pages/Notice";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/Main" element={<Main />} />
         <Route path="/MyInfo" element={<MyInfo />} />
         <Route path="/MyArticle" element={<MyArticle />} />
+        <Route path="/Notice" element={<Notice />} />
       </Routes >
     </>
   );

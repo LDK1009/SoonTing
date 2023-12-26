@@ -105,20 +105,32 @@ const SignIn = () => {
 
   //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
   return (
-    <Container>
-      <MainText>순천향대 학우들과 함께하는 새로운 이야기의 시작!</MainText>
-      <LoginButton onClick={() => GoogleSignIn()}>
-        <GoogleImg src={google} alt="google" />
-        구글로 로그인 하기
-      </LoginButton>
-    </Container>
+    <>
+    <Background>
+      <Container>
+        <MainText>순천향대 학우들과 함께하는 새로운 이야기의 시작!</MainText>
+        <LoginButton onClick={() => GoogleSignIn()}>
+          <GoogleImg src={google} alt="google" />
+          구글로 로그인 하기
+        </LoginButton>
+      </Container>
+    </Background>
+    </>
   );
 };
 
+const Background = styled.div`
+  height: 100%;
+  background-image: url("/background.jpg");
+  background-repeat: no-repeat; /* 배경 이미지 반복 설정 */
+  background-size: cover; /* 배경 이미지 크기 조절 (cover, contain 등) */
+  background-position: center; /* 배경 이미지 위치 조절 */
+`;
+
 const Container = styled.div`
   height: 100%;
+  width:100%;
   display: flex;
-  background-color: #0066CC;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -134,7 +146,7 @@ const LoginButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  &:hover{
+  &:hover {
     cursor: pointer;
   }
 `;
@@ -145,6 +157,7 @@ const MainText = styled.div`
   font-size: 30px;
   color: white;
   text-align: center;
+  text-shadow: -1px -1px 15px pink, 1px -1px 15px pink, -1px 1px 15px pink, 1px 1px 15px pink;
 `;
 
 const GoogleImg = styled.img`
