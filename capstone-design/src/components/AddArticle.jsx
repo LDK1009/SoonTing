@@ -5,10 +5,13 @@ import styled from "styled-components";
 import { TextField } from "@mui/material";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig";
+import CloseIcon from "@mui/icons-material/Close";
+import { useNavigate } from "react-router-dom";
 
 const AddArticle = ({ userData }) => {
   const [open, setOpen] = React.useState(false); // 모달창 열기/닫기
   const [submitForm, setSubmitForm] = useState({}); // 게시글 정보
+  const navigate = useNavigate(); // 네비게이트 변수
 
   ////////// 모달 열기 함수
   const handleOpen = () => setOpen(true);
@@ -72,49 +75,111 @@ const AddArticle = ({ userData }) => {
     return returnTime;
   };
 
+  ////////// 고정 정보 클릭 시 경고
+  const alertFixedInfo = () => {
+    alert("'내정보' 페이지에서 변경해주세요.😉");
+    if (window.confirm("'내정보' 페이지로 이동할까요?🧐")) {
+      navigate("/MyInfo", {
+        state: { uid: userData.uid },
+      });
+    } else {
+    }
+  };
+
   return (
     <>
-      <button onClick={handleOpen}>글쓰기</button>
+      <WriteButton onClick={handleOpen}>글쓰기</WriteButton>
       <Modal open={open} onClose={handleClose}>
-        <StyledModalBox>
-          <div>모달 창 테스트!</div>
-          <div> 이름 : {submitForm.name}</div>
-          <div> 학과 : {submitForm.major}</div>
-          <div> 성별 : {submitForm.gender}</div>
-          <div> 나이 : {submitForm.age}</div>
-          <div> 팀원 수 : {submitForm.people}</div>
-          <TextField
-            label="제목"
-            name="title"
-            value={submitForm.title}
-            multiline
-            maxRows={1}
-            onChange={onChange}
-          />
-          <TextField
-            label="내용"
-            name="content"
-            value={submitForm.content}
-            multiline
-            rows={6}
-            onChange={onChange}
-          />
-          <button onClick={addArticle}>글쓰기</button>
-        </StyledModalBox>
+        <ModalContainer>
+          <ModalBox>
+            <StyledCloseIcon onClick={handleClose} />
+            <h2>글쓰기</h2>
+            <FixedInfo onClick={alertFixedInfo}>
+              {submitForm.name} / {submitForm.major} / {submitForm.gender} / {submitForm.age}세
+            </FixedInfo>
+            <FixedInfo onClick={alertFixedInfo}>인원 : {submitForm.people}명</FixedInfo>
+            <StyledInput label="제목" name="title" value={submitForm.title} multiline maxRows={1} onChange={onChange} />
+            <GapDiv />
+            <StyledInput
+              label="내용"
+              name="content"
+              value={submitForm.content}
+              multiline
+              rows={6}
+              onChange={onChange}
+            />
+            <WriteButton onClick={addArticle}>글쓰기</WriteButton>
+          </ModalBox>
+        </ModalContainer>
       </Modal>
     </>
   );
 };
 
-const StyledModalBox = styled(Box)`
+const StyledInput = styled(TextField)`
+  width: 250px;
+`;
+
+export const WriteButton = styled.button`
+  //위치
+  position: absolute;
+  bottom: 30px;
+  //정렬
+  //크기
+  width: 150px;
+  height: 40px;
+  //디자인
+  background-color: #cfbc5d;
+  color: white;
+  border: 0px;
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px 1px #c7b660;
+  //폰트
+  font-size: 20px;
+  font-family: "omyu_pretty";
+  //이벤트
+  &:hover {
+    cursor: pointer;
+    opacity: 0.9;
+  }
+`;
+
+const ModalContainer = styled(Box)`
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 300px;
-  height: 500px;
+  height: 480px;
+  padding: 10px;
   background-color: white;
   border-radius: 15px;
+`;
+
+const ModalBox = styled.div`
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const StyledCloseIcon = styled(CloseIcon)`
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const FixedInfo = styled.div`
+  margin-bottom: 10px;
+`;
+
+const GapDiv = styled.div`
+  margin: 10px;
 `;
 
 export default AddArticle;

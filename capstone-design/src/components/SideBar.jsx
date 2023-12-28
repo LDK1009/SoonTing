@@ -10,7 +10,15 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import DescriptionIcon from "@mui/icons-material/Description";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MenuIcon from "@mui/icons-material/Menu";
+import HelpIcon from '@mui/icons-material/Help';
 import { useNavigate } from "react-router-dom";
+import { db } from "../firebaseConfig";
+import { useState } from "react";
+import { doc, getDoc } from "firebase/firestore";
+import { useEffect } from "react";
+import styled from "styled-components";
+import { Divider } from "@mui/material";
+import HomeIcon from '@mui/icons-material/Home';
 
 export default function SideBar() {
   ////////// 쿠키 가져오기
@@ -43,6 +51,13 @@ export default function SideBar() {
 
   const navigate = useNavigate(); // 네비게이트 변수
 
+  ////////// 홈 페이지로 이동
+  const toHome = () => {
+    navigate("/", {
+      state: { uid: uidCookieValue },
+    });
+  };
+
   ////////// 내정보 페이지로 이동
   const toMyInfo = () => {
     navigate("/MyInfo", {
@@ -57,21 +72,32 @@ export default function SideBar() {
     });
   };
 
-  const goToOption = (index) => {
+  const firstDividerOption = (index) => {
     switch (index) {
       case 0:
-        toMyInfo();
+        toHome();
         break;
       case 1:
-        toMyArticle();
+        toMyInfo();
         break;
       case 2:
+        toMyArticle();
+        break;
+      default:
+        break;
+    }
+  };
+
+  const secondDividerOption = (index) => {
+    switch (index) {
+      case 0:
         navigate("/Notice");
         break;
       default:
         break;
     }
   };
+
 
   //////////
   const [state, setState] = React.useState({
@@ -97,13 +123,25 @@ export default function SideBar() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {["내 정보", "내 게시물", "공지사항"].map((text, index) => (
-          <ListItem key={text} disablePadding onClick={() => goToOption(index)}>
+        {["홈", "내 정보", "내 게시물"].map((text, index) => (
+          <ListItem key={text} disablePadding onClick={() => firstDividerOption(index)}>
             <ListItemButton>
               <ListItemIcon>
-                {index === 0 && <AccountCircleIcon />}
-                {index === 1 && <DescriptionIcon />}
-                {index === 2 && <NotificationsIcon />}
+                {index === 0 && <HomeIcon />}
+                {index === 1 && <AccountCircleIcon />}
+                {index === 2 && <DescriptionIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+        <Divider/>
+        {["공지사항", "도움말"].map((text, index) => (
+          <ListItem key={text} disablePadding onClick={() => secondDividerOption(index)}>
+            <ListItemButton>
+              <ListItemIcon>
+                {index === 0 && <NotificationsIcon />}
+                {index === 1 && <HelpIcon />}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
@@ -113,12 +151,84 @@ export default function SideBar() {
     </Box>
   );
 
+  // 유저아이디를 기반으로 회원 정보 가져오기
+  const [userData, setUserData] = useState({
+    uid: "",
+    name: "",
+    email: "",
+    gender: "",
+    age: "",
+    people: "",
+    major: "",
+    number: "",
+  });
+
+  ////////// 유저 정보 불러오기
+  const readUserInfo = async () => {
+    // DB에 문서명이 uid인 문서가 있는지 확인하고 있다면 해당 유저 정보를 가져오기
+    const docRef = doc(db, "users", uidCookieValue);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      setUserData(() => docSnap.data());
+    } else {
+      // docSnap.data() will be undefined in this case
+      alert("회원정보를 찾을 수 없습니다.");
+      navigate("/SignIn");
+    }
+  };
+
+  ////////// 마운트
+  useEffect(() => {
+    readUserInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
-      <MenuIcon onClick={toggleDrawer("right", true)} />
+      <StyledMenuIcon onClick={toggleDrawer("right", true)} />
       <Drawer anchor={"right"} open={state["right"]} onClose={toggleDrawer("right", false)}>
+        <StudentCardContainer>
+          <StudentCardTop>SCH</StudentCardTop>
+          <StudentCardText>{userData.name}</StudentCardText>
+          <StudentCardText>{userData.major}</StudentCardText>
+          <StudentCardText>
+            {userData.gender} / {userData.age}세
+          </StudentCardText>
+        </StudentCardContainer>
+        <Divider />
         {list("right")}
       </Drawer>
     </>
   );
 }
+
+const StyledMenuIcon = styled(MenuIcon)`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+`;
+
+const StudentCardContainer = styled.div`
+  border: 1px solid black;
+  border-radius: 10px;
+  margin: 20px 30px;
+  text-align: center;
+  overflow: hidden; 
+`;
+
+const StudentCardTop = styled.div`
+  background-color: #26539c;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+`;
+
+const StudentCardText = styled.div`
+  margin: 5px;
+`;

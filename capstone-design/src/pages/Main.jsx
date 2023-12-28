@@ -40,20 +40,6 @@ const Main = () => {
     }
   };
 
-  ////////// 내정보 페이지로 이동
-  const toMyInfo = () => {
-    navigate("/MyInfo", {
-      state: { uid: userUid },
-    });
-  };
-
-  ////////// 내가 쓴 글 페이지로 이동
-  const toMyArticle = () => {
-    navigate("/MyArticle", {
-      state: { uid: userUid },
-    });
-  };
-
   const GetDocs = async () => {
     ////////// 게시글 불러오기
     const articlesRef = collection(db, "articles");
@@ -95,28 +81,17 @@ const Main = () => {
     <>
       <Background>
         <Container>
-          <SideBar/>
-          <div>로그인 성공!, 메인페이지 입니다.</div>
-          <h1>로그인 유저 정보</h1>
-          <div> 이름 : {userData.name}</div>
-          <div> 학과 : {userData.major}</div>
-          <div> 이메일 : {userData.email}</div>
-          <div> 성별 : {userData.gender}</div>
-          <div> 나이 : {userData.age}</div>
-          <div> 팀원 수 : {userData.people}</div>
-          <div> 전화번호 : {userData.number}</div>
-          <button onClick={toMyInfo}>내정보 수정</button>
-          <button onClick={toMyArticle}>내가 쓴 글</button>
+          <SideBar />
+          <h1>홈</h1>
+          <ArticleContainer>{renderArticles(loadedArticles)}</ArticleContainer>
           <AddArticle userData={userData} />
-          <h1>불러온 데이터</h1>
-          {renderArticles(loadedArticles)}
         </Container>
       </Background>
     </>
   );
 };
 
-const Background = styled.div`
+export const Background = styled.div`
   height: 100%;
   background-image: url("/background.jpg");
   background-repeat: no-repeat; /* 배경 이미지 반복 설정 */
@@ -128,15 +103,36 @@ const Background = styled.div`
 `;
 
 const Container = styled.div`
-  width:280px;
-  height:90%;
+  width: 280px;
+  height: 90%;
   padding: 20px;
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   background-color: white;
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px 3px pink;
+`;
+
+const ArticleContainer = styled.div`
+  height: 200px;
+  overflow: auto;
+  width:100%;
+  /* &::-webkit-scrollbar {
+    display:none;
+  } */
+  /* Chrome, Safari, Opera*/
+  &::-webkit-scrollbar {
+    width: 3px;
+    background-color: white;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: pink;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: whitesmoke;
+  }
 `;
 
 export default Main;

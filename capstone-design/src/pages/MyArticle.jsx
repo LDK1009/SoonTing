@@ -2,6 +2,19 @@ import { collection, doc, getDocs, orderBy, query, setDoc, where } from "firebas
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { db } from "../firebaseConfig";
+import { Background } from "./Main";
+import styled from "styled-components";
+import SideBar from "../components/SideBar";
+import { Divider } from "@mui/material";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Collapse from "@mui/material/Collapse";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import CircleRoundedIcon from "@mui/icons-material/CircleRounded";
+import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 
 const MyArticle = () => {
   const navProps = useLocation(); // useNavigate 프롭스 전달 받기
@@ -9,6 +22,14 @@ const MyArticle = () => {
   const [expiredArticles, setExpiredArticles] = useState([]); // 만료된 게시물(1차원 배열)
   const [unExpiredArticles, setUnExpiredArticles] = useState([]); // 만료되지 않은 게시물(1차원 배열)
   const [allApplication, setAllApplication] = useState([[], []]); // 모든 게시물의 모든 신청자 정보(2차원 배열)
+  const [isLoadExpired, setIsLoadExpired] = useState(false); // 불러올 게시물 스위치(만료 전/후)
+
+  ///
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
 
   ////////// 게시글 불러오기
   const getMyArticles = async (expiration) => {
@@ -73,7 +94,7 @@ const MyArticle = () => {
     const docRef = doc(db, "articles", docName);
     await setDoc(docRef, { matchingUserInfo: matchingUserInfo, expiration: true }, { merge: true });
     alert("매칭 완료! 😘");
-    window.location.reload()
+    window.location.reload();
   };
 
   ////////// 미만료 게시글&신청내역 렌더링
@@ -87,21 +108,36 @@ const MyArticle = () => {
           const aplicationOfArticle = allApplication[index] || []; // 해당 게시물의 모든 신청자 정보를 변수에 대입
 
           return (
-            <div key={index} style={{ border: "3px solid black" }}>
-              <div>컬렉션 명 : {collectionName}</div>
-              <div>작성시간 : {item.time}</div>
-              <div>제목 : {item.title}</div>
-              <div>내용 : {item.content}</div>
-              <hr />
-              {aplicationOfArticle.map((item2, index2) => {
-                // 해당 게시물의 모든 신청자 정보를 순회하며 렌더링
-                return (
-                  <div key={index2} style={{ marginLeft: "20px" }}>
-                    {index2 + 1}번째 신청자 : {item2.uid}
-                    <button onClick={() => matching(collectionName, item2)}>매칭</button>
-                  </div>
-                );
-              })}
+            <div key={index}>
+              <List
+                sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+                component="nav"
+                aria-labelledby="nested-list-subheader"
+              >
+                {/* 헤더 */}
+                <ListItemButton onClick={handleClick}>
+                  <ListItemIcon>
+                    <CircleRoundedIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={item.title} />
+                  {open ? <ExpandLess /> : <ExpandMore />}
+                </ListItemButton>
+                {/* 드롭다운 */}
+                <Collapse in={open} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                    {aplicationOfArticle.map((item2, index2) => {
+                      // 해당 게시물의 모든 신청자 정보를 순회하며 렌더링
+                      return (
+                        <ListItemButton sx={{ pl: 4 }} key={index2} style={{ marginLeft: "20px" }}>
+                          {index2 + 1}번째 신청자 : {item2.uid}
+                          <button onClick={() => matching(collectionName, item2)}>매칭</button>
+                        </ListItemButton>
+                      );
+                    })}
+                  </List>
+                </Collapse>
+              </List>
+              <Divider />
             </div>
           );
         })}
@@ -116,22 +152,39 @@ const MyArticle = () => {
       <>
         {articles.map((item, index) => {
           // 모든 게시물 배열을 순회하며 렌더링 for문 생각하면 편함
-          const collectionName = item.uid + "_" + item.time; // 게시물의 문서명 || 컬렉션명
+          // const collectionName = item.uid + "_" + item.time; // 게시물의 문서명 || 컬렉션명
 
           return (
-            <div key={index} style={{ border: "3px solid black" }}>
-              <div>컬렉션 명 : {collectionName}</div>
-              <div>작성시간 : {item.time}</div>
-              <div>제목 : {item.title}</div>
-              <div>내용 : {item.content}</div>
-              <hr/>
-              <div>매칭자 정보</div>
-              <div>닉네임 : {item.matchingUserInfo.name}</div>
-              <div>나이 : {item.matchingUserInfo.age}</div>
-              <div>성별 : {item.matchingUserInfo.gender}</div>
-              <div>학과 : {item.matchingUserInfo.major}</div>
-              <div>uid : {item.matchingUserInfo.uid}</div>
-              <div style={{backgroundColor:'red', width:'50px', textAlign:'center', color:'white'}}>만료</div>
+            <div key={index}>
+              <List
+                sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+                component="nav"
+                aria-labelledby="nested-list-subheader"
+              >
+                {/* 헤더 */}
+                <ListItemButton onClick={handleClick}>
+                  <ListItemIcon>
+                    <CheckCircleRoundedIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={item.title} />
+                  {open ? <ExpandLess /> : <ExpandMore />}
+                </ListItemButton>
+                {/* 드롭다운 */}
+                <Collapse in={open} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                    <div>매칭자 정보</div>
+                    <div>닉네임 : {item.matchingUserInfo.name}</div>
+                    <div>나이 : {item.matchingUserInfo.age}</div>
+                    <div>성별 : {item.matchingUserInfo.gender}</div>
+                    <div>학과 : {item.matchingUserInfo.major}</div>
+                    <div>uid : {item.matchingUserInfo.uid}</div>
+                    <div style={{ backgroundColor: "red", width: "50px", textAlign: "center", color: "white" }}>
+                      만료
+                    </div>
+                  </List>
+                </Collapse>
+              </List>
+              <Divider />
             </div>
           );
         })}
@@ -154,16 +207,55 @@ const MyArticle = () => {
 
   //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
   return (
-    <div>
-      <div>내가 쓴 글</div>
-      <div>{Uid}</div>
-
-      <h1>만료되지 않은 게시물</h1>
-      {renderUnExpiredArticles(unExpiredArticles, allApplication)}
-      <h1>만료된 게시물</h1>
-      {renderExpiredArticles(expiredArticles)}
-    </div>
+    <>
+      <Background>
+        <Container>
+          <SideBar />
+          <h1>내 게시물</h1>
+          <button onClick={() => setIsLoadExpired(false)}>매칭 전</button>
+          <button onClick={() => setIsLoadExpired(true)}>매칭 후</button>
+          <ArticlesContainer>
+            {isLoadExpired
+              ? renderExpiredArticles(expiredArticles)
+              : renderUnExpiredArticles(unExpiredArticles, allApplication)}
+          </ArticlesContainer>
+        </Container>
+      </Background>
+    </>
   );
 };
+
+const Container = styled.div`
+  width: 280px;
+  height: 90%;
+  padding: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px 3px pink;
+`;
+
+const ArticlesContainer = styled.div`
+  height: 600px;
+  overflow: auto;
+  width: 100%;
+  /* &::-webkit-scrollbar {
+    display:none;
+  } */
+  /* Chrome, Safari, Opera*/
+  &::-webkit-scrollbar {
+    width: 3px;
+    background-color: white;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: pink;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: whitesmoke;
+  }
+`;
 
 export default MyArticle;

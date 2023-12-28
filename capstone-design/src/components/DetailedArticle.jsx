@@ -28,7 +28,7 @@ const DetailedArticle = ({ articleInfo, userInfo }) => {
 
   return (
     <div>
-      <div onClick={handleOpen}>
+      <div onClick={handleOpen} style={{backgroundColor:'pink', width:'100%'}}>
         {/* 학과 / 나이 / 성별 / 인원 .. 제목 */}
         <div>
           {articleInfo.major} / {articleInfo.age} / {articleInfo.gender} /{" "}
