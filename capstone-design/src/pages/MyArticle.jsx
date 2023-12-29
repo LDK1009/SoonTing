@@ -15,6 +15,7 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import CircleRoundedIcon from "@mui/icons-material/CircleRounded";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
+import { GenderButton } from "./MyInfo";
 
 const MyArticle = () => {
   const navProps = useLocation(); // useNavigate 프롭스 전달 받기
@@ -119,7 +120,7 @@ const MyArticle = () => {
                   <ListItemIcon>
                     <CircleRoundedIcon />
                   </ListItemIcon>
-                  <ListItemText primary={item.title} />
+                  <ArticleHeader>{item.title}</ArticleHeader>
                   {open ? <ExpandLess /> : <ExpandMore />}
                 </ListItemButton>
                 {/* 드롭다운 */}
@@ -128,16 +129,27 @@ const MyArticle = () => {
                     {aplicationOfArticle.map((item2, index2) => {
                       // 해당 게시물의 모든 신청자 정보를 순회하며 렌더링
                       return (
-                        <ListItemButton sx={{ pl: 4 }} key={index2} style={{ marginLeft: "20px" }}>
-                          {index2 + 1}번째 신청자 : {item2.uid}
-                          <button onClick={() => matching(collectionName, item2)}>매칭</button>
-                        </ListItemButton>
+                        <>
+                          <ApplicantInfoContainer key={index2}>
+                            <ApplicantInfoTextWrap>
+                              <ApplicantInfoText>{item2.name}</ApplicantInfoText>
+                              <ApplicantInfoText>
+                                {item2.major} / {item2.age}세
+                              </ApplicantInfoText>
+                              <ApplicantInfoText>
+                                {item2.gender} / {item2.people}명
+                              </ApplicantInfoText>
+                            </ApplicantInfoTextWrap>
+                            <MatchingButton onClick={() => matching(collectionName, item2)}>매칭</MatchingButton>
+                          </ApplicantInfoContainer>
+                          <ApplicantDivider />
+                        </>
                       );
                     })}
                   </List>
                 </Collapse>
               </List>
-              <Divider />
+              {!open && <Divider />}
             </div>
           );
         })}
@@ -166,25 +178,30 @@ const MyArticle = () => {
                   <ListItemIcon>
                     <CheckCircleRoundedIcon />
                   </ListItemIcon>
-                  <ListItemText primary={item.title} />
+                  <ArticleHeader>{item.title}</ArticleHeader>
                   {open ? <ExpandLess /> : <ExpandMore />}
                 </ListItemButton>
                 {/* 드롭다운 */}
                 <Collapse in={open} timeout="auto" unmountOnExit>
                   <List component="div" disablePadding>
-                    <div>매칭자 정보</div>
-                    <div>닉네임 : {item.matchingUserInfo.name}</div>
-                    <div>나이 : {item.matchingUserInfo.age}</div>
-                    <div>성별 : {item.matchingUserInfo.gender}</div>
-                    <div>학과 : {item.matchingUserInfo.major}</div>
-                    <div>uid : {item.matchingUserInfo.uid}</div>
-                    <div style={{ backgroundColor: "red", width: "50px", textAlign: "center", color: "white" }}>
-                      만료
-                    </div>
+                    <ApplicantInfoContainer>
+                      <ApplicantInfoTextWrap>
+                        <ApplicantInfoText>{item.matchingUserInfo.name}</ApplicantInfoText>
+                        <ApplicantInfoText>
+                          {item.matchingUserInfo.major} / {item.matchingUserInfo.age}세
+                        </ApplicantInfoText>
+                        <ApplicantInfoText>
+                          {item.matchingUserInfo.gender} / {item.matchingUserInfo.people}명
+                        </ApplicantInfoText>
+                        <ApplicantInfoText>연락처 : {item.matchingUserInfo.number}</ApplicantInfoText>
+                      </ApplicantInfoTextWrap>
+                      <ConfirmButton>확정</ConfirmButton>
+                    </ApplicantInfoContainer>
+                    <ApplicantDivider />
                   </List>
                 </Collapse>
               </List>
-              <Divider />
+              {!open && <Divider />}
             </div>
           );
         })}
@@ -212,8 +229,14 @@ const MyArticle = () => {
         <Container>
           <SideBar />
           <h1>내 게시물</h1>
-          <button onClick={() => setIsLoadExpired(false)}>매칭 전</button>
-          <button onClick={() => setIsLoadExpired(true)}>매칭 후</button>
+          <ButtonGroup>
+            <StyledButton isSelect={!isLoadExpired} onClick={() => setIsLoadExpired(false)}>
+              매칭 전
+            </StyledButton>
+            <StyledButton isSelect={isLoadExpired} onClick={() => setIsLoadExpired(true)}>
+              매칭 후
+            </StyledButton>
+          </ButtonGroup>
           <ArticlesContainer>
             {isLoadExpired
               ? renderExpiredArticles(expiredArticles)
@@ -225,6 +248,7 @@ const MyArticle = () => {
   );
 };
 
+// 최상위 컨테이너(흰 배경)
 const Container = styled.div`
   width: 280px;
   height: 90%;
@@ -238,6 +262,7 @@ const Container = styled.div`
   box-shadow: 0px 0px 10px 3px pink;
 `;
 
+// 전체 게시물 컨테이너
 const ArticlesContainer = styled.div`
   height: 600px;
   overflow: auto;
@@ -256,6 +281,84 @@ const ArticlesContainer = styled.div`
   &::-webkit-scrollbar-track {
     background-color: whitesmoke;
   }
+`;
+
+//매칭 전/후 버튼 그룹
+const ButtonGroup = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 20px;
+`;
+
+// 매칭 전/후 버튼
+const StyledButton = styled(GenderButton)``;
+
+// 드롭다운 게시물 제목
+const ArticleHeader = styled.div`
+  flex-grow: 1;
+  font-size: 20px;
+`;
+
+// 드롭다운 신청자 정보 컨테이너
+const ApplicantInfoContainer = styled.div`
+  display: flex;
+  justify-content: end;
+`;
+
+// 드롭다운 신청자 정보 박스
+const ApplicantInfoTextWrap = styled.div`
+  text-align: end;
+  margin-right: 20px;
+`;
+
+// 드롭다운 신청자 정보 텍스트
+const ApplicantInfoText = styled.div`
+  font-size: 15px;
+`;
+
+
+// 매칭 버튼
+const MatchingButton = styled.button`
+  //크기
+  width: 50px;
+  height: 50px;
+  margin-right: 5px;
+  //디자인
+  background-color: #cfbc5d;
+  color: white;
+  border: 0px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 7px 1px #c7b660;
+  //폰트
+  font-size: 20px;
+  font-family: "omyu_pretty";
+  //이벤트
+  &:hover {
+    cursor: pointer;
+    opacity: 0.9;
+  }
+`;
+
+
+// 확정 버튼
+const ConfirmButton = styled(MatchingButton)`
+  background-color: #8E8FFA;
+  box-shadow: 0px 0px 7px 1px #8E8FFA;
+  &:hover {
+    cursor: auto;
+    opacity:1;
+  }
+`;
+
+const ApplicantDivider = styled.hr`
+  width: 80%;
+  border: none; /* 추가: 기본 테두리 제거 */
+  height: 1px; /* 추가: 테두리 높이 설정 */
+  background-color: pink; /* 원하는 배경색으로 변경 */
+  margin: 15px 0px;
+  margin-left: auto;
+  margin-right: 0;
 `;
 
 export default MyArticle;

@@ -197,7 +197,7 @@ const SelectGender = styled.div`
   justify-content: space-around;
 `;
 
-const GenderButton = styled.button`
+export const GenderButton = styled.button`
   width: 110px;
   height: 30px;
   margin:0px 5px;
