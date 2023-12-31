@@ -94,7 +94,7 @@ const Main = () => {
 
 export const Background = styled.div`
   height: 100%;
-  background-image: url("/background.jpg");
+  background-image: url("./background.jpg");
   background-repeat: no-repeat; /* 배경 이미지 반복 설정 */
   background-size: cover; /* 배경 이미지 크기 조절 (cover, contain 등) */
   background-position: center; /* 배경 이미지 위치 조절 */
