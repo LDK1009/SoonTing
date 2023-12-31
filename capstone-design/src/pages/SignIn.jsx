@@ -85,6 +85,11 @@ const SignIn = () => {
     return null;
   };
 
+  // ////////// 쿠키 삭제하기
+  // function deleteCookie(name) {
+  //   document.cookie = encodeURIComponent(name) + "=; expires=Thu, 01 JAN 1999 00:00:10 GMT";
+  // }
+
   ////////// 쿠키 보유 여부
   const isHaveCookie = () => {
     // 쿠키에 저장된 uid를 가져온다
@@ -103,18 +108,21 @@ const SignIn = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // var target_url = "https://ldk1009.github.io/CapstoneDesign/";
+  // window.location.href = "kakaotalk://web/openExternal?url=" + encodeURIComponent(target_url);
+
   //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
   return (
     <>
-    <Background>
-      <Container>
-        <MainText>순천향대 학우들과 함께하는 새로운 이야기의 시작!</MainText>
-        <LoginButton onClick={() => GoogleSignIn()}>
-          <GoogleImg src={google} alt="google" />
-          구글로 로그인 하기
-        </LoginButton>
-      </Container>
-    </Background>
+      <Background>
+        <Container>
+          <MainText>순천향대 학우들과 함께하는 새로운 이야기의 시작!</MainText>
+          <LoginButton onClick={() => GoogleSignIn()}>
+            <GoogleImg src={google} alt="google" />
+            구글로 로그인 하기
+          </LoginButton>
+        </Container>
+      </Background>
     </>
   );
 };
@@ -129,7 +137,7 @@ const Background = styled.div`
 
 const Container = styled.div`
   height: 100%;
-  width:100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;

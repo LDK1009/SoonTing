@@ -9,7 +9,6 @@ import { Divider } from "@mui/material";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
 import Collapse from "@mui/material/Collapse";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
@@ -317,7 +316,6 @@ const ApplicantInfoText = styled.div`
   font-size: 15px;
 `;
 
-
 // 매칭 버튼
 const MatchingButton = styled.button`
   //크기
@@ -340,14 +338,13 @@ const MatchingButton = styled.button`
   }
 `;
 
-
 // 확정 버튼
 const ConfirmButton = styled(MatchingButton)`
-  background-color: #8E8FFA;
-  box-shadow: 0px 0px 7px 1px #8E8FFA;
+  background-color: #8e8ffa;
+  box-shadow: 0px 0px 7px 1px #8e8ffa;
   &:hover {
     cursor: auto;
-    opacity:1;
+    opacity: 1;
   }
 `;
 

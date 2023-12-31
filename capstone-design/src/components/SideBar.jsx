@@ -10,7 +10,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import DescriptionIcon from "@mui/icons-material/Description";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MenuIcon from "@mui/icons-material/Menu";
-import HelpIcon from '@mui/icons-material/Help';
+import HelpIcon from "@mui/icons-material/Help";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebaseConfig";
 import { useState } from "react";
@@ -18,7 +18,8 @@ import { doc, getDoc } from "firebase/firestore";
 import { useEffect } from "react";
 import styled from "styled-components";
 import { Divider } from "@mui/material";
-import HomeIcon from '@mui/icons-material/Home';
+import HomeIcon from "@mui/icons-material/Home";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 export default function SideBar() {
   ////////// 쿠키 가져오기
@@ -72,6 +73,7 @@ export default function SideBar() {
     });
   };
 
+  ////////// 사이드바 첫번째 그룹 함수 옵션
   const firstDividerOption = (index) => {
     switch (index) {
       case 0:
@@ -88,16 +90,21 @@ export default function SideBar() {
     }
   };
 
+  ////////// 사이드바 두번째 그룹 함수 옵션
   const secondDividerOption = (index) => {
     switch (index) {
       case 0:
         navigate("/Notice");
         break;
+      case 1:
+        break;
+      case 2:
+        logout("uid");
+        break;
       default:
         break;
     }
   };
-
 
   //////////
   const [state, setState] = React.useState({
@@ -135,13 +142,14 @@ export default function SideBar() {
             </ListItemButton>
           </ListItem>
         ))}
-        <Divider/>
-        {["공지사항", "도움말"].map((text, index) => (
+        <Divider />
+        {["공지사항", "도움말", "로그아웃"].map((text, index) => (
           <ListItem key={text} disablePadding onClick={() => secondDividerOption(index)}>
             <ListItemButton>
               <ListItemIcon>
                 {index === 0 && <NotificationsIcon />}
                 {index === 1 && <HelpIcon />}
+                {index === 2 && <LogoutIcon />}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
@@ -176,6 +184,17 @@ export default function SideBar() {
       alert("회원정보를 찾을 수 없습니다.");
       navigate("/SignIn");
     }
+  };
+
+  ////////// 로그아웃(쿠키 삭제하기)
+  const logout = (cookieName) => {
+    // 현재 날짜와 시간을 구합니다.
+    var currentDate = new Date();
+    // 쿠키의 만료일을 현재 시간 이전으로 설정합니다.
+    currentDate.setFullYear(currentDate.getFullYear() - 1);
+    // 쿠키 설정
+    document.cookie = cookieName + "=; expires=" + currentDate.toUTCString() + "; path=/";
+    navigate("/");
   };
 
   ////////// 마운트
@@ -214,7 +233,7 @@ const StudentCardContainer = styled.div`
   border-radius: 10px;
   margin: 20px 30px;
   text-align: center;
-  overflow: hidden; 
+  overflow: hidden;
 `;
 
 const StudentCardTop = styled.div`

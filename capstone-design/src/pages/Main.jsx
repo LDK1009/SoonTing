@@ -77,6 +77,7 @@ const Main = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
   return (
     <>
       <Background>
@@ -118,7 +119,7 @@ const Container = styled.div`
 const ArticleContainer = styled.div`
   height: 200px;
   overflow: auto;
-  width:100%;
+  width: 100%;
   /* &::-webkit-scrollbar {
     display:none;
   } */
