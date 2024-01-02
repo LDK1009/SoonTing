@@ -117,9 +117,10 @@ const Container = styled.div`
 `;
 
 const ArticleContainer = styled.div`
-  height: 200px;
+  height: 150px;
   overflow: auto;
   width: 100%;
+  padding:0px 10px;
   /* &::-webkit-scrollbar {
     display:none;
   } */

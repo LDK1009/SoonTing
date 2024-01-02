@@ -27,15 +27,17 @@ const DetailedArticle = ({ articleInfo, userInfo }) => {
 
 
   return (
-    <div>
-      <div onClick={handleOpen} style={{backgroundColor:'pink', width:'100%'}}>
+    <>
+      <SummaryArticleContainer onClick={handleOpen}>
         {/* 학과 / 나이 / 성별 / 인원 .. 제목 */}
+        <SummaryArticleContent>
         <div>
           {articleInfo.major} / {articleInfo.age} / {articleInfo.gender} /{" "}
           {articleInfo.people}인
         </div>
         <div>{articleInfo.title}</div>
-      </div>
+        </SummaryArticleContent>
+      </SummaryArticleContainer>
       <Modal open={open} onClose={handleClose}>
         <StyledModalBox>
           <div>작성자 : {articleInfo.name}</div>
@@ -50,7 +52,7 @@ const DetailedArticle = ({ articleInfo, userInfo }) => {
           <button onClick={matchingApply}>매칭 신청</button>
         </StyledModalBox>
       </Modal>
-    </div>
+    </>
   );
 };
 
@@ -64,5 +66,19 @@ const StyledModalBox = styled(Box)`
   background-color: white;
   border-radius: 15px;
 `;
+
+const SummaryArticleContainer =styled.div`
+  width:100%;
+  height:80px;
+  background-color:pink;
+  border:1px solid red;
+  border-radius:15px;
+  display:flex;
+  align-items:center;
+` 
+
+const SummaryArticleContent = styled.div`
+  margin-left:10px;
+`
 
 export default DetailedArticle;
