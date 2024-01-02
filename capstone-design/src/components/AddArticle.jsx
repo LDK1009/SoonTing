@@ -97,7 +97,7 @@ const AddArticle = ({ userData }) => {
             <FixedInfo onClick={alertFixedInfo}>
               {submitForm.name} / {submitForm.major} / {submitForm.gender} / {submitForm.age}세
             </FixedInfo>
-            <FixedInfo onClick={alertFixedInfo}>인원 : {submitForm.people}명</FixedInfo>
+            <FixedInfo onClick={alertFixedInfo}>인원 : {submitForm.people}인</FixedInfo>
             <StyledInput label="제목" name="title" value={submitForm.title} multiline maxRows={1} onChange={onChange} />
             <GapDiv />
             <StyledInput

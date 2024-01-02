@@ -5,6 +5,7 @@ import { setDoc, doc, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 import google from "../assets/google.png";
+import { motion } from "framer-motion";
 
 const SignIn = () => {
   const navigate = useNavigate(); // 네비게이트 변수
@@ -116,7 +117,13 @@ const SignIn = () => {
     <>
       <Background>
         <Container>
-          <MainText>순천향대 학우들과 함께하는 새로운 이야기의 시작!</MainText>
+          <MainText
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            순천향대 학우들과 함께하는 새로운 이야기의 시작!
+          </MainText>
           <LoginButton onClick={() => GoogleSignIn()}>
             <GoogleImg src={google} alt="google" />
             구글로 로그인 하기
@@ -159,7 +166,7 @@ const LoginButton = styled.div`
   }
 `;
 
-const MainText = styled.div`
+const MainText = styled(motion.div)`
   width: 80%;
   margin-bottom: 30px;
   font-size: 30px;
