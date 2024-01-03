@@ -116,7 +116,7 @@ const Container = styled.div`
 `;
 
 const ArticleContainer = styled.div`
-  height: 150px;
+  height: 500px;
   overflow: auto;
   width: 100%;
   padding: 0px 10px;

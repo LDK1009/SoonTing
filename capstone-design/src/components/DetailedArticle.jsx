@@ -34,7 +34,7 @@ const DetailedArticle = ({ articleInfo, userInfo }) => {
           <SummaryArticleHeadline>{articleInfo.title}</SummaryArticleHeadline>
         </SummaryArticleContent>
       </SummaryArticleContainer>
-      <Modal open={open} onClose={handleClose}>
+      <StyledModal open={open} onClose={handleClose}>
         <StyledModalBox>
           <DetailedArticleContainer>
             <DetailedArticleHeadline>{articleInfo.title}</DetailedArticleHeadline>
@@ -46,20 +46,29 @@ const DetailedArticle = ({ articleInfo, userInfo }) => {
             <MatchingApplyButton onClick={matchingApply}>매칭 신청</MatchingApplyButton>
           </DetailedArticleContainer>
         </StyledModalBox>
-      </Modal>
+      </StyledModal>
     </>
   );
 };
+const StyledModal = styled(Modal)`
+  &:focus-visible {
+    outline: 0px;
+  }
+`;
 
 const StyledModalBox = styled(Box)`
+  &:focus-visible {
+    outline: 0px;
+  }
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 300px;
-  height: 500px;
+  /* height: 500px; */
   background-color: white;
   border-radius: 15px;
+  border: 0px;
 `;
 
 const SummaryArticleContainer = styled.div`
@@ -71,7 +80,7 @@ const SummaryArticleContainer = styled.div`
   display: flex;
   align-items: center;
   box-shadow: 3px 3px 5px 1px #f3dccc;
-  margin-bottom:30px;
+  margin-bottom: 30px;
 `;
 
 const SummaryArticleContent = styled.div`
@@ -89,35 +98,36 @@ const SummaryArticleHeadline = styled.div`
 `;
 
 const DetailedArticleContainer = styled.div`
-  padding: 30px 20px;
-  height: 100%;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
+  padding: 20px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const DetailedArticleHeadline = styled.div`
   font-size: 20px;
   text-align: center;
-  margin-bottom:20px;
+  margin-bottom: 20px;
 `;
 
 const DetailedArticleInfo = styled.div`
-margin-bottom:5px;
+  margin-bottom: 5px;
 `;
 
 const DetailedArticleContent = styled.div`
-margin-top:20px;
-width:100%;
-text-align:center;
-height:220px;
-padding:15px 0px;
-border:2px solid #EEEEEE;
-border-radius:10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+  text-align: center;
+  height: 220px;
+  padding: 15px 0px;
+  border: 2px solid #eeeeee;
+  border-radius: 10px;
 `;
 
 const MatchingApplyButton = styled(WriteButton)`
-  
-`
+  position: relative;
+  bottom: 0px;
+`;
 
 export default DetailedArticle;
