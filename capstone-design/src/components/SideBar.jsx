@@ -202,7 +202,7 @@ export default function SideBar() {
     readUserInfo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+//////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
   return (
     <>
       <StyledMenuIcon onClick={toggleDrawer("right", true)} />
@@ -226,6 +226,9 @@ const StyledMenuIcon = styled(MenuIcon)`
   position: absolute;
   top: 20px;
   right: 20px;
+  &:hover{
+    cursor:pointer;
+  }
 `;
 
 const StudentCardContainer = styled.div`
