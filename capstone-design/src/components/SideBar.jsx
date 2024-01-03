@@ -97,6 +97,7 @@ export default function SideBar() {
         navigate("/Notice");
         break;
       case 1:
+        window.location.href = "https://activeguide.kr/guide/1704272045345x690245614199636000";
         break;
       case 2:
         logout("uid");
