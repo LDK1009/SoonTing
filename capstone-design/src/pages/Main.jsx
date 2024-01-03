@@ -84,7 +84,6 @@ const Main = () => {
         <Container>
           <SideBar />
           <h1>홈</h1>
-          <h1>배포 테스트2</h1>
           <ArticleContainer>{renderArticles(loadedArticles)}</ArticleContainer>
           <AddArticle userData={userData} />
         </Container>
