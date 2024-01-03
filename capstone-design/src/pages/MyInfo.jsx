@@ -166,6 +166,7 @@ const MyInfo = () => {
             onChange={onChange} // onChange 시에 onChange 함수 호출
           />
           <GapDiv />
+          <WarningText>입력하신 정보는 서비스 이용에 활용될 수 있습니다.</WarningText>
           <ModifyButton onClick={setMyInfo}>수정하기</ModifyButton>
         </Container>
       </Background>
@@ -208,5 +209,10 @@ export const GenderButton = styled.button`
   border: 0px;
   opacity: ${(props) => (props.isSelect ? 1 : 0.5)};
 `;
+
+const WarningText = styled.div`
+  font-size:12px;
+  color:lightgray;
+`
 
 export default MyInfo;
