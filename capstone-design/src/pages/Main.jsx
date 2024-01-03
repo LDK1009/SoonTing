@@ -61,10 +61,9 @@ const Main = () => {
     return (
       <>
         {arr.map((item, index) => (
-          <div key={index}>
-            <h3>{index}번째 게시글</h3>
-            <DetailedArticle articleInfo={item} userInfo={userData}></DetailedArticle>
-          </div>
+          <>
+            <DetailedArticle key={index} articleInfo={item} userInfo={userData}></DetailedArticle>
+          </>
         ))}
       </>
     );
@@ -120,7 +119,7 @@ const ArticleContainer = styled.div`
   height: 150px;
   overflow: auto;
   width: 100%;
-  padding:0px 10px;
+  padding: 0px 10px;
   /* &::-webkit-scrollbar {
     display:none;
   } */

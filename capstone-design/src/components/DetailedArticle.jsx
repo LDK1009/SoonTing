@@ -71,6 +71,7 @@ const SummaryArticleContainer = styled.div`
   display: flex;
   align-items: center;
   box-shadow: 3px 3px 5px 1px #f3dccc;
+  margin-bottom:30px;
 `;
 
 const SummaryArticleContent = styled.div`
