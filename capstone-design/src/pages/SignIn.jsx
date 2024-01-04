@@ -105,6 +105,10 @@ const SignIn = () => {
 
   ////////// 마운트
   useEffect(() => {
+    // 인앱 브라우저로 입장 시 웹 브라우저로 변경
+    var target_url = 'https://capstone-design-nine.vercel.app/';
+    window.location.href = 'kakaotalk://web/openExternal?url='+encodeURIComponent(target_url); 
+    // 쿠키 보유 여부 확인
     isHaveCookie();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
