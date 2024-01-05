@@ -93,7 +93,8 @@ const SummaryArticleContainer = styled.div`
 `;
 
 const SummaryArticleContent = styled.div`
-  margin-left: 10px;
+  margin: 0px 10px;
+  width:100%;
 `;
 
 const SummaryArticleInfo = styled.div`
