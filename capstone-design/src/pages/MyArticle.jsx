@@ -138,6 +138,9 @@ const MyArticle = () => {
                               <ApplicantInfoText>
                                 {item2.gender} / {item2.people}명
                               </ApplicantInfoText>
+                              <ApplicantInfoText>
+                                연락처 : {item2.number}
+                              </ApplicantInfoText>
                             </ApplicantInfoTextWrap>
                             <MatchingButton onClick={() => matching(collectionName, item2)}>매칭</MatchingButton>
                           </ApplicantInfoContainer>
@@ -303,6 +306,7 @@ const ArticleHeader = styled.div`
 const ApplicantInfoContainer = styled.div`
   display: flex;
   justify-content: end;
+  align-items:center;
 `;
 
 // 드롭다운 신청자 정보 박스
