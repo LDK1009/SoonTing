@@ -61,6 +61,7 @@ const SummaryNoticeBox = styled.div`
 
 const SummaryNoticeHeadline = styled.div`
   font-size: 15px;
+  width:200px;
 `;
 
 const SummaryNoticeDate = styled.div`
@@ -77,6 +78,7 @@ const DetailedNoticeContainer = styled.div`
 `;
 
 const DetailedNoticeHeadline = styled.div`
+  width:90%;
   margin: 20px 0px;
   font-size: 20px;
   font-weight: bold;

@@ -6,8 +6,10 @@ import NoticePost from "../components/NoticePost";
 
 const Notice = () => {
   const data = [
-    { headline: "공지사항 테스트1", date: "2024-01-03", contents: "테스트 공지사항의 내용입니다." },
-    { headline: "공지사항 테스트2", date: "2024-01-03", contents: "테스트 공지사항의 내용입니다2." },
+    { headline: "[기능] 게시물 날짜 표시", date: "2024-01-05", contents: "요약 게시물에 작성일이 표기됩니다." },
+    { headline: "[기능] 매칭 전 매칭자 연락처 보기", date: "2024-01-05", contents: "[내 게시물] 페이지의 '매칭 전 게시물'에서 해당 게시물 '매칭 신청자의 연락처'를 볼 수 있습니다." },
+    { headline: "[테스트] 공지사항 테스트2", date: "2024-01-03", contents: "테스트 공지사항2의 내용입니다." },
+    { headline: "[테스트] 공지사항 테스트1", date: "2024-01-03", contents: "테스트 공지사항1의 내용입니다." },
   ];
 
   return (
