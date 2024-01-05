@@ -23,14 +23,23 @@ const DetailedArticle = ({ articleInfo, userInfo }) => {
     alert("매칭 신청 완료!");
   };
 
+  ////////// 게시글 시간
+  const startIndex = articleInfo.time.indexOf('년') + 1; //년 다음부터
+  const endIndex = articleInfo.time.indexOf('일') + 1; // 일까지
+  const writeTime = articleInfo.time.substring(startIndex, endIndex);
+
+  // 정규 표현식을 사용하여 "01월 05일" 부분을 추출
   return (
     <>
       <SummaryArticleContainer onClick={handleOpen}>
         {/* 학과 / 나이 / 성별 / 인원 .. 제목 */}
         <SummaryArticleContent>
-          <SummaryArticleInfo>
-            {articleInfo.major} / {articleInfo.age} / {articleInfo.gender} / {articleInfo.people}인
-          </SummaryArticleInfo>
+          <SummaryArticleInfoWrap>
+            <SummaryArticleInfo>
+              {articleInfo.major} / {articleInfo.age} / {articleInfo.gender} / {articleInfo.people}인
+            </SummaryArticleInfo>
+            <SummaryArticleInfo>{writeTime}</SummaryArticleInfo>
+          </SummaryArticleInfoWrap>
           <SummaryArticleHeadline>{articleInfo.title}</SummaryArticleHeadline>
         </SummaryArticleContent>
       </SummaryArticleContainer>
@@ -91,6 +100,12 @@ const SummaryArticleInfo = styled.div`
   margin-bottom: 3px;
   font-size: 12px;
   color: #607274;
+`;
+
+const SummaryArticleInfoWrap = styled.div`
+  display: flex;
+  width:100%;
+  justify-content:space-between;
 `;
 
 const SummaryArticleHeadline = styled.div`
