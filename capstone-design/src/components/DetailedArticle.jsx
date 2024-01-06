@@ -18,7 +18,8 @@ const DetailedArticle = ({ articleInfo, userInfo }) => {
   const matchingApply = async () => {
     const collectionName = articleInfo.uid + "_" + articleInfo.time;
     await setDoc(doc(db, `Matching/Application/${collectionName}`, userInfo.uid), {
-      ...userInfo,
+      ...userInfo, // 신청자 정보 전달
+      matching:false, // 매칭 여부는 false로 시작
     });
     alert("매칭 신청 완료!");
   };
