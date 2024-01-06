@@ -128,15 +128,18 @@ const MyArticle = () => {
     const mathingUserDocRef = doc(db, `Matching/MatchingUser/${docName}`, matchingUserInfo.uid);
     await setDoc(mathingUserDocRef, { ...matchingUserInfo, expiration: true }); // 매칭 확정자에 넣기
     alert("매칭 완료! 😘");
-    window.location.reload();
-  };
+    getMyArticles(false);
+    getMyArticles(true);
+    };
 
   ////////// 게시물 마감
   const expireArticle = async (docName) => {
     const articleDocRef = doc(db, "articles", docName);
     await setDoc(articleDocRef, { expiration: true }, { merge: true }); // 게시글 마감
     alert("마감 되었습니다✔");
-    window.location.reload();
+    // window.location.reload();
+    getMyArticles(false);
+    getMyArticles(true);
   };
 
   ////////// 미만료 게시글&신청내역 렌더링
@@ -302,10 +305,10 @@ const MyArticle = () => {
           <h1>내 게시물</h1>
           <ButtonGroup>
             <StyledButton isSelect={!isLoadExpired} onClick={() => setIsLoadExpired(false)}>
-              매칭 전
+              마감 전
             </StyledButton>
             <StyledButton isSelect={isLoadExpired} onClick={() => setIsLoadExpired(true)}>
-              매칭 후
+              마감 후
             </StyledButton>
           </ButtonGroup>
           <ArticlesContainer>
