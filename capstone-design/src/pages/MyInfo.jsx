@@ -56,12 +56,12 @@ const MyInfo = () => {
 
   ////////// 수정 완료
   const setMyInfo = async () => {
-    if (form.name && form.gender && form.age && form.people && form.major && form.number) {
+    if (form.name && form.gender && form.age && form.major && form.number) {
       await setDoc(doc(db, "users", Uid), {
         ...form, // 입력값이 갱신된 유저 정보로 문서를 덮어 씌운다
       });
       alert("수정완료"); // 수정완료 메시지
-      navigate("/", {
+      navigate("/Main", {
         state: { uid: Uid },
       });
     } else {

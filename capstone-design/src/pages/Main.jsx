@@ -13,7 +13,7 @@ const Main = () => {
   const navigate = useNavigate(); // 네비게이트 변수
   const [loadedArticles, setLoadedArticles] = useState([]); // 로드한 게시글
 
-  // 유저아이디를 기반으로 회원 정보 가져오기
+  ////////// 유저아이디를 기반으로 회원 정보 가져오기
   const [userData, setUserData] = useState({
     uid: "",
     name: "",
@@ -32,11 +32,17 @@ const Main = () => {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      setUserData(() => docSnap.data());
+      // setUserData(() => docSnap.data());
+      // console.log("문서 가져오는중");
+      const userDataFromDb = docSnap.data();
+      setUserData(userDataFromDb);
+      console.log("문서 가져오는 중");
+      // 데이터 업데이트 후에 isEnterUserInfo 함수 호출
+      isEnterUserInfo(userDataFromDb);
     } else {
       // docSnap.data() will be undefined in this case
       alert("회원정보를 찾을 수 없습니다.");
-      navigate("/SignIn");
+      navigate("/");
     }
   };
 
@@ -56,7 +62,7 @@ const Main = () => {
     setLoadedArticles(() => newData);
   };
 
-  // 게시글 렌더링
+  ////////// 게시글 렌더링
   const renderArticles = (arr) => {
     return (
       <>
@@ -69,10 +75,27 @@ const Main = () => {
     );
   };
 
+  ////////// 사용자 정보 입력 여부
+  const isEnterUserInfo = async (userData) => {
+    if (userData.name && userData.major && userData.gender && userData.age && userData.number) {
+      console.log("사용자 정보가 모두 입력되어 있습니다.");
+    } else {
+      console.log("사용자 정보가 모두 입력되지 않았습니다.\n사용자 정보 >>\n", userData);
+      alert("사용자 정보를 모두 입력해 주세요.");
+      navigate("/MyInfo", {
+        state: { uid: userUid },
+      });
+    }
+  };
+
   ////////// 마운트
   useEffect(() => {
-    readUserInfo();
-    GetDocs();
+    const fetchData = async () => {
+      await readUserInfo();
+      GetDocs();
+    };
+
+    fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

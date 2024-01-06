@@ -95,7 +95,7 @@ const SignIn = () => {
   const isHaveCookie = () => {
     // 쿠키에 저장된 uid를 가져온다
     const userUid = getCookie("uid");
-    // 쿠기에 저장된 uid가 있다면 Main 페이지로 로드하면서 uid를 네비게이트 프롭스로 전달한다.
+    // 쿠키에 저장된 uid가 있다면 Main 페이지로 로드하면서 uid를 네비게이트 프롭스로 전달한다.
     if (userUid) {
       navigate("/Main", {
         state: { uid: userUid },
