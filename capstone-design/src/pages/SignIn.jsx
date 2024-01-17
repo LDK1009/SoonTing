@@ -1,12 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { auth, db, provider } from "../firebaseConfig";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { setDoc, doc, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 import google from "../assets/google.png";
-import { motion } from "framer-motion";
+import { animate, motion, useMotionValue, useTransform } from "framer-motion";
 import ScrollIcon from "../components/ScrollIcon";
+import { emphasize } from "@mui/material";
 
 const SignIn = () => {
   const navigate = useNavigate(); // 네비게이트 변수
@@ -138,6 +139,14 @@ const SignIn = () => {
           <MotionSlideText direction={true} text={slideText[0]}></MotionSlideText>
           <MotionSlideText direction={false} text={slideText[1]}></MotionSlideText>
         </SlideTextContainer>
+        {/* 규모 */}
+        <PromotionLabel>규모</PromotionLabel>
+        <SlideTextContainer>
+          <MotionScaleContainer>
+            <MotionScale label="사용자" endNum={1689} unit="명" />
+            <MotionScale label="매칭" endNum={2946} unit="건" />
+          </MotionScaleContainer>
+        </SlideTextContainer>
       </Container>
     </>
   );
@@ -205,6 +214,7 @@ const PromotionLabel = styled(SubTitleText)`
   margin-left: 10px;
   width: 100%;
   text-align: left;
+  margin-top: 30px;
 `;
 const PromotionContainer = styled.div`
   background-color: #4d207a;
@@ -233,6 +243,53 @@ const MotionSlideText = ({ direction, text }) => {
         <SlideText>{text}</SlideText>
       </motion.div>
     </div>
+  );
+};
+
+const MotionScaleContainer = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+`;
+
+const MotionScaleWrap = styled.div``;
+
+const MotionScaleWrap2 = styled.div`
+  display: flex;
+  align-items: end;
+`;
+
+const MotionScaleLabel = styled(EmphasisText)`
+  text-align: start;
+`;
+const MotionScaleQuantity = styled(MainTitleText)`
+  margin: 5px 5px 0px 0px;
+`;
+
+const MotionScaleUnit = styled(EmphasisText)``;
+
+const MotionScale = ({ label, endNum, unit }) => {
+  const count = useMotionValue(0);
+  const rounded = useTransform(count, (latest) => Math.round(latest));
+
+  useEffect(() => {
+    const controls = animate(count, endNum, { duration: 1.5 });
+
+    return controls.stop;
+  }, []);
+
+  return (
+    <>
+      <MotionScaleWrap>
+        <MotionScaleLabel>{label}</MotionScaleLabel>
+        <MotionScaleWrap2>
+          <MotionScaleQuantity>
+            <motion.div>{rounded}</motion.div>
+          </MotionScaleQuantity>
+          <MotionScaleUnit>{unit}</MotionScaleUnit>
+        </MotionScaleWrap2>
+      </MotionScaleWrap>
+    </>
   );
 };
 
