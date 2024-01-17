@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import styled from "styled-components";
 import google from "../assets/google.png";
 import { motion } from "framer-motion";
+import ScrollIcon from "../components/ScrollIcon";
 
 const SignIn = () => {
   const navigate = useNavigate(); // 네비게이트 변수
@@ -112,70 +113,100 @@ const SignIn = () => {
   //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
   return (
     <>
-      <Background>
-        <Container>
-          <MainText
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            순천향대 학우들과 함께하는 새로운 이야기의 시작!
-          </MainText>
-          <LoginButton onClick={() => GoogleSignIn()}>
-            <GoogleImg src={google} alt="google" />
-            구글로 로그인 하기
-          </LoginButton>
-        </Container>
-      </Background>
+      <Container>
+        {/* 메인 텍스트 */}
+        <MainTitleText initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+          순천향대 학우들과 함께하는
+          <br />
+          새로운 이야기의 시작!
+        </MainTitleText>
+        {/* 로그인 버튼 */}
+        <LoginButton onClick={() => GoogleSignIn()}>
+          <GoogleImg src={google} alt="google" />
+          <BodyText color="black">구글로 로그인 하기</BodyText>
+        </LoginButton>
+        {/* 스크롤 아이콘 */}
+        <ScrollIcon />
+        {/* 슬라이드 텍스트 */}
+        <PromotionLabel>슬라이드 텍스트</PromotionLabel>
+        <PromotionContainer>
+          
+        </PromotionContainer>
+      </Container>
     </>
   );
 };
 
-const Background = styled.div`
-  height: 100%;
-  background-image: url("./background.jpg");
-  background-repeat: no-repeat; /* 배경 이미지 반복 설정 */
-  background-size: cover; /* 배경 이미지 크기 조절 (cover, contain 등) */
-  background-position: center; /* 배경 이미지 위치 조절 */
-`;
-
 const Container = styled.div`
+  background-color: #26539c;
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  padding-top: 350px;
 `;
 
 const LoginButton = styled.div`
-  background-color: white;
-  border-radius: 20px;
-  font-size: 20px;
-  width: 80%;
+  width: 200px;
   height: 50px;
-  font-family: "omyu_pretty";
+  background-color: white;
+  border-radius: 5px;
+  margin-top: 20px;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   &:hover {
     cursor: pointer;
   }
 `;
 
-const MainText = styled(motion.div)`
-  width: 80%;
-  margin-bottom: 30px;
+export const MainTitleText = styled(motion.div)`
+  color: ${(props) => props.color || "white"};
   font-size: 30px;
-  color: white;
+  font-weight: 600;
+  line-height: 34px;
+  letter-spacing: -2.5%;
   text-align: center;
-  text-shadow: -1px -1px 15px pink, 1px -1px 15px pink, -1px 1px 15px pink, 1px 1px 15px pink;
+`;
+
+export const SubTitleText = styled(MainTitleText)`
+  font-size: 22px;
+  line-height: 32px;
+`;
+
+export const EmphasisText = styled(MainTitleText)`
+  font-size: 18px;
+  line-height: 28px;
+`;
+
+export const BodyText = styled(MainTitleText)`
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+`;
+
+export const BodyBlurText = styled(BodyText)`
+  color: #767676;
 `;
 
 const GoogleImg = styled.img`
-  width: 20px;
-  height: 20px;
-  margin-right: 5px;
+  width: 30px;
+  height: 30px;
 `;
+const PromotionLabel = styled(SubTitleText)`
+  margin-bottom:5px;
+  margin-left:10px;
+  width:100%;
+  text-align:left;
+`
+const PromotionContainer = styled.div`
+  background-color:#4D207A;
+  width:100%;
+  height:150px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+`
 
 export default SignIn;
