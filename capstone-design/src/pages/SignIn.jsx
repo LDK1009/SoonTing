@@ -10,6 +10,10 @@ import ScrollIcon from "../components/ScrollIcon";
 
 const SignIn = () => {
   const navigate = useNavigate(); // 네비게이트 변수
+  const slideText = [
+    "이번 주 토요일에 새로운 카페 탐방 갈 사람?! 낼 오후에 같이 쇼핑 갈 사람 구한다?! 담주 일욜에 같이 요가 수업 들을 사람?! 이번 주 금욜에 스파에서 마사지 받을 사람?! 낼 저녁에 같이 요리 대결할 사람?! 담주 토욜에 새로 개장한 영화관 갈 사람?! 이번 주 일욜에 새로운 레스토랑에서 점심 먹을 사람?! 낼 오후에 동네 공원에서 피크닉 할 사람?! 담주 목욜에 새로운 공연 보러 갈 사람?! 이번 주 토욜에 같이 스케이트 보드 타러 갈 사람?! ",
+    "낼 저녁에 요가 수업 같이 들을 사람?! 담주 일욜에 동네 카페에서 새로운 메뉴 시식할 사람?! 이번 주 금욜에 열리는 축제 같이 갈 사람?! 낼 오후에 새로 개장한 공원에서 산책할 사람?! 담주 수욜에 새로운 카페에서 커피 한잔 할 사람?! 이번 주 토욜에 전시회 같이 갈 사람?! 낼 저녁에 새로운 레스토랑에서 저녁 같이 먹을 사람?! 담주 일욜에 오픈 마이크 이벤트 같이 갈 사람?! 이번 주 금욜에 새로 개장한 헬스장 같이 갈 사람?! 낼 오후에 다양한 음식 같이 먹을 사람?! 이번 주말에 놀이공원 같이 갈 사람?! 내일 점심에 브런치 같이 먹을 사람?! 다음 주에 같이 여행 갈 사람?! 이번 주에 같이 영화 보러 갈 사람?! 내일 저녁에 같이 술 한잔 할 사람?! 다음 주에 같이 등산 갈 사람?! 이번 주말에 같이 캠핑 갈 사람?! 내일 점심에 같이 카페 갈 사람?! 다음 주에 같이 미술관 갈 사람?! 이번 주에 같이 콘서트 갈 사람?! 이번 주말에 같이 바다 보러 갈 사람?! 내일 점심에 같이 초밥 먹으러 갈 사람?! 다음 주에 같이 미술관 갈 사람?! 이번 주에 같이 영화 보러 갈 사람?! 내일 저녁에 같이 술 한잔 할 사람?! 다음 주에 같이 캠핑 갈 사람?! 이번 주말에 같이 놀이공원 갈 사람?! 내일 점심에 같이 브런치 먹으러 갈 사람?! 다음 주에 같이 여행 갈 사람?! 이번 주에 같이 콘서트 갈 사람?! 이번 주말에 같이 드라이브 갈 사람?! 내일 점심에 같이 파스타 먹으러 갈 사람?! 다음 주에 같이 동물원 갈 사람?! 이번 주에 같이 뮤지컬 보러 갈 사람?! 내일 저녁에 같이 고기 먹으러 갈 사람?! 다음 주에 같이 수영장 갈 사람?! 이번 주말에 같이 자전거 타러 갈 사람?! 내일 점심에 같이 샐러드 먹으러 갈 사람?! 다음 주에 같이 박물관 갈 사람?! 이번 주에 같이 연극 보러 갈 사람?! 이번 주말에 같이 등산 갈 사람?! 내일 점심에 같이 떡볶이 먹으러 갈 사람?! 다음 주에 같이 스케이트장 갈 사람?! 이번 주에 같이 전시회 갈 사람?! 내일 저녁에 같이 치맥 먹으러 갈 사람?! 다음 주에 같이 놀이공원 갈 사람?! 이번 주말에 같이 낚시 갈 사람?! 내일 점심에 같이 샌드위치 먹으러 갈 사람?! 다음 주에 같이 워터파크 갈 사람?! 이번 주에 같이 음악회 갈 사람?! 이번 주말에 같이 캠핑 갈 사람?! 내일 점심에 같이 마라탕 먹으러 갈 사람?! 다음 주에 같이 스키장 갈 사람?! 이번 주에 같이 재즈바 갈 사람?! 내일 저녁에 같이 회 먹으러 갈 사람?! 다음 주에 같이 아이스링크장 갈 사람?! 이번 주말에 서핑하러 갈 사람?! 내일 점심에 같이 라멘 먹으러 갈 사람?! 다음 주에 같이 VR체험관 갈 사람?! 이번 주에 같이 뮤지컬 보러 갈 사람?! 이번 주말에 같이 자전거 타러 갈 사람?! 내일 점심에 같이 돈까스 먹으러 갈 사람?! 다음 주에 같이 볼링 치러 갈 사람?! 이번 주에 같이 도서관 갈 사람?! 내일 저녁에 같이 피자 먹으러 갈 사람?!",
+  ];
 
   ////////// 구글 로그인
   const GoogleSignIn = () => {
@@ -129,9 +133,11 @@ const SignIn = () => {
         <ScrollIcon />
         {/* 슬라이드 텍스트 */}
         <PromotionLabel>슬라이드 텍스트</PromotionLabel>
-        <PromotionContainer>
-          
-        </PromotionContainer>
+        <SlideTextContainer>
+          <MotionSlideText direction={false} text={slideText[0]}></MotionSlideText>
+          <MotionSlideText direction={true} text={slideText[0]}></MotionSlideText>
+          <MotionSlideText direction={false} text={slideText[1]}></MotionSlideText>
+        </SlideTextContainer>
       </Container>
     </>
   );
@@ -195,18 +201,39 @@ const GoogleImg = styled.img`
   height: 30px;
 `;
 const PromotionLabel = styled(SubTitleText)`
-  margin-bottom:5px;
-  margin-left:10px;
-  width:100%;
-  text-align:left;
-`
+  margin-bottom: 5px;
+  margin-left: 10px;
+  width: 100%;
+  text-align: left;
+`;
 const PromotionContainer = styled.div`
-  background-color:#4D207A;
-  width:100%;
-  height:150px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-`
+  background-color: #4d207a;
+  width: 100%;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const SlideTextContainer = styled(PromotionContainer)`
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+`;
+const SlideText = styled(EmphasisText)`
+  white-space: nowrap;
+`;
+
+const MotionSlideText = ({ direction, text }) => {
+  const start = direction ? -2000 : 0;
+  const end = direction ? 0 : -2000;
+  return (
+    <div>
+      <motion.div initial={{ x: start }} animate={{ x: end }} transition={{ duration: 180 }}>
+        <SlideText>{text}</SlideText>
+      </motion.div>
+    </div>
+  );
+};
 
 export default SignIn;
