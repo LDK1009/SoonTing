@@ -6,8 +6,55 @@ import AddArticle from "../components/AddArticle";
 import DetailedArticle from "../components/DetailedArticle";
 import styled from "styled-components";
 import Header from "../components/Header";
+import categoryImg1 from "../assets/밥팅.png";
+import categoryImg2 from "../assets/스터팅.png";
+import categoryImg3 from "../assets/과팅.png";
 
 const Main = () => {
+  // 카테고리 상태
+  const [categoryState, setCategoryState] = useState({
+    babting: true,
+    stuting: false,
+    guating: false,
+  });
+
+  useEffect(() => {
+    console.log(categoryState);
+  }, [categoryState]);
+  // 카테고리 상태변경 함수
+
+  const changeCategory = (category) => {
+    switch (category) {
+      case "babting":
+        setCategoryState({
+          babting: true,
+          stuting: false,
+          guating: false,
+        });
+        console.log("카테고리클릭!");
+        break;
+      case "stuting":
+        setCategoryState({
+          babting: false,
+          stuting: true,
+          guating: false,
+        });
+        console.log("카테고리클릭!");
+        break;
+      case "guating":
+        setCategoryState({
+          babting: false,
+          stuting: false,
+          guating: true,
+        });
+        console.log("카테고리클릭!");
+        break;
+      default:
+        console.log("카테고리클릭! 하지만 아무일도 없었다");
+        break;
+    }
+  };
+
   const location = useLocation(); // useNavigate 프롭스 전달 받기(uid)
   const userUid = location.state.uid; // uid
   const navigate = useNavigate(); // 네비게이트 변수
@@ -100,24 +147,54 @@ const Main = () => {
   }, []);
 
   //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
+  //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
+  //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
+  //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
   return (
     <>
-      <Header/>
+      <Header />
       <Container>
-          <ArticleContainer>{renderArticles(loadedArticles)}</ArticleContainer>
-          <AddArticle userData={userData} />
+        {/* 카테고리 */}
+        <CategoryItemGroup>
+          <CategoryItem
+            label="밥팅"
+            src={categoryImg1}
+            isSelect={categoryState.babting}
+            onClickFunc={changeCategory}
+            onClickFuncParameter="babting"
+          />
+          <CategoryItem
+            label="스터팅"
+            src={categoryImg2}
+            isSelect={categoryState.stuting}
+            onClickFunc={changeCategory}
+            onClickFuncParameter="stuting"
+          />
+          <CategoryItem
+            label="과팅"
+            src={categoryImg3}
+            isSelect={categoryState.guating}
+            onClickFunc={changeCategory}
+            onClickFuncParameter="guating"
+          />
+        </CategoryItemGroup>
+        {/* 게시물 컨테이너 */}
+        <ArticleContainer>{renderArticles(loadedArticles)}</ArticleContainer>
+        {/* 글쓰기 버튼 */}
+        <AddArticle userData={userData} />
       </Container>
     </>
   );
 };
 
+// 전체 컨테이너
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 export const Background = styled.div`
   height: 100%;
   display: flex;
@@ -125,11 +202,13 @@ export const Background = styled.div`
   align-items: center;
 `;
 
+// 게시물 컨테이너
 const ArticleContainer = styled.div`
   width: 320px;
   height: 550px;
   overflow: auto;
   padding: 0px 10px;
+  margin-bottom: 20px;
 
   /* Chrome, Safari, Opera*/
   &::-webkit-scrollbar {
@@ -137,11 +216,58 @@ const ArticleContainer = styled.div`
     background-color: white;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: #D2DAFF;
+    background-color: #d2daff;
   }
   &::-webkit-scrollbar-track {
     background-color: whitesmoke;
   }
+`;
+
+const CategortItemContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const CategortItemImg = styled.img`
+  width: 90px;
+  height: 90px;
+  opacity: ${(props) => (props.isSelect ? "1" : "0.5")};
+`;
+
+const CategortItemButton = styled.button`
+  background-color: ${(props) => (props.isSelect ? "#72C6EF" : "white")};
+  width: 90px;
+  height: 30px;
+  border-radius: 10px;
+  border-width: 3px;
+  border-style: solid;
+  border-color: ${(props) => (props.isSelect ? "#1C9AD6" : "#72C6EF")};
+  font-size: 14px;
+  font-weight: 600;
+  color: ${(props) => (props.isSelect ? "#111111" : "#767676")};
+  font-family: "Pretendard-Regular";
+`;
+
+const CategoryItem = ({ label, src, isSelect, onClickFunc, onClickFuncParameter }) => {
+  const itemClick = () => {
+    onClickFunc(onClickFuncParameter); //changeCategory호출
+  };
+  return (
+    <>
+      <CategortItemContainer onClick={itemClick}>
+        <CategortItemImg src={src} alt="category" isSelect={isSelect} />
+        <CategortItemButton isSelect={isSelect}>{label}</CategortItemButton>
+      </CategortItemContainer>
+    </>
+  );
+};
+
+const CategoryItemGroup = styled.div`
+  width: 320px;
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0px;
 `;
 
 export default Main;
