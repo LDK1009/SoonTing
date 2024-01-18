@@ -3,6 +3,7 @@ import { Background } from "./Main";
 import styled from "styled-components";
 import SideBar from "../components/SideBar";
 import NoticePost from "../components/NoticePost";
+import Header from "../components/Header";
 
 const Notice = () => {
   const data = [
@@ -48,6 +49,7 @@ const Notice = () => {
 
   return (
     <>
+    <Header/>
       <Background>
         <Container>
           <SideBar />

@@ -44,11 +44,6 @@ export default function SideBar() {
   ////////// uid 쿠키 값 가져오기
   const uidCookieValue = getCookie("uid");
 
-  if (uidCookieValue) {
-    console.log("uid 쿠키 값:", uidCookieValue);
-  } else {
-    console.log("uid 쿠키를 찾을 수 없습니다.");
-  }
 
   const navigate = useNavigate(); // 네비게이트 변수
 
@@ -203,7 +198,7 @@ export default function SideBar() {
     readUserInfo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-//////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
+  //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
   return (
     <>
       <StyledMenuIcon onClick={toggleDrawer("right", true)} />
@@ -224,11 +219,15 @@ export default function SideBar() {
 }
 
 const StyledMenuIcon = styled(MenuIcon)`
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  &:hover{
-    cursor:pointer;
+  color: white;
+  margin-right: 10px;
+  &.css-i4bv87-MuiSvgIcon-root {
+    width: 30px;
+    height: 30px;
+  }
+  &:hover {
+    cursor: pointer;
+    opacity:0.9;
   }
 `;
 

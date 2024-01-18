@@ -5,7 +5,7 @@ import { doc, getDoc, collection, query, where, getDocs, orderBy } from "firebas
 import AddArticle from "../components/AddArticle";
 import DetailedArticle from "../components/DetailedArticle";
 import styled from "styled-components";
-import SideBar from "../components/SideBar";
+import Header from "../components/Header";
 
 const Main = () => {
   const location = useLocation(); // useNavigate 프롭스 전달 받기(uid)
@@ -102,40 +102,25 @@ const Main = () => {
   //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
   return (
     <>
-      <Background>
-        <Container>
-          <SideBar />
-          <h1>홈</h1>
+      <Container>
+        <Header/>
           <ArticleContainer>{renderArticles(loadedArticles)}</ArticleContainer>
           <AddArticle userData={userData} />
-        </Container>
-      </Background>
+      </Container>
     </>
   );
 };
 
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color:pink;
+`
 export const Background = styled.div`
   height: 100%;
-  background-image: url("./background.jpg");
-  background-repeat: no-repeat; /* 배경 이미지 반복 설정 */
-  background-size: cover; /* 배경 이미지 크기 조절 (cover, contain 등) */
-  background-position: center; /* 배경 이미지 위치 조절 */
   display: flex;
   justify-content: center;
   align-items: center;
-`;
-
-const Container = styled.div`
-  width: 280px;
-  height: 90%;
-  padding: 20px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: white;
-  border-radius: 20px;
-  box-shadow: 0px 0px 10px 3px pink;
 `;
 
 const ArticleContainer = styled.div`

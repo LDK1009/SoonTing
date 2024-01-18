@@ -7,6 +7,7 @@ import { Background } from "./Main";
 import styled from "styled-components";
 import { WriteButton } from "../components/AddArticle";
 import SideBar from "../components/SideBar";
+import Header from "../components/Header";
 
 const MyInfo = () => {
   const navigate = useNavigate(); // 네비게이트 변수
@@ -110,6 +111,7 @@ const MyInfo = () => {
 
   return (
     <>
+    <Header/>
       <Background>
         <Container>
           <SideBar />

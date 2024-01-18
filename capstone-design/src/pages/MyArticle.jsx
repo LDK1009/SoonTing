@@ -15,6 +15,7 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import CircleRoundedIcon from "@mui/icons-material/CircleRounded";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import { GenderButton } from "./MyInfo";
+import Header from "../components/Header";
 
 const MyArticle = () => {
   const navProps = useLocation(); // useNavigate 프롭스 전달 받기
@@ -299,6 +300,7 @@ const MyArticle = () => {
   //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
   return (
     <>
+    <Header/>
       <Background>
         <Container>
           <SideBar />
