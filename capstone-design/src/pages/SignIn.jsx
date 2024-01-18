@@ -18,6 +18,8 @@ const SignIn = () => {
     "낼 저녁에 요가 수업 같이 들을 사람?! 담주 일욜에 동네 카페에서 새로운 메뉴 시식할 사람?! 이번 주 금욜에 열리는 축제 같이 갈 사람?! 낼 오후에 새로 개장한 공원에서 산책할 사람?! 담주 수욜에 새로운 카페에서 커피 한잔 할 사람?! 이번 주 토욜에 전시회 같이 갈 사람?! 낼 저녁에 새로운 레스토랑에서 저녁 같이 먹을 사람?! 담주 일욜에 오픈 마이크 이벤트 같이 갈 사람?! 이번 주 금욜에 새로 개장한 헬스장 같이 갈 사람?! 낼 오후에 다양한 음식 같이 먹을 사람?! 이번 주말에 놀이공원 같이 갈 사람?! 내일 점심에 브런치 같이 먹을 사람?! 다음 주에 같이 여행 갈 사람?! 이번 주에 같이 영화 보러 갈 사람?! 내일 저녁에 같이 술 한잔 할 사람?! 다음 주에 같이 등산 갈 사람?! 이번 주말에 같이 캠핑 갈 사람?! 내일 점심에 같이 카페 갈 사람?! 다음 주에 같이 미술관 갈 사람?! 이번 주에 같이 콘서트 갈 사람?! 이번 주말에 같이 바다 보러 갈 사람?! 내일 점심에 같이 초밥 먹으러 갈 사람?! 다음 주에 같이 미술관 갈 사람?! 이번 주에 같이 영화 보러 갈 사람?! 내일 저녁에 같이 술 한잔 할 사람?! 다음 주에 같이 캠핑 갈 사람?! 이번 주말에 같이 놀이공원 갈 사람?! 내일 점심에 같이 브런치 먹으러 갈 사람?! 다음 주에 같이 여행 갈 사람?! 이번 주에 같이 콘서트 갈 사람?! 이번 주말에 같이 드라이브 갈 사람?! 내일 점심에 같이 파스타 먹으러 갈 사람?! 다음 주에 같이 동물원 갈 사람?! 이번 주에 같이 뮤지컬 보러 갈 사람?! 내일 저녁에 같이 고기 먹으러 갈 사람?! 다음 주에 같이 수영장 갈 사람?! 이번 주말에 같이 자전거 타러 갈 사람?! 내일 점심에 같이 샐러드 먹으러 갈 사람?! 다음 주에 같이 박물관 갈 사람?! 이번 주에 같이 연극 보러 갈 사람?! 이번 주말에 같이 등산 갈 사람?! 내일 점심에 같이 떡볶이 먹으러 갈 사람?! 다음 주에 같이 스케이트장 갈 사람?! 이번 주에 같이 전시회 갈 사람?! 내일 저녁에 같이 치맥 먹으러 갈 사람?! 다음 주에 같이 놀이공원 갈 사람?! 이번 주말에 같이 낚시 갈 사람?! 내일 점심에 같이 샌드위치 먹으러 갈 사람?! 다음 주에 같이 워터파크 갈 사람?! 이번 주에 같이 음악회 갈 사람?! 이번 주말에 같이 캠핑 갈 사람?! 내일 점심에 같이 마라탕 먹으러 갈 사람?! 다음 주에 같이 스키장 갈 사람?! 이번 주에 같이 재즈바 갈 사람?! 내일 저녁에 같이 회 먹으러 갈 사람?! 다음 주에 같이 아이스링크장 갈 사람?! 이번 주말에 서핑하러 갈 사람?! 내일 점심에 같이 라멘 먹으러 갈 사람?! 다음 주에 같이 VR체험관 갈 사람?! 이번 주에 같이 뮤지컬 보러 갈 사람?! 이번 주말에 같이 자전거 타러 갈 사람?! 내일 점심에 같이 돈까스 먹으러 갈 사람?! 다음 주에 같이 볼링 치러 갈 사람?! 이번 주에 같이 도서관 갈 사람?! 내일 저녁에 같이 피자 먹으러 갈 사람?!",
   ];
 
+
+
   ////////// 구글 로그인
   const GoogleSignIn = () => {
     signInWithPopup(auth, provider) // 로그인 팝업을 띄운다.
@@ -160,8 +162,20 @@ const SignIn = () => {
             <SlotTextMotion />
           </SlotTextWrap>
           <SlotText>학생들을 기다리고 있습니다.</SlotText>
+          {/* 로그인 버튼 */}
+          <LoginButton2Container>
+            <LoginButton2 onClick={() => GoogleSignIn()}>
+              <GoogleImg2 src={google} alt="google" />
+              <BodyText color="black">지금 바로 시작</BodyText>
+            </LoginButton2>
+          </LoginButton2Container>
         </SlotTextContainer>
-        
+        {/* 푸터 */}
+        <FooterContainer>
+            <FooterText>제작자 : 순코딩</FooterText>
+            <FooterText>사업자 등록 번호 : 123-45-67890</FooterText>
+            <FooterText>이메일 : m3088787@naver.com</FooterText>
+        </FooterContainer>
       </Container>
     </>
   );
@@ -190,6 +204,7 @@ const LoginButton = styled.div`
   align-items: center;
   &:hover {
     cursor: pointer;
+    opacity: 0.9;
   }
 `;
 
@@ -310,6 +325,7 @@ const MotionScale = ({ label, endNum, unit }) => {
   const count = useMotionValue(0);
   const rounded = useTransform(count, (latest) => Math.round(latest));
 
+  // 애니메이션 시작
   useEffect(() => {
     const controls = animate(count, endNum, { duration: 1.5 });
 
@@ -367,6 +383,7 @@ const CoreValueItem = ({ label, src }) => {
 
 const SlotTextContainer = styled(PromotionContainer)`
   margin-top: 30px;
+  position: relative;
 `;
 
 const SlotTextWrap = styled.div`
@@ -375,30 +392,70 @@ const SlotTextWrap = styled.div`
 
 const SlotText = styled(SubTitleText)`
   text-align: left;
+  margin-left:20px;
 `;
 
 // 슬롯텍스트 모션 컴포넌트
 const SlotTextMotion = () => {
   // 슬롯에 표시될 문자열을 담은 배열
   const arr = [
-    "컴퓨터소프트웨어공학과",
-    "전기공학과",
+    "의예과",
     "간호학과",
-    "기계공학과",
-    "의료생명공학과",
-    "보건행정경영학과",
-    "에너지환경공학과",
+    "화학과",
+    "식품영양학과",
+    "환경보건학과",
     "생명과학과",
+    "유아교육과",
+    "특수교육과",
+    "청소년교육·상담학과",
+    "법학과",
+    "행정학과",
     "경찰행정학과",
+    "사회복지학과",
+    "경영학과",
+    "국제통상학과",
+    "관광경영학과",
+    "경제금융학과",
+    "IT금융경영학과",
+    "글로벌문화산업학과",
+    "회계학과",
+    "컴퓨터공학과",
+    "정보통신공학과",
+    "전자공학과",
+    "전기공학과",
+    "전자정보공학과",
+    "나노화학공학과",
+    "에너지환경공학과",
+    "디스플레이신소재공학과",
+    "기계공학과",
+    "컴퓨터소프트웨어공학과",
+    "정보보호학과",
+    "메타버스&게임학과",
+    "AI·빅데이터학과",
+    "사물인터넷학과",
+    "의료IT공학과",
+    "보건행정경영학과",
+    "의료생명공학과",
+    "임상병리학과",
+    "작업치료학과",
+    "의약공학과",
+    "의공학과",
+    "한국문화콘텐츠학과",
+    "영미학과",
+    "중국학과",
+    "미디어커뮤니케이션학과",
+    "건축학과",
+    "스마트자동차학과",
+    "에너지공학과",
   ];
 
   // 현재 보여지고 있는 슬롯의 인덱스를 나타내는 상태 변수
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(Math.floor(Math.random() * arr.length));
 
   // 애니메이션이 완료되면  호출되는 함수
   const onAnimationComplete = () => {
     // 다음 슬롯으로 이동하기 위해 currentIndex 업데이트
-    setCurrentIndex((prev) => (prev + 1) % arr.length);
+    setCurrentIndex(Math.floor(Math.random() * arr.length));
   };
 
   // Framer motion 애니메이션에 필요한 속성값 객체
@@ -406,8 +463,8 @@ const SlotTextMotion = () => {
     // initial: { opacity: 1, y: 40,  }, // 텍스트는 밑에서 시작해서
     // initial: { rotateX: -90, y: 20, opacity:0.3 }, // 텍스트는 밑에서 시작해서
     // animate: { opacity: 0.7, y: -40 }, // 위로 올라온다
-    animate: { rotateX: [-90, 90], y: [20,-20], opacity:[0.3, 1, 0.3] }, // 위로 올라온다
-    transition: { duration: 2, ease: "linear", times: [0, 0.5, 1] }, // initial 상태에서 animate 상태까지 도달하는 데에 걸리는 시간은 duration
+    animate: { rotateX: [-90, 0, 90], y: [20, 0, -20], opacity: [0, 1, 0] }, // 위로 올라온다
+    transition: { duration: 1.5, ease: "linear", times: [0, 0.5, 1] }, // initial 상태에서 animate 상태까지 도달하는 데에 걸리는 시간은 duration
   };
 
   return (
@@ -423,13 +480,46 @@ const SlotTextMotion = () => {
           transition={slotVariants.transition}
           // 애니메이션이 완료될 때 호출되는 함수 지정
           onAnimationComplete={onAnimationComplete}
-          >
+        >
           {/* 슬롯 아이템 보이는 곳 */}
-          <SlotText style={{ color: "#72C6EF"}}>{arr[currentIndex]}</SlotText>
+          <SlotText style={{ color: "#72C6EF" }}>{arr[currentIndex]}</SlotText>
         </motion.div>
       </AnimatePresence>
     </>
   );
 };
 
+const LoginButton2Container = styled.div`
+  width: 100%;
+  position: absolute;
+  bottom: 15px;
+  display: flex;
+  justify-content: center;
+`;
+
+const LoginButton2 = styled(LoginButton)`
+  width: 120px;
+  height: 30px;
+  justify-content: space-evenly;
+`;
+
+const GoogleImg2 = styled(GoogleImg)`
+  width: 15px;
+  height: 15px;
+`;
+
+const FooterContainer = styled.div`
+  background-color: #111111;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  width: 100%;
+  height: 100px;
+`;
+
+const FooterText = styled(BodyText)`
+  margin-left:20px;
+  text-align:left;
+`
 export default SignIn;
