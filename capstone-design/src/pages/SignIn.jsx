@@ -5,9 +5,11 @@ import { setDoc, doc, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 import google from "../assets/google.png";
-import { animate, motion, useMotionValue, useTransform } from "framer-motion";
+import { AnimatePresence, animate, motion, useMotionValue, useTransform } from "framer-motion";
 import ScrollIcon from "../components/ScrollIcon";
-import { emphasize } from "@mui/material";
+import coreValueItemImg1 from "../assets/만남.png";
+import coreValueItemImg2 from "../assets/소통.png";
+import coreValueItemImg3 from "../assets/협력.png";
 
 const SignIn = () => {
   const navigate = useNavigate(); // 네비게이트 변수
@@ -133,7 +135,6 @@ const SignIn = () => {
         {/* 스크롤 아이콘 */}
         <ScrollIcon />
         {/* 슬라이드 텍스트 */}
-        <PromotionLabel>슬라이드 텍스트</PromotionLabel>
         <SlideTextContainer>
           <MotionSlideText direction={false} text={slideText[0]}></MotionSlideText>
           <MotionSlideText direction={true} text={slideText[0]}></MotionSlideText>
@@ -141,27 +142,43 @@ const SignIn = () => {
         </SlideTextContainer>
         {/* 규모 */}
         <PromotionLabel>규모</PromotionLabel>
-        <SlideTextContainer>
-          <MotionScaleContainer>
-            <MotionScale label="사용자" endNum={1689} unit="명" />
-            <MotionScale label="매칭" endNum={2946} unit="건" />
-          </MotionScaleContainer>
-        </SlideTextContainer>
+        <MotionScaleContainer>
+          <MotionScale label="사용자" endNum={1689} unit="명" />
+          <MotionScale label="매칭" endNum={2946} unit="건" />
+        </MotionScaleContainer>
+        {/* 핵심가치 */}
+        <PromotionLabel>핵심가치</PromotionLabel>
+        <CoreValueContainer>
+          <CoreValueItem label="만남" src={coreValueItemImg1} />
+          <CoreValueItem label="소통" src={coreValueItemImg2} />
+          <CoreValueItem label="협력" src={coreValueItemImg3} />
+        </CoreValueContainer>
+        {/* 슬롯 텍스트 */}
+        <SlotTextContainer>
+          <SlotTextWrap>
+            <SlotText>순팅은&nbsp;</SlotText>
+            <SlotTextMotion />
+          </SlotTextWrap>
+          <SlotText>학생들을 기다리고 있습니다.</SlotText>
+        </SlotTextContainer>
+        
       </Container>
     </>
   );
 };
 
+// 전체 컨테이너
 const Container = styled.div`
   background-color: #26539c;
-  height: 100%;
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 350px;
 `;
 
+// 로그인 버튼
 const LoginButton = styled.div`
   width: 200px;
   height: 50px;
@@ -176,6 +193,7 @@ const LoginButton = styled.div`
   }
 `;
 
+// 대제목 텍스트
 export const MainTitleText = styled(motion.div)`
   color: ${(props) => props.color || "white"};
   font-size: 30px;
@@ -185,30 +203,37 @@ export const MainTitleText = styled(motion.div)`
   text-align: center;
 `;
 
+// 부제목 텍스트
 export const SubTitleText = styled(MainTitleText)`
   font-size: 22px;
   line-height: 32px;
 `;
 
+// 강조 텍스트
 export const EmphasisText = styled(MainTitleText)`
   font-size: 18px;
   line-height: 28px;
 `;
 
+// 본문 텍스트
 export const BodyText = styled(MainTitleText)`
   font-size: 14px;
   line-height: 22px;
   font-weight: 400;
 `;
 
+// 본문 흐림 텍스트
 export const BodyBlurText = styled(BodyText)`
   color: #767676;
 `;
 
+// 로그인 버튼 내부 아이콘
 const GoogleImg = styled.img`
   width: 30px;
   height: 30px;
 `;
+
+// 홍보 컨테이너 라벨
 const PromotionLabel = styled(SubTitleText)`
   margin-bottom: 5px;
   margin-left: 10px;
@@ -216,58 +241,71 @@ const PromotionLabel = styled(SubTitleText)`
   text-align: left;
   margin-top: 30px;
 `;
+
+// 홍보 컨테이너
 const PromotionContainer = styled.div`
   background-color: #4d207a;
   width: 100%;
-  height: 150px;
+  height: 200px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 `;
 
+// 슬라이드 텍스트 컨테이너
 const SlideTextContainer = styled(PromotionContainer)`
   overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
+  margin-top: 30px;
 `;
+
+// 슬라이드 텍스트
 const SlideText = styled(EmphasisText)`
   white-space: nowrap;
 `;
 
+// 슬라이드 텍스트 모션 컴포넌트
 const MotionSlideText = ({ direction, text }) => {
   const start = direction ? -2000 : 0;
   const end = direction ? 0 : -2000;
   return (
-    <div>
+    <>
       <motion.div initial={{ x: start }} animate={{ x: end }} transition={{ duration: 180 }}>
         <SlideText>{text}</SlideText>
       </motion.div>
-    </div>
+    </>
   );
 };
 
-const MotionScaleContainer = styled.div`
-  display: flex;
+// 사용자,매칭 수 컨테이너
+const MotionScaleContainer = styled(PromotionContainer)`
+  flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
 `;
 
+// 모션 스케일 아이템 묶음
 const MotionScaleWrap = styled.div``;
 
+// 사용자, 매칭 텍스트
+const MotionScaleLabel = styled(EmphasisText)`
+  text-align: start;
+`;
+
+// 숫자, 단위 묶음
 const MotionScaleWrap2 = styled.div`
   display: flex;
   align-items: end;
 `;
 
-const MotionScaleLabel = styled(EmphasisText)`
-  text-align: start;
-`;
+// 숫자
 const MotionScaleQuantity = styled(MainTitleText)`
   margin: 5px 5px 0px 0px;
 `;
 
+// 단위
 const MotionScaleUnit = styled(EmphasisText)``;
 
+// 모션 스케일 컴포넌트
 const MotionScale = ({ label, endNum, unit }) => {
   const count = useMotionValue(0);
   const rounded = useTransform(count, (latest) => Math.round(latest));
@@ -276,6 +314,7 @@ const MotionScale = ({ label, endNum, unit }) => {
     const controls = animate(count, endNum, { duration: 1.5 });
 
     return controls.stop;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -289,6 +328,106 @@ const MotionScale = ({ label, endNum, unit }) => {
           <MotionScaleUnit>{unit}</MotionScaleUnit>
         </MotionScaleWrap2>
       </MotionScaleWrap>
+    </>
+  );
+};
+
+const CoreValueContainer = styled(PromotionContainer)`
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+`;
+
+const CoreValueItemContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center; //수평
+  justify-content: center; //수직
+`;
+const CoreValueItemLabel = styled(EmphasisText)`
+  margin-bottom: 10px;
+`;
+
+const CoreValueItemImg = styled.img`
+  width: 100px;
+  height: 100px;
+  border-radius: 20px;
+  background-color: white;
+`;
+const CoreValueItem = ({ label, src }) => {
+  return (
+    <>
+      <CoreValueItemContainer>
+        <CoreValueItemLabel>{label}</CoreValueItemLabel>
+        <CoreValueItemImg alt="CoreValue" src={src} />
+      </CoreValueItemContainer>
+    </>
+  );
+};
+
+const SlotTextContainer = styled(PromotionContainer)`
+  margin-top: 30px;
+`;
+
+const SlotTextWrap = styled.div`
+  display: flex;
+`;
+
+const SlotText = styled(SubTitleText)`
+  text-align: left;
+`;
+
+// 슬롯텍스트 모션 컴포넌트
+const SlotTextMotion = () => {
+  // 슬롯에 표시될 문자열을 담은 배열
+  const arr = [
+    "컴퓨터소프트웨어공학과",
+    "전기공학과",
+    "간호학과",
+    "기계공학과",
+    "의료생명공학과",
+    "보건행정경영학과",
+    "에너지환경공학과",
+    "생명과학과",
+    "경찰행정학과",
+  ];
+
+  // 현재 보여지고 있는 슬롯의 인덱스를 나타내는 상태 변수
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // 애니메이션이 완료되면  호출되는 함수
+  const onAnimationComplete = () => {
+    // 다음 슬롯으로 이동하기 위해 currentIndex 업데이트
+    setCurrentIndex((prev) => (prev + 1) % arr.length);
+  };
+
+  // Framer motion 애니메이션에 필요한 속성값 객체
+  const slotVariants = {
+    // initial: { opacity: 1, y: 40,  }, // 텍스트는 밑에서 시작해서
+    // initial: { rotateX: -90, y: 20, opacity:0.3 }, // 텍스트는 밑에서 시작해서
+    // animate: { opacity: 0.7, y: -40 }, // 위로 올라온다
+    animate: { rotateX: [-90, 90], y: [20,-20], opacity:[0.3, 1, 0.3] }, // 위로 올라온다
+    transition: { duration: 2, ease: "linear", times: [0, 0.5, 1] }, // initial 상태에서 animate 상태까지 도달하는 데에 걸리는 시간은 duration
+  };
+
+  return (
+    <>
+      {/* 애니메이션의 등장,퇴장 감지 / onAnimationComplete을 사용하려면 필요함 */}
+      <AnimatePresence>
+        {/* 애니메이션 박스 */}
+        <motion.div
+          key={currentIndex} // 현재 슬롯의 인덱스를 키로 사용하여 애니메이션 처리
+          variants={slotVariants}
+          initial={slotVariants.initial}
+          animate={slotVariants.animate}
+          transition={slotVariants.transition}
+          // 애니메이션이 완료될 때 호출되는 함수 지정
+          onAnimationComplete={onAnimationComplete}
+          >
+          {/* 슬롯 아이템 보이는 곳 */}
+          <SlotText style={{ color: "#72C6EF"}}>{arr[currentIndex]}</SlotText>
+        </motion.div>
+      </AnimatePresence>
     </>
   );
 };
