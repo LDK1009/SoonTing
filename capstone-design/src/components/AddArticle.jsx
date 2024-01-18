@@ -86,6 +86,7 @@ const AddArticle = ({ userData }) => {
     }
   };
 
+  //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
   return (
     <>
       <WriteButton onClick={handleOpen}>글쓰기</WriteButton>
@@ -120,24 +121,17 @@ const StyledInput = styled(TextField)`
   width: 250px;
 `;
 
+// 글쓰기 버튼
 export const WriteButton = styled.button`
-  //위치
-  position: absolute;
-  bottom: 30px;
-  //정렬
-  //크기
+  background-color: #4d207a;
   width: 150px;
   height: 40px;
-  //디자인
-  background-color: #cfbc5d;
+  border-radius: 10px;
+  border:0px;
   color: white;
-  border: 0px;
-  border-radius: 20px;
-  box-shadow: 0px 0px 10px 1px #c7b660;
-  //폰트
-  font-size: 20px;
-  font-family: "omyu_pretty";
-  //이벤트
+  font-size: 18px;
+  font-weight: 600;
+  font-family: "Pretendard-Regular";
   &:hover {
     cursor: pointer;
     opacity: 0.9;

@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { WriteButton } from "./AddArticle";
+import { BodyBlurText, BodyText } from "../pages/SignIn";
 
 const DetailedArticle = ({ articleInfo, userInfo }) => {
   const [open, setOpen] = useState(false); // 모달창 열기/닫기
@@ -36,11 +37,14 @@ const DetailedArticle = ({ articleInfo, userInfo }) => {
         {/* 학과 / 나이 / 성별 / 인원 .. 제목 */}
         <SummaryArticleContent>
           <SummaryArticleInfoWrap>
+            {/* 학과 나이 성별 인원 */}
             <SummaryArticleInfo>
               {articleInfo.major} / {articleInfo.age} / {articleInfo.gender} / {articleInfo.people}인
             </SummaryArticleInfo>
+            {/* 날짜 */}
             <SummaryArticleInfo>{writeTime}</SummaryArticleInfo>
           </SummaryArticleInfoWrap>
+            {/* 제목 */}
           <SummaryArticleHeadline>{articleInfo.title}</SummaryArticleHeadline>
         </SummaryArticleContent>
       </SummaryArticleContainer>
@@ -82,14 +86,12 @@ const StyledModalBox = styled(Box)`
 `;
 
 const SummaryArticleContainer = styled.div`
-  width: 100%;
+  width: 300px;
   height: 80px;
-  /* background-color:#F3DCCC; */
-  background-color: #feefdb;
+  border:2px solid #72C6EF;
   border-radius: 15px;
   display: flex;
   align-items: center;
-  box-shadow: 3px 3px 5px 1px #f3dccc;
   margin-bottom: 30px;
 `;
 
@@ -98,10 +100,9 @@ const SummaryArticleContent = styled.div`
   width:100%;
 `;
 
-const SummaryArticleInfo = styled.div`
-  margin-bottom: 3px;
+const SummaryArticleInfo = styled(BodyBlurText)`
   font-size: 12px;
-  color: #607274;
+  color: #767676;
 `;
 
 const SummaryArticleInfoWrap = styled.div`
@@ -110,8 +111,11 @@ const SummaryArticleInfoWrap = styled.div`
   justify-content:space-between;
 `;
 
-const SummaryArticleHeadline = styled.div`
-  font-size: 15px;
+const SummaryArticleHeadline = styled(BodyText)`
+  text-align:left;
+  color:#111111;
+  height:44px;
+  overflow-y:hidden;
 `;
 
 const DetailedArticleContainer = styled.div`

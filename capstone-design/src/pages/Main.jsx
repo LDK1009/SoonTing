@@ -102,8 +102,8 @@ const Main = () => {
   //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
   return (
     <>
+      <Header/>
       <Container>
-        <Header/>
           <ArticleContainer>{renderArticles(loadedArticles)}</ArticleContainer>
           <AddArticle userData={userData} />
       </Container>
@@ -114,7 +114,9 @@ const Main = () => {
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  background-color:pink;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
 `
 export const Background = styled.div`
   height: 100%;
@@ -124,20 +126,18 @@ export const Background = styled.div`
 `;
 
 const ArticleContainer = styled.div`
-  height: 500px;
+  width: 320px;
+  height: 550px;
   overflow: auto;
-  width: 100%;
   padding: 0px 10px;
-  /* &::-webkit-scrollbar {
-    display:none;
-  } */
+
   /* Chrome, Safari, Opera*/
   &::-webkit-scrollbar {
     width: 3px;
     background-color: white;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: pink;
+    background-color: #D2DAFF;
   }
   &::-webkit-scrollbar-track {
     background-color: whitesmoke;
