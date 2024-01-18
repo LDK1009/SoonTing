@@ -160,22 +160,22 @@ const Main = () => {
             label="밥팅"
             src={categoryImg1}
             isSelect={categoryState.babting}
-            onClickFunc={changeCategory}
-            onClickFuncParameter="babting"
+            propsFunc={changeCategory}
+            propsFuncParam="babting"
           />
           <CategoryItem
             label="스터팅"
             src={categoryImg2}
             isSelect={categoryState.stuting}
-            onClickFunc={changeCategory}
-            onClickFuncParameter="stuting"
+            propsFunc={changeCategory}
+            propsFuncParam="stuting"
           />
           <CategoryItem
             label="과팅"
             src={categoryImg3}
             isSelect={categoryState.guating}
-            onClickFunc={changeCategory}
-            onClickFuncParameter="guating"
+            propsFunc={changeCategory}
+            propsFuncParam="guating"
           />
         </CategoryItemGroup>
         {/* 게시물 컨테이너 */}
@@ -249,9 +249,9 @@ const CategortItemButton = styled.button`
   font-family: "Pretendard-Regular";
 `;
 
-const CategoryItem = ({ label, src, isSelect, onClickFunc, onClickFuncParameter }) => {
+const CategoryItem = ({ label, src, isSelect, propsFunc, propsFuncParam }) => {
   const itemClick = () => {
-    onClickFunc(onClickFuncParameter); //changeCategory호출
+    propsFunc(propsFuncParam); //changeCategory호출
   };
   return (
     <>
