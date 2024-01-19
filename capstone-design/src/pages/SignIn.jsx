@@ -193,7 +193,7 @@ const SignIn = () => {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////컴포넌트//////////////////////////////////////////////////
 
 // 전체 컨테이너
 const Container = styled.div`
@@ -289,7 +289,7 @@ const SlideTextContainer = styled(PromotionContainer)`
 `;
 
 // 슬라이드 텍스트
-const SlideText = styled(EmphasisText)`
+const SlideText = styled(SubTitleText)`
   white-space: nowrap;
 `;
 
@@ -448,7 +448,7 @@ const SlotText = styled(SubTitleText)`
 // 슬롯텍스트 모션 컴포넌트
 const SlotTextMotion = () => {
   // 슬롯에 표시될 문자열을 담은 배열
-  const arr = [
+  const majorArray = [
     "의예과",
     "간호학과",
     "화학과",
@@ -500,16 +500,23 @@ const SlotTextMotion = () => {
   ];
 
   // 현재 보여지고 있는 슬롯의 인덱스를 나타내는 상태 변수
-  const [currentIndex, setCurrentIndex] = useState(Math.floor(Math.random() * arr.length));
+  const initNum=Math.floor(Math.random() * majorArray.length);
+  const [currentIndex, setCurrentIndex] = useState(initNum);
 
   // 애니메이션이 완료되면  호출되는 함수
-  const onAnimationComplete = () => {
-    // 다음 슬롯으로 이동하기 위해 currentIndex 업데이트
-    setCurrentIndex(Math.floor(Math.random() * (arr.length+1)));
+  const onAnimationComplete = async () => {
+    const randNum = Math.floor(Math.random() * majorArray.length);
+    if(currentIndex===randNum){ //현재 인덱스와 현재 뽑은 랜덤 수가 같으면 재렌더링이 이루어지지 않아 애니메이션이 중단된다.
+      await setCurrentIndex(randNum+1);
+    }
+    else{
+      await setCurrentIndex(randNum);
+    }
   };
 
   // Framer motion 애니메이션에 필요한 속성값 객체
   const slotVariants = {
+    initial: { rotateX: 0, y: 0, opacity: 1 }, // 초기 상태
     animate: { rotateX: [-90, 0, 90], y: [20, 0, -20], opacity: [0, 1, 0] }, // 위로 올라온다
     transition: { duration: 1.5, ease: "linear", times: [0, 0.5, 1] }, // initial 상태에서 animate 상태까지 도달하는 데에 걸리는 시간은 duration
   };
@@ -529,7 +536,7 @@ const SlotTextMotion = () => {
           onAnimationComplete={onAnimationComplete}
         >
           {/* 슬롯 아이템 보이는 곳 */}
-          <SlotText style={{ color: "#72C6EF" }}>{arr[currentIndex]}</SlotText>
+          <SlotText style={{ color: "#72C6EF" }}>{majorArray[currentIndex]}</SlotText>
         </motion.div>
       </AnimatePresence>
     </>
