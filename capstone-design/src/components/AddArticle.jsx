@@ -206,10 +206,6 @@ const StyledCloseIcon = styled(CloseIcon)`
   }
 `;
 
-const GapDiv = styled.div`
-  margin: 10px;
-`;
-
 const SelectContainer = styled(FormControl)`
   &.MuiFormControl-root {
     width: 220px;
