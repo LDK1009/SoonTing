@@ -158,6 +158,19 @@ const AddArticle = ({ userData }) => {
 
 const StyledInput = styled(TextField)`
   width: 220px;
+  /* 컨테이너 */
+  & .MuiInputBase-root .MuiOutlinedInput-notchedOutline {
+    border-color:#26539c;
+  }
+  /* 라벨 */
+  & .MuiFormLabel-root {
+    color:#26539c;
+    font-family: "Pretendard-Regular";
+  }
+  /* 인풋 폰트 */
+  & .MuiInputBase-root {
+    font-family: "Pretendard-Regular";
+  }
 `;
 
 // 글쓰기 버튼
@@ -216,7 +229,7 @@ const SelectContainer = styled(FormControl)`
 
 const SelectLabel = styled(InputLabel)`
   /* 라벨 텍스트 스타일 변경 */
-  &.css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root {
+  &.MuiFormLabel-root {
     color: #26539c;
     font-family: "Pretendard-Regular";
   }
@@ -224,20 +237,26 @@ const SelectLabel = styled(InputLabel)`
 
 const StyledSelect = styled(Select)`
   /* 클릭 전후 보더 컬러 변경 */
-  &.css-m5hdmq-MuiInputBase-root-MuiInput-root-MuiSelect-root:before {
+  &.MuiInputBase-root::before{
     border-bottom-color: #26539c;
   }
-  &.css-m5hdmq-MuiInputBase-root-MuiInput-root-MuiSelect-root:after {
+  &.MuiInputBase-root::after{
     border-bottom-color: #26539c;
   }
+
   /* 폰트 변경 */
-  &.css-m5hdmq-MuiInputBase-root-MuiInput-root-MuiSelect-root {
+  &.MuiInputBase-root {
     font-family: "Pretendard-Regular";
+  }
+
+  /* 아이콘 색상 변경  */
+  & .MuiSvgIcon-root {
+    color: #26539c;
   }
 `;
 
 const StyledMenuItem = styled(MenuItem)`
-  &.css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root {
+  &.MuiButtonBase-root {
     font-family: "Pretendard-Regular";
   }
 `;
