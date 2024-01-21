@@ -2,25 +2,25 @@ import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import styled from "styled-components";
-import { TextField } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import CloseIcon from "@mui/icons-material/Close";
-import { useNavigate } from "react-router-dom";
+import StudentCard from "./StudentCard";
 
 const AddArticle = ({ userData }) => {
   const [open, setOpen] = React.useState(false); // 모달창 열기/닫기
-  const [submitForm, setSubmitForm] = useState({}); // 게시글 정보
-  const navigate = useNavigate(); // 네비게이트 변수
 
   ////////// 모달 열기 함수
   const handleOpen = () => setOpen(true);
   ////////// 모달 닫기 함수
   const handleClose = () => setOpen(false);
 
+  const [submitForm, setSubmitForm] = useState({}); // 게시글 정보
+
   ////////// 프롭스 데이터 변경(ex) 유저정보 로드 등으로 인한 데이터 변경) 시 submitForm 에 변경된 데이터 반영
   useEffect(() => {
-    setSubmitForm({ ...userData, title: "", content: "", expiration: false });
+    setSubmitForm({ ...userData, expiration: false });
   }, [userData]);
 
   ////////// 입력폼 입력 감지 함수
@@ -30,13 +30,12 @@ const AddArticle = ({ userData }) => {
       [e.target.name]: e.target.value, // event가 발생한 input 요소의 name 값을 입력값으로 변경
     };
     setSubmitForm(nextForm); // 수정 내용 갱신
-    // console.log(submitForm.title);
   };
 
   ////////// 게시글 등록 함수
   const addArticle = async () => {
     if (submitForm.title && submitForm.content) {
-      const timeStamp = currentTime();
+      const timeStamp = currentTime(); // 게시글 등록 시간
       const docName = `${submitForm.uid}_${timeStamp}`; // 수정된 부분
       await setDoc(doc(db, "articles", docName), {
         ...submitForm,
@@ -75,39 +74,79 @@ const AddArticle = ({ userData }) => {
     return returnTime;
   };
 
-  ////////// 고정 정보 클릭 시 경고
-  const alertFixedInfo = () => {
-    alert("'내정보' 페이지에서 변경해주세요.😉");
-    if (window.confirm("'내정보' 페이지로 이동할까요?🧐")) {
-      navigate("/MyInfo", {
-        state: { uid: userData.uid },
-      });
-    } else {
-    }
-  };
-
+  useEffect(() => {
+    console.log("submitForm변경>>", submitForm);
+  }, [submitForm]);
   //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
   return (
     <>
+      {/* 모달 전 */}
       <WriteButton onClick={handleOpen}>글쓰기</WriteButton>
+      {/* 모달 후*/}
       <Modal open={open} onClose={handleClose}>
         <ModalContainer>
           <ModalBox>
+            {/* 닫기 아이콘 */}
             <StyledCloseIcon onClick={handleClose} />
-            <h2>글쓰기</h2>
-            <FixedInfo onClick={alertFixedInfo}>
-              {submitForm.name} / {submitForm.major} / {submitForm.gender} / {submitForm.age}세
-            </FixedInfo>
-            <FixedInfo onClick={alertFixedInfo}>인원 : {submitForm.people}인</FixedInfo>
-            <StyledInput label="제목" name="title" value={submitForm.title} multiline maxRows={1} onChange={onChange} />
-            <GapDiv />
+            {/* 학생증 */}
+            <StudentCard style={{ margin: "20px 0px" }} />
+            {/* 인풋 */}
+            {/*  */}
+            {/* 카테고리 */}
+            <SelectContainer variant="standard" sx={{ m: 1, minWidth: 220, minHeight: 30 }}>
+              <SelectLabel id="demo-simple-select-standard-label">카테고리</SelectLabel>
+              <StyledSelect
+                labelId="demo-simple-select-standard-label"
+                id="demo-simple-select-standard"
+                name="category"
+                value={submitForm.category}
+                onChange={onChange}
+                label="카테고리"
+              >
+                <StyledMenuItem value="밥팅">밥팅</StyledMenuItem>
+                <StyledMenuItem value="스터팅">스터팅</StyledMenuItem>
+                <StyledMenuItem value="과팅">과팅</StyledMenuItem>
+              </StyledSelect>
+            </SelectContainer>
+            {/* 인원 */}
+            <SelectContainer variant="standard">
+              <SelectLabel id="demo-simple-select-standard-label">인원</SelectLabel>
+              <StyledSelect
+                labelId="demo-simple-select-standard-label"
+                id="demo-simple-select-standard"
+                name="people"
+                value={submitForm.people}
+                onChange={onChange}
+                label="인원"
+              >
+                <StyledMenuItem value={1}>1인</StyledMenuItem>
+                <StyledMenuItem value={2}>2인</StyledMenuItem>
+                <StyledMenuItem value={3}>3인</StyledMenuItem>
+                <StyledMenuItem value={4}>4인</StyledMenuItem>
+                <StyledMenuItem value={5}>5인</StyledMenuItem>
+                <StyledMenuItem value={6}>6인</StyledMenuItem>
+              </StyledSelect>
+            </SelectContainer>
+            {/*  */}
+            {/* 제목 */}
+            <StyledInput
+              label="제목"
+              name="title"
+              value={submitForm.title}
+              multiline
+              maxRows={1}
+              onChange={onChange}
+              style={{ marginBottom: "15px" }}
+            />
+            {/* 내용 */}
             <StyledInput
               label="내용"
               name="content"
               value={submitForm.content}
               multiline
-              rows={6}
+              rows={5}
               onChange={onChange}
+              style={{ marginBottom: "20px" }}
             />
             <WriteButton onClick={addArticle}>글쓰기</WriteButton>
           </ModalBox>
@@ -118,7 +157,7 @@ const AddArticle = ({ userData }) => {
 };
 
 const StyledInput = styled(TextField)`
-  width: 250px;
+  width: 220px;
 `;
 
 // 글쓰기 버튼
@@ -127,7 +166,7 @@ export const WriteButton = styled.button`
   width: 150px;
   height: 40px;
   border-radius: 10px;
-  border:0px;
+  border: 0px;
   color: white;
   font-size: 18px;
   font-weight: 600;
@@ -144,8 +183,7 @@ const ModalContainer = styled(Box)`
   left: 50%;
   transform: translate(-50%, -50%);
   width: 300px;
-  height: 480px;
-  padding: 10px;
+  height: 600px;
   background-color: white;
   border-radius: 15px;
 `;
@@ -161,19 +199,50 @@ const ModalBox = styled.div`
 
 const StyledCloseIcon = styled(CloseIcon)`
   position: absolute;
-  top: 0px;
-  right: 0px;
+  top: 10px;
+  right: 10px;
   &:hover {
     cursor: pointer;
   }
-`;
-
-const FixedInfo = styled.div`
-  margin-bottom: 10px;
 `;
 
 const GapDiv = styled.div`
   margin: 10px;
 `;
 
+const SelectContainer = styled(FormControl)`
+  &.MuiFormControl-root {
+    width: 220px;
+    margin: 0px;
+    margin-bottom: 15px;
+  }
+`;
+
+const SelectLabel = styled(InputLabel)`
+  /* 라벨 텍스트 스타일 변경 */
+  &.css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root {
+    color: #26539c;
+    font-family: "Pretendard-Regular";
+  }
+`;
+
+const StyledSelect = styled(Select)`
+  /* 클릭 전후 보더 컬러 변경 */
+  &.css-m5hdmq-MuiInputBase-root-MuiInput-root-MuiSelect-root:before {
+    border-bottom-color: #26539c;
+  }
+  &.css-m5hdmq-MuiInputBase-root-MuiInput-root-MuiSelect-root:after {
+    border-bottom-color: #26539c;
+  }
+  /* 폰트 변경 */
+  &.css-m5hdmq-MuiInputBase-root-MuiInput-root-MuiSelect-root {
+    font-family: "Pretendard-Regular";
+  }
+`;
+
+const StyledMenuItem = styled(MenuItem)`
+  &.css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root {
+    font-family: "Pretendard-Regular";
+  }
+`;
 export default AddArticle;

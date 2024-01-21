@@ -178,7 +178,7 @@ export default function SideBar() {
     } else {
       // docSnap.data() will be undefined in this case
       alert("회원정보를 찾을 수 없습니다.");
-      navigate("/SignIn");
+      navigate("/");
     }
   };
 
