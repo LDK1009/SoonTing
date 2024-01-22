@@ -1,9 +1,8 @@
 import React from "react";
-import { Background } from "./Main";
 import styled from "styled-components";
-import SideBar from "../components/SideBar";
 import NoticePost from "../components/NoticePost";
 import Header from "../components/Header";
+import { MainTitleText } from "./SignIn";
 
 const Notice = () => {
   const data = [
@@ -49,35 +48,33 @@ const Notice = () => {
 
   return (
     <>
-    <Header/>
-      <Background>
-        <Container>
-          <SideBar />
-          <h1>공지사항</h1>
-          {data.map((item, index) => {
-            return (
-              <>
-                <NoticePost key={index} headline={item.headline} date={item.date} contents={item.contents} />
-              </>
-            );
-          })}
-        </Container>
-      </Background>
+      <Header />
+      <Container>
+        <LogoText>Shine Your Way</LogoText>
+        {data.map((item, index) => {
+          return (
+            <>
+              <NoticePost key={index} headline={item.headline} date={item.date} contents={item.contents} />
+            </>
+          );
+        })}
+      </Container>
     </>
   );
 };
 
 const Container = styled.div`
-  width: 280px;
-  height: 90%;
-  padding: 20px;
-  position: relative;
+  height: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction:column;
+  justify-content: center;
   align-items: center;
-  background-color: white;
-  border-radius: 20px;
-  box-shadow: 0px 0px 10px 3px pink;
 `;
+
+const LogoText = styled(MainTitleText)`
+  color:#26539C;
+  margin:30px 0px;
+  font-style:italic;
+`
 
 export default Notice;
