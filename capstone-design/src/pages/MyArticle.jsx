@@ -2,9 +2,8 @@ import { collection, doc, getDocs, orderBy, query, setDoc, where } from "firebas
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { db } from "../firebaseConfig";
-import { Background } from "./Main";
+import { CategortItemButton } from "./Main";
 import styled from "styled-components";
-import SideBar from "../components/SideBar";
 import { Divider } from "@mui/material";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -14,8 +13,8 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import CircleRoundedIcon from "@mui/icons-material/CircleRounded";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
-import { GenderButton } from "./MyInfo";
 import Header from "../components/Header";
+import { BodyText } from "./SignIn";
 
 const MyArticle = () => {
   const navProps = useLocation(); // useNavigate 프롭스 전달 받기
@@ -131,7 +130,7 @@ const MyArticle = () => {
     alert("매칭 완료! 😘");
     getMyArticles(false);
     getMyArticles(true);
-    };
+  };
 
   ////////// 게시물 마감
   const expireArticle = async (docName) => {
@@ -155,20 +154,12 @@ const MyArticle = () => {
 
           return (
             <div key={index}>
-              <List
-                sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-                component="nav"
-                aria-labelledby="nested-list-subheader"
-              >
+              <SummaryList component="nav" aria-labelledby="nested-list-subheader">
                 {/* 헤더 */}
                 <ListItemButton onClick={handleClick}>
-                  <ListItemIcon>
-                    <CircleRoundedIcon />
-                  </ListItemIcon>
+                  <SummaryListIcon />
                   <ArticleHeader>{item.title}</ArticleHeader>
-                  <div>
-                  {open ? <ExpandLess /> : <ExpandMore />}
-                  </div>
+                  <div>{open ? <ExpandLess /> : <ExpandMore />}</div>
                 </ListItemButton>
                 {/* 드롭다운 */}
                 <Collapse in={open} timeout="auto" unmountOnExit>
@@ -198,13 +189,12 @@ const MyArticle = () => {
                         </>
                       );
                     })}
-<div style={{width:"100%", display:'flex', justifyContent:'end'}}>
-                  <ExprireButton onClick={() => expireArticle(collectionName)}>마감하기</ExprireButton>
-                  </div>
-
+                    <div style={{ width: "100%", display: "flex", justifyContent: "end" }}>
+                      <ExprireButton onClick={() => expireArticle(collectionName)}>마감하기</ExprireButton>
+                    </div>
                   </List>
                 </Collapse>
-              </List>
+              </SummaryList>
               {!open && <Divider />}
             </div>
           );
@@ -226,11 +216,7 @@ const MyArticle = () => {
 
           return (
             <div key={index}>
-              <List
-                sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-                component="nav"
-                aria-labelledby="nested-list-subheader"
-              >
+              <List component="nav" aria-labelledby="nested-list-subheader">
                 {/* 헤더 */}
                 <ListItemButton onClick={handleClick}>
                   <ListItemIcon>
@@ -298,61 +284,55 @@ const MyArticle = () => {
     console.log(allMatchingUser);
   }, [allMatchingUser]);
   //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
+  //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
+  //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
+  //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
   return (
     <>
-    <Header/>
-      <Background>
-        <Container>
-          <SideBar />
-          <h1>내 게시물</h1>
-          <ButtonGroup>
-            <StyledButton isSelect={!isLoadExpired} onClick={() => setIsLoadExpired(false)}>
-              마감 전
-            </StyledButton>
-            <StyledButton isSelect={isLoadExpired} onClick={() => setIsLoadExpired(true)}>
-              마감 후
-            </StyledButton>
-          </ButtonGroup>
-          <ArticlesContainer>
-            {isLoadExpired
-              ? renderExpiredArticles(expiredArticles, allMatchingUser)
-              : renderUnExpiredArticles(unExpiredArticles, allApplication)}
-          </ArticlesContainer>
-        </Container>
-      </Background>
+      <Header />
+      <Container>
+        {/* 버튼 */}
+        <ButtonGroup>
+          <FilterButton isSelect={!isLoadExpired} onClick={() => setIsLoadExpired(false)}>
+            마감 전
+          </FilterButton>
+          <FilterButton isSelect={isLoadExpired} onClick={() => setIsLoadExpired(true)}>
+            마감 후
+          </FilterButton>
+        </ButtonGroup>
+        {/* 게시물 */}
+        <ArticlesContainer>
+          {isLoadExpired
+            ? renderExpiredArticles(expiredArticles, allMatchingUser)
+            : renderUnExpiredArticles(unExpiredArticles, allApplication)}
+        </ArticlesContainer>
+      </Container>
     </>
   );
 };
 
 // 최상위 컨테이너(흰 배경)
 const Container = styled.div`
-  width: 280px;
-  height: 90%;
-  padding: 20px;
-  position: relative;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: white;
-  border-radius: 20px;
-  box-shadow: 0px 0px 10px 3px pink;
 `;
 
 // 전체 게시물 컨테이너
 const ArticlesContainer = styled.div`
   height: 600px;
+  width: 300px;
+  padding: 0px 10px;
   overflow: auto;
-  width: 100%;
-  /* &::-webkit-scrollbar {
-    display:none;
-  } */
   /* Chrome, Safari, Opera*/
   &::-webkit-scrollbar {
     width: 3px;
     background-color: white;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: pink;
+    background-color: #d2daff;
   }
   &::-webkit-scrollbar-track {
     background-color: whitesmoke;
@@ -361,19 +341,26 @@ const ArticlesContainer = styled.div`
 
 //매칭 전/후 버튼 그룹
 const ButtonGroup = styled.div`
-  width: 100%;
+  width: 300px;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  margin-top: 30px;
   margin-bottom: 20px;
 `;
 
 // 매칭 전/후 버튼
-const StyledButton = styled(GenderButton)``;
+const FilterButton = styled(CategortItemButton)`
+  width: 140px;
+  height: 40px;
+  font-size: 16px;
+`;
 
 // 드롭다운 게시물 제목
-const ArticleHeader = styled.div`
-  flex-grow: 1;
-  font-size: 20px;
+const ArticleHeader = styled(BodyText)`
+  color:#111111;
+  width:200px;
+  height:44px;
+  overflow:hidden;
 `;
 
 // 드롭다운 신청자 정보 컨테이너
@@ -438,21 +425,40 @@ const ApplicantDivider = styled.hr`
 
 //마감하기 버튼
 const ExprireButton = styled.button`
-  width:100%;
+  width: 100%;
   height: 40px;
-  margin-bottom:20px;
-  font-size:15px;
-  background-color:red;
-  color:white;
-  font-weight:bold;
-  font-family: 'omyu_pretty';
-  border:0px;
-  border-radius:10px;
-  opacity:0.8;
-  &:hover{
-    cursor:pointer;
-    opacity:0.6;
+  margin-bottom: 20px;
+  font-size: 15px;
+  background-color: red;
+  color: white;
+  font-weight: bold;
+  font-family: "omyu_pretty";
+  border: 0px;
+  border-radius: 10px;
+  opacity: 0.8;
+  &:hover {
+    cursor: pointer;
+    opacity: 0.6;
   }
-  `
+`;
+
+const SummaryList = styled(List)`
+  /* 전체 컨테이너 */
+  width: 100%;
+  /* 리스트 아이템(펼치기 전) */
+  & .MuiButtonBase-root {
+    height: 50px;
+    padding: 0px;
+    justify-content:space-between;
+  }
+`;
+
+const SummaryListIcon = styled(CircleRoundedIcon)`
+  &.MuiSvgIcon-root {
+    width: 24px;
+    height: 24px;
+    color: #72c6ef;
+  }
+`;
 
 export default MyArticle;
