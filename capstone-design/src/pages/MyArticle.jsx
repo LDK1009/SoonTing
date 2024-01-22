@@ -7,7 +7,6 @@ import styled from "styled-components";
 import { Divider } from "@mui/material";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import Collapse from "@mui/material/Collapse";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
@@ -207,14 +206,12 @@ const MyArticle = () => {
 
           return (
             <div key={index}>
-              <List component="nav" aria-labelledby="nested-list-subheader">
+              <SummaryList component="nav" aria-labelledby="nested-list-subheader">
                 {/* 헤더 */}
                 <ListItemButton onClick={handleClick}>
-                  <ListItemIcon>
-                    <CheckCircleRoundedIcon />
-                  </ListItemIcon>
+                  <DetailListIcon />
                   <ArticleHeader>{item.title}</ArticleHeader>
-                  {open ? <ExpandLess /> : <ExpandMore />}
+                  <div>{open ? <ExpandLess /> : <ExpandMore />}</div>
                 </ListItemButton>
                 {/* 드롭다운 */}
                 <Collapse in={open} timeout="auto" unmountOnExit>
@@ -224,25 +221,15 @@ const MyArticle = () => {
                       return (
                         <>
                           <ApplicantInfoContainer key={index2}>
-                            <ApplicantInfoTextWrap>
-                              <ApplicantInfoText>{item2.name}</ApplicantInfoText>
-                              <ApplicantInfoText>
-                                {item2.major} / {item2.age}세
-                              </ApplicantInfoText>
-                              <ApplicantInfoText>
-                                {item2.gender} / {item2.people}명
-                              </ApplicantInfoText>
-                              <ApplicantInfoText>연락처 : {item2.number}</ApplicantInfoText>
-                            </ApplicantInfoTextWrap>
+                            <StudentCard info={item2} />
                             <ConfirmButton>확정</ConfirmButton>
                           </ApplicantInfoContainer>
-                          <ApplicantDivider />
                         </>
                       );
                     })}
                   </List>
                 </Collapse>
-              </List>
+              </SummaryList>
               {!open && <Divider />}
             </div>
           );
@@ -363,17 +350,6 @@ const ApplicantInfoContainer = styled.div`
   margin-bottom: 20px;
 `;
 
-// 드롭다운 신청자 정보 박스
-const ApplicantInfoTextWrap = styled.div`
-  text-align: end;
-  margin-right: 20px;
-`;
-
-// 드롭다운 신청자 정보 텍스트
-const ApplicantInfoText = styled.div`
-  font-size: 15px;
-`;
-
 // 매칭 버튼
 const MatchingButton = styled.button`
   width: 50px;
@@ -401,16 +377,6 @@ const ConfirmButton = styled(MatchingButton)`
   }
 `;
 
-const ApplicantDivider = styled.hr`
-  width: 80%;
-  border: none; /* 추가: 기본 테두리 제거 */
-  height: 1px; /* 추가: 테두리 높이 설정 */
-  background-color: pink; /* 원하는 배경색으로 변경 */
-  margin: 15px 0px;
-  margin-left: auto;
-  margin-right: 0;
-`;
-
 //마감하기 버튼
 const ExprireButton = styled(WriteButton)`
   width: 100%;
@@ -436,6 +402,15 @@ const SummaryListIcon = styled(CircleRoundedIcon)`
   }
 `;
 
+const DetailListIcon = styled(CheckCircleRoundedIcon)`
+  &.MuiSvgIcon-root {
+    width: 24px;
+    height: 24px;
+    color: #72c6ef;
+  }
+`;
+
+// 학생증
 const StudentCard = ({ info }) => {
   const applicantInfo = info;
   return (
