@@ -240,7 +240,7 @@ const CategortItemImg = styled.img`
   opacity: ${(props) => (props.isSelect ? "1" : "0.5")};
 `;
 
-const CategortItemButton = styled.button`
+export const CategortItemButton = styled.button`
   background-color: ${(props) => (props.isSelect ? "#72C6EF" : "white")};
   width: 90px;
   height: 30px;
