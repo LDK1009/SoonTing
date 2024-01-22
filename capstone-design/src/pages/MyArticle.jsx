@@ -25,13 +25,6 @@ const MyArticle = () => {
   const [allMatchingUser, setAllMatchingUser] = useState([[], []]); // 모든 게시물의 모든 신청자 정보(2차원 배열)
   const [isLoadExpired, setIsLoadExpired] = useState(false); // 불러올 게시물 스위치(만료 전/후)
 
-  ///
-  const [open, setOpen] = React.useState(false);
-
-  const handleClick = () => {
-    setOpen(!open);
-  };
-
   ////////// 게시글 불러오기
   const getMyArticles = async (expiration) => {
     // 유저의 uid와 일치한 게시글을 모두 불러와 만료 여부에 따라 데이터를 분류해 담는다.
@@ -142,6 +135,28 @@ const MyArticle = () => {
     getMyArticles(true);
   };
 
+  ////////// 개별 드롭다운
+  const [unExpiredCollapseOpen, setUnExpiredCollapseOpen] = useState([]);
+  const [expiredCollapseOpen, setExpiredCollapseOpen] = useState([]);
+
+  const unExpiredOpen = (index) => {
+    // 클릭된 게시물의 상태를 토글합니다.
+    setUnExpiredCollapseOpen((prevOpen) => {
+      const newOpen = [...prevOpen]; // 기존 배열 복사
+      newOpen[index] = !newOpen[index]; // 기존 배열 중 index번째만 변경
+      return newOpen; // 새로운 배열 반환
+    });
+  };
+
+  const expiredOpen = (index) => {
+    // 클릭된 게시물의 상태를 토글합니다.
+    setExpiredCollapseOpen((prevOpen) => {
+      const newOpen = [...prevOpen];
+      newOpen[index] = !newOpen[index];
+      return newOpen;
+    });
+  };
+
   ////////// 미만료 게시글&신청내역 렌더링
   const renderUnExpiredArticles = (articles, allApplication) => {
     // 모든 게시글 배열과 모든 게시물의 모든 신청자 정보 2차원 배열을 받아 게시물1-게시물1의 신청내역들 / 게시물2-게시물2의 신청내역들 을 번갈아 렌더링한다.
@@ -156,13 +171,15 @@ const MyArticle = () => {
             <div key={index}>
               <SummaryList component="nav" aria-labelledby="nested-list-subheader">
                 {/* 헤더 */}
-                <ListItemButton onClick={handleClick}>
+                <ListItemButton onClick={() => unExpiredOpen(index)}>
                   <SummaryListIcon />
                   <ArticleHeader>{item.title}</ArticleHeader>
-                  <div>{open ? <ExpandLess /> : <ExpandMore />}</div>
+                  {/* <div>{open ? <ExpandLess /> : <ExpandMore />}</div> */}
+                  <div>{unExpiredCollapseOpen[index] ? <ExpandLess /> : <ExpandMore />}</div>
                 </ListItemButton>
                 {/* 드롭다운 */}
-                <Collapse in={open} timeout="auto" unmountOnExit>
+                {/* <Collapse in={open} timeout="auto" unmountOnExit> */}
+                <Collapse in={unExpiredCollapseOpen[index]} timeout="auto" unmountOnExit>
                   <List component="div" disablePadding>
                     {aplicationOfArticle.map((item2, index2) => {
                       // 해당 게시물의 모든 신청자 정보를 순회하며 렌더링
@@ -185,7 +202,7 @@ const MyArticle = () => {
                   </List>
                 </Collapse>
               </SummaryList>
-              {!open && <Divider />}
+              <Divider />
             </div>
           );
         })}
@@ -208,13 +225,13 @@ const MyArticle = () => {
             <div key={index}>
               <SummaryList component="nav" aria-labelledby="nested-list-subheader">
                 {/* 헤더 */}
-                <ListItemButton onClick={handleClick}>
+                <ListItemButton onClick={() => expiredOpen(index)}>
                   <DetailListIcon />
                   <ArticleHeader>{item.title}</ArticleHeader>
-                  <div>{open ? <ExpandLess /> : <ExpandMore />}</div>
+                  <div>{expiredCollapseOpen[index] ? <ExpandLess /> : <ExpandMore />}</div>
                 </ListItemButton>
                 {/* 드롭다운 */}
-                <Collapse in={open} timeout="auto" unmountOnExit>
+                <Collapse in={expiredCollapseOpen[index]} timeout="auto" unmountOnExit>
                   <List component="div" disablePadding>
                     {aplicationOfArticle.map((item2, index2) => {
                       // 해당 게시물의 모든 신청자 정보를 순회하며 렌더링
@@ -230,7 +247,7 @@ const MyArticle = () => {
                   </List>
                 </Collapse>
               </SummaryList>
-              {!open && <Divider />}
+              <Divider />
             </div>
           );
         })}
