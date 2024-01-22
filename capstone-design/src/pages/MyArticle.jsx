@@ -15,6 +15,7 @@ import CircleRoundedIcon from "@mui/icons-material/CircleRounded";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import Header from "../components/Header";
 import { BodyText } from "./SignIn";
+import { WriteButton } from "../components/AddArticle";
 
 const MyArticle = () => {
   const navProps = useLocation(); // useNavigate 프롭스 전달 받기
@@ -169,23 +170,13 @@ const MyArticle = () => {
                       return (
                         <>
                           <ApplicantInfoContainer key={index2}>
-                            <ApplicantInfoTextWrap>
-                              <ApplicantInfoText>{item2.name}</ApplicantInfoText>
-                              <ApplicantInfoText>
-                                {item2.major} / {item2.age}세
-                              </ApplicantInfoText>
-                              <ApplicantInfoText>
-                                {item2.gender} / {item2.people}명
-                              </ApplicantInfoText>
-                              {item2.matching && <ApplicantInfoText>연락처 : {item2.number}</ApplicantInfoText>}
-                            </ApplicantInfoTextWrap>
+                            <StudentCard info={item2} />
                             {item2.matching ? (
                               <ConfirmButton>확정</ConfirmButton>
                             ) : (
                               <MatchingButton onClick={() => matching(collectionName, item2)}>매칭</MatchingButton>
                             )}
                           </ApplicantInfoContainer>
-                          <ApplicantDivider />
                         </>
                       );
                     })}
@@ -345,7 +336,7 @@ const ButtonGroup = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 30px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 `;
 
 // 매칭 전/후 버튼
@@ -357,17 +348,19 @@ const FilterButton = styled(CategortItemButton)`
 
 // 드롭다운 게시물 제목
 const ArticleHeader = styled(BodyText)`
-  color:#111111;
-  width:200px;
-  height:44px;
-  overflow:hidden;
+  color: #111111;
+  width: 200px;
+  height: 44px;
+  overflow: hidden;
 `;
 
 // 드롭다운 신청자 정보 컨테이너
 const ApplicantInfoContainer = styled.div`
+  width: 100%;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
+  margin-bottom: 20px;
 `;
 
 // 드롭다운 신청자 정보 박스
@@ -383,20 +376,16 @@ const ApplicantInfoText = styled.div`
 
 // 매칭 버튼
 const MatchingButton = styled.button`
-  //크기
   width: 50px;
   height: 50px;
-  margin-right: 5px;
-  //디자인
+  margin-left: 10px;
   background-color: #cfbc5d;
-  color: white;
   border: 0px;
   border-radius: 10px;
-  box-shadow: 0px 0px 7px 1px #c7b660;
-  //폰트
-  font-size: 20px;
-  font-family: "omyu_pretty";
-  //이벤트
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: "Pretendard-Regular";
   &:hover {
     cursor: pointer;
     opacity: 0.9;
@@ -405,8 +394,7 @@ const MatchingButton = styled.button`
 
 // 확정 버튼
 const ConfirmButton = styled(MatchingButton)`
-  background-color: #8e8ffa;
-  box-shadow: 0px 0px 7px 1px #8e8ffa;
+  background-color: #26539c;
   &:hover {
     cursor: auto;
     opacity: 1;
@@ -424,22 +412,8 @@ const ApplicantDivider = styled.hr`
 `;
 
 //마감하기 버튼
-const ExprireButton = styled.button`
+const ExprireButton = styled(WriteButton)`
   width: 100%;
-  height: 40px;
-  margin-bottom: 20px;
-  font-size: 15px;
-  background-color: red;
-  color: white;
-  font-weight: bold;
-  font-family: "omyu_pretty";
-  border: 0px;
-  border-radius: 10px;
-  opacity: 0.8;
-  &:hover {
-    cursor: pointer;
-    opacity: 0.6;
-  }
 `;
 
 const SummaryList = styled(List)`
@@ -449,7 +423,8 @@ const SummaryList = styled(List)`
   & .MuiButtonBase-root {
     height: 50px;
     padding: 0px;
-    justify-content:space-between;
+    justify-content: space-between;
+    margin: 10px 0px;
   }
 `;
 
@@ -459,6 +434,65 @@ const SummaryListIcon = styled(CircleRoundedIcon)`
     height: 24px;
     color: #72c6ef;
   }
+`;
+
+const StudentCard = ({ info }) => {
+  const applicantInfo = info;
+  return (
+    <>
+      <StudentCardContainer>
+        <StudentCardTop>
+          <StudentCardSCH>SCH</StudentCardSCH>
+          <StudentCardPeople>4인</StudentCardPeople>
+          {/* <StudentCardPeople>{applicantInfo.people}</StudentCardPeople> */}
+        </StudentCardTop>
+        <StudentCardText>{applicantInfo.name}</StudentCardText>
+        <StudentCardText>{applicantInfo.major}</StudentCardText>
+        <StudentCardText>
+          {applicantInfo.gender} / {applicantInfo.age}세
+        </StudentCardText>
+        <StudentCardText>
+          {applicantInfo.matching && applicantInfo.number.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3")}
+        </StudentCardText>
+      </StudentCardContainer>
+    </>
+  );
+};
+
+const StudentCardContainer = styled.div`
+  width: 220px;
+  height: 120px;
+  border: 1px solid black;
+  border-radius: 10px;
+  text-align: center;
+  overflow: hidden;
+`;
+
+const StudentCardTop = styled.div`
+  position: relative;
+  background-color: #26539c;
+  width: 100%;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const StudentCardSCH = styled.div`
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+`;
+
+const StudentCardPeople = styled(BodyText)`
+  position: absolute;
+  right: 10px;
+`;
+
+const StudentCardText = styled(BodyText)`
+  color: #111111;
+  font-size: 12px;
 `;
 
 export default MyArticle;
