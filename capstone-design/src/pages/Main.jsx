@@ -11,25 +11,35 @@ import categoryImg2 from "../assets/스터팅.png";
 import categoryImg3 from "../assets/과팅.png";
 
 const Main = () => {
+  // useNavigate 프롭스 전달 받기(uid)
+  const location = useLocation();
+  // uid
+  const userUid = location.state.uid;
+  // 네비게이트 변수
+  const navigate = useNavigate();
+
+  // 밥팅,스터팅,과팅 게시물
+  const [babtingArticles, setBabtingArticles] = useState([]);
+  const [stutingArticles, setStutingArticles] = useState([]); // 스터팅 게시글
+  const [gwatingArticles, setGwatingArticles] = useState([]); // 과팅 게시글
+  // 현재 게시물(렌더링할 게시물)
+  const [currentArticles, setCurrentArticles] = useState([]); // 카테고리 변경에 따라 현재 보여줄 게시물
+
   // 카테고리 상태
   const [categoryState, setCategoryState] = useState({
     babting: true,
     stuting: false,
-    guating: false,
+    gwating: false,
   });
 
-  useEffect(() => {
-    console.log(categoryState);
-  }, [categoryState]);
-  // 카테고리 상태변경 함수
-
+  ////////// 카테고리 변경
   const changeCategory = (category) => {
     switch (category) {
       case "babting":
         setCategoryState({
           babting: true,
           stuting: false,
-          guating: false,
+          gwating: false,
         });
         console.log("카테고리클릭!");
         break;
@@ -37,15 +47,15 @@ const Main = () => {
         setCategoryState({
           babting: false,
           stuting: true,
-          guating: false,
+          gwating: false,
         });
         console.log("카테고리클릭!");
         break;
-      case "guating":
+      case "gwating":
         setCategoryState({
           babting: false,
           stuting: false,
-          guating: true,
+          gwating: true,
         });
         console.log("카테고리클릭!");
         break;
@@ -55,12 +65,7 @@ const Main = () => {
     }
   };
 
-  const location = useLocation(); // useNavigate 프롭스 전달 받기(uid)
-  const userUid = location.state.uid; // uid
-  const navigate = useNavigate(); // 네비게이트 변수
-  const [loadedArticles, setLoadedArticles] = useState([]); // 로드한 게시글
-
-  ////////// 유저아이디를 기반으로 회원 정보 가져오기
+  ////////// 회원 정보
   const [userData, setUserData] = useState({
     uid: "",
     name: "",
@@ -72,7 +77,7 @@ const Main = () => {
     number: "",
   });
 
-  ////////// 유저 정보 불러오기
+  ////////// 회원 정보 불러오기
   const readUserInfo = async () => {
     // DB에 문서명이 uid인 문서가 있는지 확인하고 있다면 해당 유저 정보를 가져오기
     const docRef = doc(db, "users", userUid);
@@ -93,12 +98,18 @@ const Main = () => {
     }
   };
 
-  const GetDocs = async () => {
+  ////////// 게시물 가져오기
+  const GetDocs = async (category) => {
     ////////// 게시글 불러오기
     const articlesRef = collection(db, "articles");
     // const q = query(articlesRef, where("expiration", "==", false)); // 정렬 없음
     // const q = query(articlesRef, where("expiration", "==", false), orderBy("time")); // 최근 게시글이 최히단에 위치
-    const q = query(articlesRef, where("expiration", "==", false), orderBy("time", "desc")); // 최근 게시글이 최상단에 위치
+    const q = query(
+      articlesRef,
+      where("expiration", "==", false),
+      where("category", "==", category),
+      orderBy("time", "desc")
+    ); // 최근 게시글이 최상단에 위치
     const newData = [];
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
@@ -106,7 +117,19 @@ const Main = () => {
       // console.log(doc.id, " => ", doc.data().expiration);
       newData.push(doc.data());
     });
-    setLoadedArticles(() => newData);
+    switch (category) {
+      case "밥팅":
+        setBabtingArticles(() => newData);
+        break;
+      case "스터팅":
+        setStutingArticles(() => newData);
+        break;
+      case "과팅":
+        setGwatingArticles(() => newData);
+        break;
+      default:
+        break;
+    }
   };
 
   ////////// 게시글 렌더링
@@ -139,12 +162,26 @@ const Main = () => {
   useEffect(() => {
     const fetchData = async () => {
       await readUserInfo();
-      GetDocs();
+      GetDocs("밥팅");
+      GetDocs("스터팅");
+      GetDocs("과팅");
     };
-
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  ////////// 밥팅,스터팅,과팅 게시물 모두 로드 후 & 카테고리 변경시 렌더링할(현재) 게시물 변경
+  useEffect(() => {
+    if (categoryState.babting) {
+      setCurrentArticles(babtingArticles);
+    } else if (categoryState.stuting) {
+      setCurrentArticles(stutingArticles);
+    } else if (categoryState.gwating) {
+      setCurrentArticles(gwatingArticles);
+    } else {
+      console.log("카테고리 선택 오류");
+    }
+  }, [babtingArticles, stutingArticles, gwatingArticles, categoryState]);
 
   //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
   //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
@@ -173,13 +210,13 @@ const Main = () => {
           <CategoryItem
             label="과팅"
             src={categoryImg3}
-            isSelect={categoryState.guating}
+            isSelect={categoryState.gwating}
             propsFunc={changeCategory}
-            propsFuncParam="guating"
+            propsFuncParam="gwating"
           />
         </CategoryItemGroup>
         {/* 게시물 컨테이너 */}
-        <ArticleContainer>{renderArticles(loadedArticles)}</ArticleContainer>
+        <ArticleContainer>{renderArticles(currentArticles)}</ArticleContainer>
         {/* 글쓰기 버튼 */}
         <AddArticle userData={userData} />
       </Container>
