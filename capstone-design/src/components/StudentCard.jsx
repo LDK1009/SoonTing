@@ -8,6 +8,7 @@ const StudentCard = ({ info }) => {
       <Container>
         <Top>
           <SCH>SCH</SCH>
+          {/* 내 게시물 신청자 인원 수 반영 */}
           <People>{info.people}인</People>
           {/* <People>{info.people}</People> */}
         </Top>
