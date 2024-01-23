@@ -65,11 +65,11 @@ const AddArticle = ({ userData }) => {
     const t = new Date();
     // 년, 월, 일, 시, 분, 초 추출
     const year = t.getFullYear();
-    const month = t.getMonth() + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
-    const day = t.getDate();
-    const hours = t.getHours();
-    const minutes = t.getMinutes();
-    const seconds = t.getSeconds();
+    const month = String(t.getMonth() + 1).padStart(2, "0"); // 월은 0부터 시작하므로 1을 더하고, padStart로 두 자리로 만듭니다.
+    const day = String(t.getDate()).padStart(2, "0"); // 일도 padStart로 두 자리로 만듭니다.
+    const hours = String(t.getHours()).padStart(2, "0"); // 시도 padStart로 두 자리로 만듭니다.
+    const minutes = String(t.getMinutes()).padStart(2, "0"); // 분도 padStart로 두 자리로 만듭니다.
+    const seconds = String(t.getSeconds()).padStart(2, "0"); // 초도 padStart로 두 자리로 만듭니다.
     const returnTime = `${year}년${month}월${day}일${hours}시${minutes}분${seconds}초`;
     return returnTime;
   };
@@ -160,11 +160,11 @@ const StyledInput = styled(TextField)`
   width: 220px;
   /* 컨테이너 */
   & .MuiInputBase-root .MuiOutlinedInput-notchedOutline {
-    border-color:#26539c;
+    border-color: #26539c;
   }
   /* 라벨 */
   & .MuiFormLabel-root {
-    color:#26539c;
+    color: #26539c;
     font-family: "Pretendard-Regular";
   }
   /* 인풋 폰트 */
@@ -238,10 +238,10 @@ const SelectLabel = styled(InputLabel)`
 
 const StyledSelect = styled(Select)`
   /* 클릭 전후 보더 컬러 변경 */
-  &.MuiInputBase-root::before{
+  &.MuiInputBase-root::before {
     border-bottom-color: #26539c;
   }
-  &.MuiInputBase-root::after{
+  &.MuiInputBase-root::after {
     border-bottom-color: #26539c;
   }
 
