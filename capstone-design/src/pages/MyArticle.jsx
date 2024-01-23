@@ -13,7 +13,7 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import CircleRoundedIcon from "@mui/icons-material/CircleRounded";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import Header from "../components/Header";
-import { BodyText } from "./SignIn";
+import { BodyBlurText, BodyText } from "./SignIn";
 import { WriteButton } from "../components/AddArticle";
 import StudentCard from "../components/StudentCard";
 
@@ -25,54 +25,7 @@ const MyArticle = () => {
   const [allApplication, setAllApplication] = useState([[], []]); // 모든 게시물의 모든 신청자 정보(2차원 배열)
   const [allMatchingUser, setAllMatchingUser] = useState([[], []]); // 모든 게시물의 모든 매칭자 정보(2차원 배열)
   const [isLoadExpired, setIsLoadExpired] = useState(false); // 불러올 게시물 스위치(만료 전/후)
-
-  const [numArr, setNumArr] = useState([])
-
-  const testFunc = (arr) => {
-    console.log("testFunc시작>>", numArr);
-    
-    let newArr=[];
-    for (let i = 0; i < arr.length; i++) {
-      console.log("1차 for문 입장", numArr);
-      let sum = 0;
-      for (let j = 0; j < arr[i].length; j++) {
-        console.log("2차 for문 입장", numArr);
-        sum += arr[i][j].people;
-        console.log(i, "번 게시물", j, "번째 유저 people", arr[i][j].people);
-      }
-      newArr.push(sum);
-    }
-    setNumArr(newArr);
-  };
-  // const testFunc = async () => {
-  //   // item1은 1차원 배열
-  //   allApplication.forEach((item1, index1) => {
-  //     let sum = 0;
-  //     if (item1.length === 0) {
-  //     } else {
-  //       // item2는 1차원 배열의 각 객체
-  //       item1.forEach((item2, index2) => {
-  //         sum += item2.people;
-  //         console.log(index1, "번 게시물", index2, "번째 유저 people", item2.people);
-  //       });
-  //     }
-  //     console.log("초기 배열 상태??",numArr, numArr.length);
-  //     setNumArr((prev) => [...prev, sum]);
-  //     console.log(index1, "번째 게시물 총합 : ", sum);
-  //   });
-  // };
-
-  // 신청자 정보 가져오면
-  useEffect(() => {
-    console.log("초기 배열 상태??", numArr, numArr.length);
-    console.log("allApplication>>>>>", allApplication);
-    testFunc(allApplication);
-  }, [allApplication]);
-
-  //
-  useEffect(() => {
-    console.log("배열변경됨!!numArr>>", numArr);
-  }, [numArr]);
+  const [sumApplication, setSumApplication] = useState([]); // 게시물별 총 신청인원
 
   ////////// 게시글 불러오기
   const getMyArticles = async (expiration) => {
@@ -222,8 +175,12 @@ const MyArticle = () => {
                 <ListItemButton onClick={() => unExpiredOpen(index)}>
                   <SummaryListIcon />
                   <ArticleHeader>{item.title}</ArticleHeader>
-                  <div>{unExpiredCollapseOpen[index] ? <ExpandLess /> : <ExpandMore />}</div>
-                  <div>{numArr[index]}</div>
+                  <div>
+                    <SumApplicationText overflow={sumApplication[index] > item.people}>
+                      {sumApplication[index]} / {item.people}
+                    </SumApplicationText>
+                    <div>{unExpiredCollapseOpen[index] ? <ExpandLess /> : <ExpandMore />}</div>
+                  </div>
                 </ListItemButton>
                 {/* 드롭다운 */}
                 <Collapse in={unExpiredCollapseOpen[index]} timeout="auto" unmountOnExit>
@@ -302,12 +259,20 @@ const MyArticle = () => {
     );
   };
 
-  ////////// 마운트
-  useEffect(() => {
-    getMyArticles(false);
-    getMyArticles(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  ////////// 게시물별 총 매칭 신청 인원 수 구하기
+  const calcSumApplication = () => {
+    let newArr = []; // 게시물별 신청인원을 담을 배열
+    // 1차 반복문 시작
+    allApplication.forEach((item1) => {
+      let sum = 0; // 게시물 총 신청인원 초기화
+      // 2차 반복문 시작(2차배열 내부 1차배열의 요소만큼 반복)
+      item1.forEach((item2) => {
+        sum += item2.people; // 게시물 신청자의 people수를 sum에 더해준다.
+      });
+      newArr.push(sum);
+    });
+    setSumApplication(newArr);
+  };
 
   ////////// unExpiredArticles 변경 시(미만료 게시물 로드 완료 시)
   useEffect(() => {
@@ -320,6 +285,19 @@ const MyArticle = () => {
     getAllMatcingUser(expiredArticles); // 모든 게시물의 신청자 데이터를 갱신한다
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [expiredArticles]);
+
+  ////////// 신청자 정보 가져온 후
+  useEffect(() => {
+    calcSumApplication();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allApplication]);
+
+  ////////// 마운트
+  useEffect(() => {
+    getMyArticles(false);
+    getMyArticles(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
   //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
@@ -470,4 +448,9 @@ const DetailListIcon = styled(CheckCircleRoundedIcon)`
   }
 `;
 
+const SumApplicationText = styled(BodyBlurText)`
+  font-size: 12px;
+  font-weight: ${(props) => props.overflow && "600"};
+  color: ${(props) => props.overflow && "#4D207A"};
+`;
 export default MyArticle;
