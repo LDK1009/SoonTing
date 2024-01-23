@@ -23,8 +23,56 @@ const MyArticle = () => {
   const [expiredArticles, setExpiredArticles] = useState([]); // 만료된 게시물(1차원 배열)
   const [unExpiredArticles, setUnExpiredArticles] = useState([]); // 만료되지 않은 게시물(1차원 배열)
   const [allApplication, setAllApplication] = useState([[], []]); // 모든 게시물의 모든 신청자 정보(2차원 배열)
-  const [allMatchingUser, setAllMatchingUser] = useState([[], []]); // 모든 게시물의 모든 신청자 정보(2차원 배열)
+  const [allMatchingUser, setAllMatchingUser] = useState([[], []]); // 모든 게시물의 모든 매칭자 정보(2차원 배열)
   const [isLoadExpired, setIsLoadExpired] = useState(false); // 불러올 게시물 스위치(만료 전/후)
+
+  const [numArr, setNumArr] = useState([])
+
+  const testFunc = (arr) => {
+    console.log("testFunc시작>>", numArr);
+    
+    let newArr=[];
+    for (let i = 0; i < arr.length; i++) {
+      console.log("1차 for문 입장", numArr);
+      let sum = 0;
+      for (let j = 0; j < arr[i].length; j++) {
+        console.log("2차 for문 입장", numArr);
+        sum += arr[i][j].people;
+        console.log(i, "번 게시물", j, "번째 유저 people", arr[i][j].people);
+      }
+      newArr.push(sum);
+    }
+    setNumArr(newArr);
+  };
+  // const testFunc = async () => {
+  //   // item1은 1차원 배열
+  //   allApplication.forEach((item1, index1) => {
+  //     let sum = 0;
+  //     if (item1.length === 0) {
+  //     } else {
+  //       // item2는 1차원 배열의 각 객체
+  //       item1.forEach((item2, index2) => {
+  //         sum += item2.people;
+  //         console.log(index1, "번 게시물", index2, "번째 유저 people", item2.people);
+  //       });
+  //     }
+  //     console.log("초기 배열 상태??",numArr, numArr.length);
+  //     setNumArr((prev) => [...prev, sum]);
+  //     console.log(index1, "번째 게시물 총합 : ", sum);
+  //   });
+  // };
+
+  // 신청자 정보 가져오면
+  useEffect(() => {
+    console.log("초기 배열 상태??", numArr, numArr.length);
+    console.log("allApplication>>>>>", allApplication);
+    testFunc(allApplication);
+  }, [allApplication]);
+
+  //
+  useEffect(() => {
+    console.log("배열변경됨!!numArr>>", numArr);
+  }, [numArr]);
 
   ////////// 게시글 불러오기
   const getMyArticles = async (expiration) => {
@@ -167,7 +215,6 @@ const MyArticle = () => {
           // 모든 게시물 배열을 순회하며 렌더링 for문 생각하면 편함
           const collectionName = item.uid + "_" + item.time; // 게시물의 문서명 || 컬렉션명
           const aplicationOfArticle = allApplication[index] || []; // 해당 게시물의 모든 신청자 정보를 변수에 대입
-
           return (
             <div key={index}>
               <SummaryList component="nav" aria-labelledby="nested-list-subheader">
@@ -175,11 +222,10 @@ const MyArticle = () => {
                 <ListItemButton onClick={() => unExpiredOpen(index)}>
                   <SummaryListIcon />
                   <ArticleHeader>{item.title}</ArticleHeader>
-                  {/* <div>{open ? <ExpandLess /> : <ExpandMore />}</div> */}
                   <div>{unExpiredCollapseOpen[index] ? <ExpandLess /> : <ExpandMore />}</div>
+                  <div>{numArr[index]}</div>
                 </ListItemButton>
                 {/* 드롭다운 */}
-                {/* <Collapse in={open} timeout="auto" unmountOnExit> */}
                 <Collapse in={unExpiredCollapseOpen[index]} timeout="auto" unmountOnExit>
                   <List component="div" disablePadding>
                     {aplicationOfArticle.map((item2, index2) => {
@@ -271,14 +317,10 @@ const MyArticle = () => {
 
   ////////// expiredArticles 변경 시(만료 게시물 로드 완료 시)
   useEffect(() => {
-    console.log("expiredArticles변경>>\n", expiredArticles);
     getAllMatcingUser(expiredArticles); // 모든 게시물의 신청자 데이터를 갱신한다
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [expiredArticles]);
 
-  useEffect(() => {
-    console.log(allMatchingUser);
-  }, [allMatchingUser]);
   //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
   //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
   //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
@@ -427,9 +469,5 @@ const DetailListIcon = styled(CheckCircleRoundedIcon)`
     color: #72c6ef;
   }
 `;
-
-
-
-
 
 export default MyArticle;
