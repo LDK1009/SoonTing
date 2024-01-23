@@ -15,6 +15,7 @@ import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import Header from "../components/Header";
 import { BodyText } from "./SignIn";
 import { WriteButton } from "../components/AddArticle";
+import StudentCard from "../components/StudentCard";
 
 const MyArticle = () => {
   const navProps = useLocation(); // useNavigate 프롭스 전달 받기
@@ -427,64 +428,8 @@ const DetailListIcon = styled(CheckCircleRoundedIcon)`
   }
 `;
 
-// 학생증
-const StudentCard = ({ info }) => {
-  const applicantInfo = info;
-  return (
-    <>
-      <StudentCardContainer>
-        <StudentCardTop>
-          <StudentCardSCH>SCH</StudentCardSCH>
-          <StudentCardPeople>4인</StudentCardPeople>
-          {/* <StudentCardPeople>{applicantInfo.people}</StudentCardPeople> */}
-        </StudentCardTop>
-        <StudentCardText>{applicantInfo.name}</StudentCardText>
-        <StudentCardText>{applicantInfo.major}</StudentCardText>
-        <StudentCardText>
-          {applicantInfo.gender} / {applicantInfo.age}세
-        </StudentCardText>
-        <StudentCardText>
-          {applicantInfo.matching && applicantInfo.number.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3")}
-        </StudentCardText>
-      </StudentCardContainer>
-    </>
-  );
-};
 
-const StudentCardContainer = styled.div`
-  width: 220px;
-  height: 120px;
-  border: 1px solid black;
-  border-radius: 10px;
-  text-align: center;
-  overflow: hidden;
-`;
 
-const StudentCardTop = styled.div`
-  position: relative;
-  background-color: #26539c;
-  width: 100%;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 
-const StudentCardSCH = styled.div`
-  color: white;
-  font-size: 20px;
-  font-weight: bold;
-  font-family: Arial, Helvetica, sans-serif;
-`;
-
-const StudentCardPeople = styled(BodyText)`
-  position: absolute;
-  right: 10px;
-`;
-
-const StudentCardText = styled(BodyText)`
-  color: #111111;
-  font-size: 12px;
-`;
 
 export default MyArticle;

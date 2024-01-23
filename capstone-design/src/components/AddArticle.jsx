@@ -6,7 +6,7 @@ import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/mater
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import CloseIcon from "@mui/icons-material/Close";
-import StudentCard from "./StudentCard";
+import StudentCard from "./MyStudentCard";
 
 const AddArticle = ({ userData }) => {
   const [open, setOpen] = React.useState(false); // 모달창 열기/닫기
@@ -219,6 +219,7 @@ const StyledCloseIcon = styled(CloseIcon)`
   }
 `;
 
+// 밑줄 인풋폼
 const SelectContainer = styled(FormControl)`
   &.MuiFormControl-root {
     width: 220px;

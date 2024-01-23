@@ -6,7 +6,7 @@ import TextField from "@mui/material/TextField";
 import styled from "styled-components";
 import { WriteButton } from "../components/AddArticle";
 import Header from "../components/Header";
-import StudentCard from "../components/StudentCard";
+import MyStudentCard from "../components/MyStudentCard";
 import { CategortItemButton } from "./Main";
 import { BodyBlurText } from "./SignIn";
 
@@ -116,7 +116,7 @@ const MyInfo = () => {
     <>
       <Header />
       <Container>
-        <StudentCard style={{ margin: "30px 0px 50px 0px" }} />
+        <MyStudentCard style={{ margin: "30px 0px 50px 0px" }} />
         <StyledTextField
           id="outlined-required"
           label="이름"

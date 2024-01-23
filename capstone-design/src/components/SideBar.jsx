@@ -16,7 +16,7 @@ import styled from "styled-components";
 import { Divider } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import LogoutIcon from "@mui/icons-material/Logout";
-import StudentCard from "./StudentCard";
+import MyStudentCard from "./MyStudentCard";
 
 export default function SideBar() {
   ////////// 쿠키 가져오기
@@ -168,7 +168,7 @@ export default function SideBar() {
       <StyledMenuIcon onClick={toggleDrawer("right", true)} />
       <Drawer anchor={"right"} open={state["right"]} onClose={toggleDrawer("right", false)}>
         <StudentCardContainer>
-          <StudentCard />
+          <MyStudentCard />
         </StudentCardContainer>
         <Divider />
         {list("right")}
