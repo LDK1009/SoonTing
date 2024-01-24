@@ -160,7 +160,7 @@ const DetailedHeadline = styled(EmphasisText)`
 const DetailedContent = styled(BodyText)`
   color: #111111;
   width: 250px;
-  height: 100px;
+  height: 88px;
   margin-bottom: 10px;
   padding: 0px 5px;
   text-align: left;
