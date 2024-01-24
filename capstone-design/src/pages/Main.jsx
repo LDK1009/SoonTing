@@ -9,7 +9,6 @@ import Header from "../components/Header";
 import categoryImg1 from "../assets/밥팅.png";
 import categoryImg2 from "../assets/스터팅.png";
 import categoryImg3 from "../assets/과팅.png";
-
 const Main = () => {
   // useNavigate 프롭스 전달 받기(uid)
   const location = useLocation();
