@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import * as React from "react";
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import styled from "styled-components";
@@ -7,6 +8,10 @@ import { doc, setDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import CloseIcon from "@mui/icons-material/Close";
 import StudentCard from "./MyStudentCard";
+import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import dayjs from "dayjs";
 
 const AddArticle = ({ userData }) => {
   const [open, setOpen] = React.useState(false); // 모달창 열기/닫기
@@ -77,6 +82,15 @@ const AddArticle = ({ userData }) => {
   useEffect(() => {
     console.log("submitForm변경>>", submitForm);
   }, [submitForm]);
+
+  const [meatingDate, setMeatingDate] = useState(null);
+
+  useEffect(() => {
+    console.log("meatingDate변경>>", meatingDate);
+  }, [meatingDate]);
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
   return (
     <>
@@ -91,7 +105,6 @@ const AddArticle = ({ userData }) => {
             {/* 학생증 */}
             <StudentCard style={{ margin: "20px 0px" }} />
             {/* 인풋 */}
-            {/*  */}
             {/* 카테고리 */}
             <SelectContainer variant="standard" sx={{ m: 1, minWidth: 220, minHeight: 30 }}>
               <SelectLabel id="demo-simple-select-standard-label">카테고리</SelectLabel>
@@ -127,7 +140,19 @@ const AddArticle = ({ userData }) => {
                 <StyledMenuItem value={6}>6인</StyledMenuItem>
               </StyledSelect>
             </SelectContainer>
-            {/*  */}
+            {/* 날짜 */}
+            {/* <LocalizationProvider dateAdapter={AdapterDayjs} dateFormats={{ monthShort: `M` }}> */}
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DemoContainer components={["DatePicker"]}>
+                <DateTimePicker
+                  showDaysOutsideCurrentMonth
+                  format="YYYY-MM-DD"
+                  label="날짜 및 시간"
+                  value={meatingDate||dayjs()}
+                  onChange={(newValue) => setMeatingDate(newValue)}
+                />
+              </DemoContainer>
+            </LocalizationProvider>
             {/* 제목 */}
             <StyledInput
               label="제목"

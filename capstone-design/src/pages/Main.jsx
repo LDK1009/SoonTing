@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import * as React from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import { db } from "../firebaseConfig";
 import { doc, getDoc, collection, query, where, getDocs, orderBy } from "firebase/firestore";
@@ -9,9 +9,7 @@ import Header from "../components/Header";
 import categoryImg1 from "../assets/밥팅.png";
 import categoryImg2 from "../assets/스터팅.png";
 import categoryImg3 from "../assets/과팅.png";
-
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { useEffect,useState } from 'react';
 
 const Main = () => {
   // useNavigate 프롭스 전달 받기(uid)
@@ -22,7 +20,7 @@ const Main = () => {
   const navigate = useNavigate();
 
   // 밥팅,스터팅,과팅 게시물
-  const [babtingArticles, setBabtingArticles] = useState([]);
+  const [babtingArticles, setBabtingArticles] = React.useState([]);
   const [stutingArticles, setStutingArticles] = useState([]); // 스터팅 게시글
   const [gwatingArticles, setGwatingArticles] = useState([]); // 과팅 게시글
   // 현재 게시물(렌더링할 게시물)
