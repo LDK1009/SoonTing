@@ -7,11 +7,10 @@ import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/mater
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import CloseIcon from "@mui/icons-material/Close";
-import StudentCard from "./MyStudentCard";
+import MyStudentCard from "./MyStudentCard";
 import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import dayjs from "dayjs";
 
 const AddArticle = ({ userData }) => {
   const [open, setOpen] = React.useState(false); // 모달창 열기/닫기
@@ -22,7 +21,6 @@ const AddArticle = ({ userData }) => {
   const handleClose = () => setOpen(false);
   const [submitForm, setSubmitForm] = useState({}); // 게시글 정보
   const [meatingDate, setMeatingDate] = useState(null);
-
 
   ////////// 입력폼 입력 감지 함수
   const onChange = (e) => {
@@ -84,8 +82,7 @@ const AddArticle = ({ userData }) => {
     console.log("submitForm변경>>", submitForm);
   }, [submitForm]);
 
-
-  ////////// 날짜 및 시간 변경 시 
+  ////////// 날짜 및 시간 변경 시
   useEffect(() => {
     console.log("meatingDate변경>>", meatingDate);
     const nextForm = {
@@ -93,6 +90,7 @@ const AddArticle = ({ userData }) => {
       DateTime: meatingDate, // event가 발생한 input 요소의 name 값을 입력값으로 변경
     };
     setSubmitForm(nextForm); // 수정 내용 갱신
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [meatingDate]);
   ////////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -109,7 +107,7 @@ const AddArticle = ({ userData }) => {
             {/* 닫기 아이콘 */}
             <StyledCloseIcon onClick={handleClose} />
             {/* 학생증 */}
-            <StudentCard style={{ margin: "20px 0px" }} />
+            <MyStudentCard style={{ margin: "30px 0px" }} />
             {/* 인풋 */}
             {/* 카테고리 */}
             <SelectContainer variant="standard" sx={{ m: 1, minWidth: 220, minHeight: 30 }}>
@@ -128,7 +126,7 @@ const AddArticle = ({ userData }) => {
               </StyledSelect>
             </SelectContainer>
             {/* 인원 */}
-            <SelectContainer variant="standard">
+            <SelectContainer style={{marginBottom:'0px'}} variant="standard">
               <SelectLabel id="demo-simple-select-standard-label">인원</SelectLabel>
               <StyledSelect
                 labelId="demo-simple-select-standard-label"
@@ -150,11 +148,11 @@ const AddArticle = ({ userData }) => {
             {/* <LocalizationProvider dateAdapter={AdapterDayjs} dateFormats={{ monthShort: `M` }}> */}
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={["DatePicker"]}>
-                <DateTimePicker
+                <StyledDateTimePicker
                   showDaysOutsideCurrentMonth
-                  format="YYYY년 MM월 DD HH시mm분"
+                  format="MM월 DD일 HH시mm분"
                   label="날짜 및 시간"
-                  value={meatingDate || dayjs()}
+                  // value={meatingDate || dayjs()}
                   onChange={(newValue) => setMeatingDate(newValue.format("YYYY년MM월DD일HH시mm분"))}
                 />
               </DemoContainer>
@@ -177,7 +175,7 @@ const AddArticle = ({ userData }) => {
               multiline
               rows={5}
               onChange={onChange}
-              style={{ marginBottom: "20px" }}
+              style={{ marginBottom: "30px" }}
             />
             <WriteButton onClick={addArticle}>글쓰기</WriteButton>
           </ModalBox>
@@ -227,7 +225,7 @@ const ModalContainer = styled(Box)`
   left: 50%;
   transform: translate(-50%, -50%);
   width: 300px;
-  height: 600px;
+  height: 700px;
   background-color: white;
   border-radius: 15px;
 `;
@@ -254,8 +252,9 @@ const StyledCloseIcon = styled(CloseIcon)`
 const SelectContainer = styled(FormControl)`
   &.MuiFormControl-root {
     width: 220px;
+    height:50px;
     margin: 0px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
   }
 `;
 
@@ -290,6 +289,35 @@ const StyledSelect = styled(Select)`
 const StyledMenuItem = styled(MenuItem)`
   &.MuiButtonBase-root {
     font-family: "Pretendard-Regular";
+  }
+`;
+
+const StyledDateTimePicker = styled(DateTimePicker)`
+  &.MuiFormControl-root {
+    margin-bottom:30px;
+    width:220px;
+    height:50px;
+    padding:0px;
+  }
+  & .MuiFormLabel-root {
+    width:100%;
+    color:#26539C;
+    font-family: 'Pretendard-Regular';
+  }
+  & .MuiInputBase-root {
+  }
+  & .MuiInputBase-root .MuiInputBase-input {
+    padding-bottom: 5px;
+    font-family: 'Pretendard-Regular';
+  }
+  & .MuiInputBase-root .MuiOutlinedInput-notchedOutline {
+    border:0px;
+    border-radius: 0px;
+    border-bottom: 1px solid #26539c;
+  }
+  // 아이콘 색상 변경
+  & .MuiInputBase-root .MuiInputAdornment-root .MuiButtonBase-root .MuiSvgIcon-root {
+    color:#26539c;
   }
 `;
 export default AddArticle;
