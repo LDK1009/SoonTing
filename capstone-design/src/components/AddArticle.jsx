@@ -10,7 +10,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import StudentCard from "./MyStudentCard";
 import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import dayjs from "dayjs";
 
 const AddArticle = ({ userData }) => {
@@ -20,13 +20,9 @@ const AddArticle = ({ userData }) => {
   const handleOpen = () => setOpen(true);
   ////////// 모달 닫기 함수
   const handleClose = () => setOpen(false);
-
   const [submitForm, setSubmitForm] = useState({}); // 게시글 정보
+  const [meatingDate, setMeatingDate] = useState(null);
 
-  ////////// 프롭스 데이터 변경(ex) 유저정보 로드 등으로 인한 데이터 변경) 시 submitForm 에 변경된 데이터 반영
-  useEffect(() => {
-    setSubmitForm({ ...userData, expiration: false });
-  }, [userData]);
 
   ////////// 입력폼 입력 감지 함수
   const onChange = (e) => {
@@ -79,14 +75,24 @@ const AddArticle = ({ userData }) => {
     return returnTime;
   };
 
+  ////////// 프롭스 데이터 변경 시(ex) 유저정보 로드 등으로 인한 데이터 변경) 시 submitForm 에 변경된 데이터 반영
+  useEffect(() => {
+    setSubmitForm({ ...userData, expiration: false });
+  }, [userData]);
+  ////////// 제출 폼 변경 시
   useEffect(() => {
     console.log("submitForm변경>>", submitForm);
   }, [submitForm]);
 
-  const [meatingDate, setMeatingDate] = useState(null);
 
+  ////////// 날짜 및 시간 변경 시 
   useEffect(() => {
     console.log("meatingDate변경>>", meatingDate);
+    const nextForm = {
+      ...submitForm, // 기존 submitForm을 복사하여
+      DateTime: meatingDate, // event가 발생한 input 요소의 name 값을 입력값으로 변경
+    };
+    setSubmitForm(nextForm); // 수정 내용 갱신
   }, [meatingDate]);
   ////////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -146,10 +152,10 @@ const AddArticle = ({ userData }) => {
               <DemoContainer components={["DatePicker"]}>
                 <DateTimePicker
                   showDaysOutsideCurrentMonth
-                  format="YYYY-MM-DD"
+                  format="YYYY년 MM월 DD HH시mm분"
                   label="날짜 및 시간"
-                  value={meatingDate||dayjs()}
-                  onChange={(newValue) => setMeatingDate(newValue)}
+                  value={meatingDate || dayjs()}
+                  onChange={(newValue) => setMeatingDate(newValue.format("YYYY년MM월DD일HH시mm분"))}
                 />
               </DemoContainer>
             </LocalizationProvider>
