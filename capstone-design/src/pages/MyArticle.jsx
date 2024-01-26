@@ -176,7 +176,7 @@ const MyArticle = () => {
                   <SummaryListIcon />
                   <ArticleHeader>{item.title}</ArticleHeader>
                   <div>
-                    <SumApplicationText overflow={sumApplication[index] > item.people}>
+                    <SumApplicationText overflow={sumApplication[index] >= item.people}>
                       {sumApplication[index]} / {item.people}
                     </SumApplicationText>
                     <div>{unExpiredCollapseOpen[index] ? <ExpandLess /> : <ExpandMore />}</div>
