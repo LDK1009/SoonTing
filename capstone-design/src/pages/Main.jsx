@@ -246,7 +246,7 @@ export const Background = styled.div`
 `;
 
 // 게시물 컨테이너
-const ArticleContainer = styled.div`
+export const ArticleContainer = styled.div`
   width: 320px;
   height: 550px;
   overflow: auto;

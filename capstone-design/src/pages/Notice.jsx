@@ -71,7 +71,7 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const LogoText = styled(MainTitleText)`
+export const LogoText = styled(MainTitleText)`
   color:#26539C;
   margin:30px 0px;
   font-style:italic;

@@ -17,6 +17,7 @@ import { Divider } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import LogoutIcon from "@mui/icons-material/Logout";
 import MyStudentCard from "./MyStudentCard";
+import HowToVoteIcon from '@mui/icons-material/HowToVote';
 
 export default function SideBar() {
   ////////// 쿠키 가져오기
@@ -64,6 +65,11 @@ export default function SideBar() {
     });
   };
 
+  //////////매칭신청한 게시물 페이지로 이동
+  const toMyApply = () => {
+    navigate("/MyApply");
+  };
+
   ////////// 사이드바 첫번째 그룹 함수 옵션
   const firstDividerOption = (index) => {
     switch (index) {
@@ -75,6 +81,9 @@ export default function SideBar() {
         break;
       case 2:
         toMyArticle();
+        break;
+      case 3:
+        toMyApply();
         break;
       default:
         break;
@@ -122,13 +131,14 @@ export default function SideBar() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {["홈", "내 정보", "내 게시물"].map((text, index) => (
+        {["홈", "내 정보", "내 게시물", "매칭신청 게시물"].map((text, index) => (
           <ListItem key={text} disablePadding onClick={() => firstDividerOption(index)}>
             <ListItemButton>
               <StyledListItemIcon>
                 {index === 0 && <HomeIcon />}
                 {index === 1 && <AccountCircleIcon />}
                 {index === 2 && <DescriptionIcon />}
+                {index === 3 && <HowToVoteIcon />}
               </StyledListItemIcon>
               <StyledListItemText primary={text} />
             </ListItemButton>

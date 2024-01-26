@@ -18,7 +18,14 @@ const DetailedArticle = ({ articleInfo, userInfo }) => {
   ////////// 모달 닫기 함수
   const handleClose = () => setOpen(false);
 
-  ////////// 매칭 신청하기
+
+  ////////// 매칭 신청하기 버튼 클릭
+  const matchingApplyButtonClick = () => {
+    matchingApply();
+    addMatchingApplyCollection();
+  }
+
+  ////////// 게시물 매칭자 컬렉션에 신청자 정보 추가
   const matchingApply = async () => {
     const collectionName = articleInfo.uid + "_" + articleInfo.time;
     await setDoc(doc(db, `Matching/Application/${collectionName}`, userInfo.uid), {
@@ -29,6 +36,27 @@ const DetailedArticle = ({ articleInfo, userInfo }) => {
     alert("매칭 신청 완료!");
   };
 
+  //////// 내 매칭신청 게시물에 추가
+  const addMatchingApplyCollection = async () => {
+    const collectionName = userInfo.uid; // uid를 컬렉션명으로 설정하여 유저별로 매칭신청한 게시물 데이터 분리
+    const docName = articleInfo.uid + "_" + articleInfo.time; // 게시물 고유 id를 문서명으로 설정
+    await setDoc(doc(db, `user's (apply&scrap) article/apply/${collectionName}`, docName), {
+      ...articleInfo, // 게시물 정보
+    });
+    console.log("신청한 게시물에 게시물 저장 완료");
+  };
+
+  ////////// 스크랩 게시물에 추가
+  // const addMatchingApplyCollection = async () => {
+  //   const collectionName = articleInfo.uid + "_" + articleInfo.time;
+  //   await setDoc(doc(db, `Matching/Application/${collectionName}`, userInfo.uid), {
+  //     ...userInfo, // 신청자 정보 전달
+  //     matching: false, // 매칭 여부는 false로 시작
+  //     people:applicationPeople, // 신청인원
+  //   });
+  //   alert("매칭 신청 완료!");
+  // };
+
   ////////// 게시글 시간
   const startIndex = articleInfo.time.indexOf("년") + 1; //년 다음부터
   const endIndex = articleInfo.time.indexOf("일") + 1; // 일까지
@@ -37,7 +65,7 @@ const DetailedArticle = ({ articleInfo, userInfo }) => {
   // 정규 표현식을 사용하여 "01월 05일" 부분을 추출
   return (
     <>
-      <SummaryContainer onClick={handleOpen}>
+      <SummaryContainer onClick={handleOpen} >
         {/* 학과 / 나이 / 성별 / 인원 .. 제목 */}
         <SummaryContent>
           <SummaryInfoWrap>
@@ -86,7 +114,7 @@ const DetailedArticle = ({ articleInfo, userInfo }) => {
               </StyledSelect>
             </SelectContainer>
           {/* 매칭신청 버튼 */}
-          <MatchingApplyButton onClick={matchingApply}>매칭 신청</MatchingApplyButton>
+          <MatchingApplyButton onClick={matchingApplyButtonClick}>매칭 신청</MatchingApplyButton>
         </StyledModalBox>
       </StyledModal>
     </>

@@ -6,6 +6,7 @@ import Main from "./pages/Main";
 import MyInfo from "./pages/MyInfo";
 import MyArticle from "./pages/MyArticle";
 import Notice from "./pages/Notice";
+import MyApply from "./pages/MyApply";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/MyInfo" element={<MyInfo />} />
         <Route path="/MyArticle" element={<MyArticle />} />
         <Route path="/Notice" element={<Notice />} />
+        <Route path="/MyApply" element={<MyApply />} />
       </Routes>
     </>
   );
