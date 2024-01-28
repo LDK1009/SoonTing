@@ -248,7 +248,7 @@ export const Background = styled.div`
 // 게시물 컨테이너
 export const ArticleContainer = styled.div`
   width: 330px;
-  height: 550px;
+  height: 570px;
   overflow: auto;
   display:flex;
   flex-direction:column;

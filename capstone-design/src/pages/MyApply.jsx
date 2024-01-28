@@ -132,6 +132,6 @@ const Container = styled.div`
 `;
 
 const StyledArticleContainer = styled(ArticleContainer)`
-  height:655px;
+  height:670px;
 `;
 export default MyApply;
