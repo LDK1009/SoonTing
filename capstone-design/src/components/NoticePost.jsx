@@ -44,7 +44,7 @@ const StyledModalBox = styled(Box)`
 const SummaryContainer = styled.div`
   width: 300px;
   height: 50px;
-  border: 2px solid #26539c;
+  border: 2px solid #739FF0;
   border-radius: 15px;
   display: flex;
   justify-content: center;
