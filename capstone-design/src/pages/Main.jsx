@@ -278,19 +278,20 @@ const CategortItemImg = styled.img`
   width: 90px;
   height: 90px;
   opacity: ${(props) => (props.isSelect ? "1" : "0.5")};
-`;
+  `;
 
 export const CategortItemButton = styled.button`
-  background-color: ${(props) => (props.isSelect ? "#72C6EF" : "white")};
+  background-color: white;
   width: 90px;
   height: 30px;
   border-radius: 10px;
-  border-width: 3px;
+  border-width: 2px;
   border-style: solid;
-  border-color: ${(props) => (props.isSelect ? "#1C9AD6" : "#72C6EF")};
+  border-color: #739FF0;
+  color: ${(props) => (props.isSelect ? "#26539C" : "#767676")};
   font-size: 14px;
   font-weight: 600;
-  color: ${(props) => (props.isSelect ? "#111111" : "#767676")};
+  opacity: ${(props) => (props.isSelect ? "1" : "0.6")};
   font-family: "Pretendard-Regular";
 `;
 
