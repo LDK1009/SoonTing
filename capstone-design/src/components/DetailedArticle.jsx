@@ -75,6 +75,7 @@ const DetailedArticle = ({ articleInfo, userInfo }) => {
             </SummaryInfo>
             {/* 날짜 */}
             <SummaryInfo>{writeTime}</SummaryInfo>
+            <div>{articleInfo.DateTime}</div>
           </SummaryInfoWrap>
           {/* 제목 */}
           <SummaryHeadline>{articleInfo.title}</SummaryHeadline>
