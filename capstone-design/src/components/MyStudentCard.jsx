@@ -82,7 +82,7 @@ const MyStudentCard = ({children, style}) => {
         <StudentCardText>
           {userData.gender} / {userData.age}세
         </StudentCardText>
-        <StudentCardText>{userData.number.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3")}</StudentCardText>
+        <StudentCardText>{userData.number && userData.number.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3")}</StudentCardText>
       </Container>
     </>
   );
