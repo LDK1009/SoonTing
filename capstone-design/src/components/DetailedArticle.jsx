@@ -9,6 +9,8 @@ import { BodyBlurText, BodyText, EmphasisText } from "../pages/SignIn";
 import MyStudentCard from "./MyStudentCard";
 import StudentCard from "./StudentCard";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 const DetailedArticle = ({ articleInfo, userInfo }) => {
   const [open, setOpen] = useState(false); // 모달창 열기/닫기
@@ -57,17 +59,29 @@ const DetailedArticle = ({ articleInfo, userInfo }) => {
   //   alert("매칭 신청 완료!");
   // };
 
-  ////////// 게시글 시간
-  const startIndex = articleInfo.time.indexOf("년") + 1; //년 다음부터
-  const endIndex = articleInfo.time.indexOf("일") + 1; // 일까지
-  const writeTime = articleInfo.time.substring(startIndex, endIndex);
-
+  ////////// 게시글 작성 시간
+  const writeTimeStartIndex = articleInfo.time.indexOf("년") + 1; //년 다음부터
+  const writeTimeEndIndex = articleInfo.time.indexOf("일") + 1; // 일까지
+  const writeTime = articleInfo.time.substring(writeTimeStartIndex, writeTimeEndIndex);
+  
+  ////////// 희망 만남 시간
+  const DateTimeYMDStartIndex = articleInfo.DateTime.indexOf("년") + 1; //년 다음부터
+  const DateTimeYMDEndIndex = articleInfo.DateTime.indexOf("일") + 1; // 일까지
+  const DateTimeHmStartIndex = articleInfo.DateTime.indexOf("일") + 1; //년 다음부터
+  const DateTimeHmEndIndex = articleInfo.DateTime.indexOf("분") + 1; // 일까지
+  const DateTimeYM = articleInfo.DateTime.substring(DateTimeYMDStartIndex, DateTimeYMDEndIndex);
+  const DateTimeHm = articleInfo.DateTime.substring(DateTimeHmStartIndex, DateTimeHmEndIndex);
   // 정규 표현식을 사용하여 "01월 05일" 부분을 추출
+  ////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////
+  //////////////////////////////렌더링//////////////////////////////
   return (
     <>
       <SummaryContainer onClick={handleOpen} >
         {/* 학과 / 나이 / 성별 / 인원 .. 제목 */}
         <SummaryContent>
+          {/* 윗줄 */}
           <SummaryInfoWrap>
             {/* 학과 나이 성별 인원 */}
             <SummaryInfo>
@@ -75,10 +89,20 @@ const DetailedArticle = ({ articleInfo, userInfo }) => {
             </SummaryInfo>
             {/* 날짜 */}
             <SummaryInfo>{writeTime}</SummaryInfo>
-            <div>{articleInfo.DateTime}</div>
           </SummaryInfoWrap>
+          {/* 아랫줄 */}
           {/* 제목 */}
+          <SummaryInfoWrap2>
           <SummaryHeadline>{articleInfo.title}</SummaryHeadline>
+          {/* 만남 희망 일시 */}
+          <DateTimeContainer>
+          <AccessAlarmIcon/>
+          <DateTimeWrap>
+          <DateTimeText>{DateTimeYM}</DateTimeText>
+          <DateTimeText>{DateTimeHm}</DateTimeText>
+          </DateTimeWrap>
+          </DateTimeContainer>
+          </SummaryInfoWrap2>
         </SummaryContent>
       </SummaryContainer>
       {/* 모달 */}
@@ -171,11 +195,42 @@ const SummaryInfoWrap = styled.div`
   justify-content: space-between;
 `;
 
+
+
+const DateTimeContainer = styled.div`
+  display:flex;
+  justify-content:end;
+  align-items:center;
+  width:80px;
+  & .MuiSvgIcon-root {
+    color:#4D207A;
+    width:15px;
+    height:15px;
+    margin-right:5px;
+  }
+`
+
+const SummaryInfoWrap2=styled.div`
+  display:flex;
+  width:100%;
+  justify-content:space-between;
+`
+
+const DateTimeWrap = styled.div`
+`
+
+const DateTimeText = styled(BodyText)`
+  color:#111111;
+  text-align:right;
+  color:#4D207A;
+`
+
 const SummaryHeadline = styled(BodyText)`
   text-align: left;
   color: #111111;
   height: 44px;
   overflow-y: hidden;
+  width:200px;
 `;
 
 const DetailedHeadline = styled(EmphasisText)`
@@ -266,4 +321,5 @@ const StyledMenuItem = styled(MenuItem)`
     font-family: "Pretendard-Regular";
   }
 `;
+
 export default DetailedArticle;
