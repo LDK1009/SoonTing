@@ -10,7 +10,6 @@ import MyStudentCard from "./MyStudentCard";
 import StudentCard from "./StudentCard";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 const DetailedArticle = ({ articleInfo, userInfo }) => {
   const [open, setOpen] = useState(false); // 모달창 열기/닫기
