@@ -204,7 +204,7 @@ const StyledInput = styled(TextField)`
 
 // 글쓰기 버튼
 export const WriteButton = styled.button`
-  background-color: #4d207a;
+  background-color: #739FF0;
   width: 150px;
   height: 40px;
   border-radius: 10px;
