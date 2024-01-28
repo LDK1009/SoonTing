@@ -155,7 +155,7 @@ const MyInfo = () => {
           name="number" // name을 username으로 설정하여 form 객체의 username 키의 값을 변경할 수 있도록한다
           onChange={onChange} // onChange 시에 onChange 함수 호출
         />
-        <WarningText>입력하신 정보는 서비스 이용에 활용될 수 있습니다.</WarningText>
+        <WarningText>입력하신 정보는<span style={{fontWeight:'bold'}}> '순팅' </span>외에 다른 목적으로 사용되지 않습니다.</WarningText>
         <ModifyButton onClick={setMyInfo}>수정완료</ModifyButton>
       </Container>
     </>
