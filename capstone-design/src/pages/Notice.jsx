@@ -7,6 +7,11 @@ import { MainTitleText } from "./SignIn";
 const Notice = () => {
   const data = [
     {
+      headline: "[오류수정] 글쓰기 예외처리",
+      date: "2024-01-29",
+      contents: "글쓰기 정보를 모두 입력해야만 팅(게시물)이 등록됩니다.",
+    },
+    {
       headline: "[기능] 매칭 기능 변경",
       date: "2024-01-06",
       contents: [

@@ -33,7 +33,7 @@ const AddArticle = ({ userData }) => {
 
   ////////// 게시글 등록 함수
   const addArticle = async () => {
-    if (submitForm.title && submitForm.content) {
+    if (submitForm.category && submitForm.people && submitForm.DateTime && submitForm.title && submitForm.content ) {
       const timeStamp = currentTime(); // 게시글 등록 시간
       const docName = `${submitForm.uid}_${timeStamp}`; // 수정된 부분
       await setDoc(doc(db, "articles", docName), {
@@ -152,7 +152,7 @@ const AddArticle = ({ userData }) => {
                   showDaysOutsideCurrentMonth
                   format="MM월 DD일 HH시mm분"
                   label="날짜 및 시간"
-                  // value={meatingDate || dayjs()}
+                  value={meatingDate}
                   onChange={(newValue) => setMeatingDate(newValue.format("YYYY년MM월DD일HH시mm분"))}
                 />
               </DemoContainer>
