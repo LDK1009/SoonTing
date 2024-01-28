@@ -24,7 +24,6 @@ const DetailedArticle = ({ articleInfo, userInfo }) => {
   const matchingApplyButtonClick = () => {
     matchingApply();
     addMatchingApplyCollection();
-    sendMessage();
   }
 
   ////////// 게시물 매칭자 컬렉션에 신청자 정보 추가
@@ -47,11 +46,6 @@ const DetailedArticle = ({ articleInfo, userInfo }) => {
     });
     console.log("신청한 게시물에 게시물 저장 완료");
   };
-
-  const sendMessage = () =>{
-    let text = "메시지 테스트";
-    window.location.href="sms:" +articleInfo.number+"?body="+text;
-  }
 
   ////////// 스크랩 게시물에 추가
   // const addMatchingApplyCollection = async () => {
