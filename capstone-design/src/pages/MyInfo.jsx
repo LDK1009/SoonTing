@@ -156,7 +156,7 @@ const MyInfo = () => {
           onChange={onChange} // onChange 시에 onChange 함수 호출
         />
         <WarningText>입력하신 정보는<span style={{fontWeight:'bold'}}> '순팅' </span>외에 다른 목적으로 사용되지 않습니다.</WarningText>
-        <ModifyButton onClick={setMyInfo}>수정완료</ModifyButton>
+        <ModifyButton style={{marginBottom:'80px'}} onClick={setMyInfo}>수정완료</ModifyButton>
       </Container>
     </>
   );

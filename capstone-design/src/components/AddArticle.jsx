@@ -99,7 +99,7 @@ const AddArticle = ({ userData }) => {
   return (
     <>
       {/* 모달 전 */}
-      <WriteButton onClick={handleOpen}>글쓰기</WriteButton>
+      <WriteButton style={{marginBottom:'80px'}} onClick={handleOpen}>글쓰기</WriteButton>
       {/* 모달 후*/}
       <Modal open={open} onClose={handleClose}>
         <ModalContainer>
