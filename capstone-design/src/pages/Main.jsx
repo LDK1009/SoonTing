@@ -247,10 +247,12 @@ export const Background = styled.div`
 
 // 게시물 컨테이너
 export const ArticleContainer = styled.div`
-  width: 320px;
+  width: 330px;
   height: 550px;
   overflow: auto;
-  padding: 0px 10px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
   margin-bottom: 20px;
 
   /* Chrome, Safari, Opera*/

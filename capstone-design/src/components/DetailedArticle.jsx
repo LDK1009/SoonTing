@@ -144,6 +144,7 @@ const DetailedArticle = ({ articleInfo, userInfo }) => {
     </>
   );
 };
+
 const StyledModal = styled(Modal)`
   &:focus-visible {
     outline: 0px;
@@ -169,13 +170,14 @@ const StyledModalBox = styled(Box)`
 `;
 
 const SummaryContainer = styled.div`
-  width: 300px;
+  width: 320px;
   height: 80px;
-  border: 2px solid #72c6ef;
+  border: 2px solid #739FF0;
   border-radius: 15px;
   display: flex;
   align-items: center;
   margin-bottom: 30px;
+  /* background-color:pink; */
 `;
 
 const SummaryContent = styled.div`
@@ -202,7 +204,7 @@ const DateTimeContainer = styled.div`
   align-items:center;
   width:80px;
   & .MuiSvgIcon-root {
-    color:#4D207A;
+    color:#26539C;
     width:15px;
     height:15px;
     margin-right:5px;
@@ -219,14 +221,13 @@ const DateTimeWrap = styled.div`
 `
 
 const DateTimeText = styled(BodyText)`
-  color:#111111;
+  color:#26539C;
   text-align:right;
-  color:#4D207A;
 `
 
 const SummaryHeadline = styled(BodyText)`
   text-align: left;
-  color: #111111;
+  color: #26539C;
   height: 44px;
   overflow-y: hidden;
   width:200px;
