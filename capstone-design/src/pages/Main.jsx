@@ -98,9 +98,6 @@ const Main = () => {
       case "순팅":
         setSoontingArticles(() => newData);
         break;
-      case "번개팅":
-        setThundertingArticles(() => newData);
-        break;
       case "과팅":
         setGwatingArticles(() => newData);
         break;
@@ -155,15 +152,6 @@ const Main = () => {
     );
   };
 
-  ////////// 마운트
-  useEffect(() => {
-    readUserInfo();
-    GetDocs("순팅");
-    GetDocs("번개팅");
-    GetDocs("과팅");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   ////////// 밥팅,스터팅,과팅 게시물 모두 로드 후 & 카테고리 변경시 렌더링할(현재) 게시물 변경
   useEffect(() => {
     if (categoryState.soonting) {
@@ -177,6 +165,35 @@ const Main = () => {
     }
   }, [soontingArticles, thundertingArticles, gwatingArticles, categoryState]);
 
+  // 순팅 게시물을 모두 가져온 후
+  useEffect(() => {
+    const newData = [];
+    // 오늘의 년월일 구하기
+    const t = new Date();
+    const year = t.getFullYear();
+    const month = String(t.getMonth() + 1).padStart(2, "0"); // 월은 0부터 시작하므로 1을 더하고, padStart로 두 자리로 만듭니다.
+    const day = String(t.getDate()).padStart(2, "0"); // 일도 padStart로 두 자리로 만듭니다.
+    const todayYMD = `${year}년${month}월${day}일`; // 오늘 날짜
+    // 아이템 순회
+    soontingArticles.forEach((item) => {
+      // 게시물 매칭 년월일 구하기
+      const dateTimeYMD = item.DateTime.substring(0, 11);
+      // 오늘의 년월일이 게시물의 매칭 년월일과 같다면
+      if (todayYMD === dateTimeYMD) {
+        newData.push(item); // 배열에 추가
+      }
+    });
+    // 아이템을 모두 순회하며 년월일이 같은 게시물만 newData에 담겼다면 번개팅 게시물로 옮기기
+    setThundertingArticles(newData);
+  }, [soontingArticles]);
+
+  ////////// 마운트
+  useEffect(() => {
+    readUserInfo();
+    GetDocs("순팅");
+    GetDocs("과팅");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
   //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
   //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
