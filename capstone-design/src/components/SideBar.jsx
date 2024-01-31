@@ -17,10 +17,13 @@ import { Divider } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import LogoutIcon from "@mui/icons-material/Logout";
 import MyStudentCard from "./MyStudentCard";
-import HowToVoteIcon from '@mui/icons-material/HowToVote';
+import HowToVoteIcon from "@mui/icons-material/HowToVote";
+import { useCookie } from "../hooks/useCookie";
 
 export default function SideBar() {
   const navigate = useNavigate(); // 네비게이트 변수
+  //커스텀훅 가져오기
+  const { deleteCookie } = useCookie();
 
   ////////// 홈 페이지로 이동
   const toHome = () => {
@@ -73,7 +76,8 @@ export default function SideBar() {
         alert("서비스 준비중입니다😥");
         break;
       case 2:
-        logout("uid");
+        deleteCookie("uid"); // 쿠키 삭제
+        navigate("/");
         break;
       default:
         break;
@@ -133,17 +137,6 @@ export default function SideBar() {
       </List>
     </Box>
   );
-
-  ////////// 로그아웃(쿠키 삭제하기)
-  const logout = (cookieName) => {
-    // 현재 날짜와 시간을 구합니다.
-    var currentDate = new Date();
-    // 쿠키의 만료일을 현재 시간 이전으로 설정합니다.
-    currentDate.setFullYear(currentDate.getFullYear() - 1);
-    // 쿠키 설정
-    document.cookie = cookieName + "=; expires=" + currentDate.toUTCString() + "; path=/";
-    navigate("/");
-  };
 
   //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
   return (

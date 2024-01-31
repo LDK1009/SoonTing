@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 export function useCookie() {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   ////////// 쿠키 저장하기
   const setCookie = (name, value, daysToExpire) => {
@@ -29,5 +29,15 @@ export function useCookie() {
     navigate("/"); // 쿠키가 없을 경우 로그인 화면으로 이동.
   };
 
-  return { setCookie, getCookie };
+  ////////// 쿠키 삭제하기
+  const deleteCookie = (name) => {
+    // 현재 날짜와 시간을 구합니다.
+    const currentDate = new Date();
+    // 쿠키의 만료일을 현재 시간 이전으로 설정합니다.
+    currentDate.setFullYear(currentDate.getFullYear() - 1);
+    // 쿠키 설정
+    document.cookie = name + "=; expires=" + currentDate.toUTCString() + "; path=/";
+  };
+
+  return { setCookie, getCookie, deleteCookie };
 }
