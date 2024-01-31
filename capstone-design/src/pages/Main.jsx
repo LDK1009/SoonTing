@@ -6,8 +6,8 @@ import AddArticle from "../components/AddArticle";
 import DetailedArticle from "../components/DetailedArticle";
 import styled from "styled-components";
 import Header from "../components/Header";
-import categoryImg1 from "../assets/밥팅.png";
-import categoryImg2 from "../assets/스터팅.png";
+import categoryImg1 from "../assets/순팅.png";
+import categoryImg2 from "../assets/번개팅.png";
 import categoryImg3 from "../assets/과팅.png";
 import { useEffect, useState } from "react";
 import { useCookie } from "../hooks/useCookie";
@@ -188,14 +188,14 @@ const Main = () => {
         {/* 카테고리 */}
         <CategoryItemGroup>
           <CategoryItem
-            label="밥팅"
+            label="순팅"
             src={categoryImg1}
             isSelect={categoryState.babting}
             propsFunc={changeCategory}
             propsFuncParam="babting"
           />
           <CategoryItem
-            label="스터팅"
+            label="번개팅"
             src={categoryImg2}
             isSelect={categoryState.stuting}
             propsFunc={changeCategory}
