@@ -11,6 +11,7 @@ import categoryImg2 from "../assets/스터팅.png";
 import categoryImg3 from "../assets/과팅.png";
 import { useEffect,useState } from 'react';
 
+//Vercel환경변수 적용 커밋
 const Main = () => {
   // useNavigate 프롭스 전달 받기(uid)
   const location = useLocation();
