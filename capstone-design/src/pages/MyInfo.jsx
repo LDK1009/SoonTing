@@ -67,7 +67,7 @@ const MyInfo = () => {
         ...form, // 입력값이 갱신된 유저 정보로 문서를 덮어 씌운다
       });
       alert("수정완료"); // 수정완료 메시지
-      window.location.reload(); // 새로고침
+      navigate("/Main");
     }
     // 하나라도 미입력 했을 시
     else {
