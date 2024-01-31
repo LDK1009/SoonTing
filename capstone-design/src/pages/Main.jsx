@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { db } from "../firebaseConfig";
 import { doc, getDoc, collection, query, where, getDocs, orderBy } from "firebase/firestore";
@@ -9,65 +9,31 @@ import Header from "../components/Header";
 import categoryImg1 from "../assets/밥팅.png";
 import categoryImg2 from "../assets/스터팅.png";
 import categoryImg3 from "../assets/과팅.png";
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from "react";
+import { useCookie } from "../hooks/useCookie";
 
 //Vercel환경변수 적용 커밋
 const Main = () => {
-  // useNavigate 프롭스 전달 받기(uid)
-  const location = useLocation();
-  // uid
-  const userUid = location.state.uid;
+  const { getCookie } = useCookie();
+  // 쿠키에서 uid 가져오기
+  const uid = getCookie("uid");
   // 네비게이트 변수
   const navigate = useNavigate();
-
-  // 밥팅,스터팅,과팅 게시물
-  const [babtingArticles, setBabtingArticles] = React.useState([]);
+  // 밥팅 게시물
+  const [babtingArticles, setBabtingArticles] = useState([]);
+  // 스터팅 게시물
   const [stutingArticles, setStutingArticles] = useState([]); // 스터팅 게시글
+  // 과팅 게시물
   const [gwatingArticles, setGwatingArticles] = useState([]); // 과팅 게시글
   // 현재 게시물(렌더링할 게시물)
   const [currentArticles, setCurrentArticles] = useState([]); // 카테고리 변경에 따라 현재 보여줄 게시물
-
   // 카테고리 상태
   const [categoryState, setCategoryState] = useState({
     babting: true,
     stuting: false,
     gwating: false,
   });
-
-  ////////// 카테고리 변경
-  const changeCategory = (category) => {
-    switch (category) {
-      case "babting":
-        setCategoryState({
-          babting: true,
-          stuting: false,
-          gwating: false,
-        });
-        console.log("카테고리클릭!");
-        break;
-      case "stuting":
-        setCategoryState({
-          babting: false,
-          stuting: true,
-          gwating: false,
-        });
-        console.log("카테고리클릭!");
-        break;
-      case "gwating":
-        setCategoryState({
-          babting: false,
-          stuting: false,
-          gwating: true,
-        });
-        console.log("카테고리클릭!");
-        break;
-      default:
-        console.log("카테고리클릭! 하지만 아무일도 없었다");
-        break;
-    }
-  };
-
-  ////////// 회원 정보
+  ////////// 유저 정보
   const [userData, setUserData] = useState({
     uid: "",
     name: "",
@@ -79,24 +45,34 @@ const Main = () => {
     number: "",
   });
 
-  ////////// 회원 정보 불러오기
+  ////////// 유저 정보 불러오기
   const readUserInfo = async () => {
-    // DB에 문서명이 uid인 문서가 있는지 확인하고 있다면 해당 유저 정보를 가져오기
-    const docRef = doc(db, "users", userUid);
+    // users컬렉션에 uid인 문서가 있는지 확인하고 있다면 해당 유저 정보를 가져오기
+    const docRef = doc(db, "users", uid);
     const docSnap = await getDoc(docRef);
-
+    // uid인 문서가 있을 경우
     if (docSnap.exists()) {
-      // setUserData(() => docSnap.data());
-      // console.log("문서 가져오는중");
-      const userDataFromDb = docSnap.data();
-      setUserData(userDataFromDb);
-      console.log("문서 가져오는 중");
+      const userDataFromDb = docSnap.data(); //DB에서 가져온 유저 정보
+      setUserData(userDataFromDb); //유저 정보 저
       // 데이터 업데이트 후에 isEnterUserInfo 함수 호출
       isEnterUserInfo(userDataFromDb);
     } else {
       // docSnap.data() will be undefined in this case
       alert("회원정보를 찾을 수 없습니다.");
       navigate("/");
+    }
+  };
+
+  ////////// 사용자 정보 입력 여부
+  const isEnterUserInfo = async (userData) => {
+    if (userData.name && userData.major && userData.gender && userData.age && userData.number) {
+      console.log("사용자 정보가 모두 입력되어 있습니다.");
+    } else {
+      console.log("사용자 정보가 모두 입력되지 않았습니다.\n사용자 정보 >>\n", userData);
+      alert("사용자 정보를 모두 입력해 주세요.");
+      navigate("/MyInfo", {
+        state: { uid: uid },
+      });
     }
   };
 
@@ -134,6 +110,39 @@ const Main = () => {
     }
   };
 
+  ////////// 카테고리 변경
+  const changeCategory = (category) => {
+    switch (category) {
+      case "babting":
+        setCategoryState({
+          babting: true,
+          stuting: false,
+          gwating: false,
+        });
+        console.log("카테고리클릭!");
+        break;
+      case "stuting":
+        setCategoryState({
+          babting: false,
+          stuting: true,
+          gwating: false,
+        });
+        console.log("카테고리클릭!");
+        break;
+      case "gwating":
+        setCategoryState({
+          babting: false,
+          stuting: false,
+          gwating: true,
+        });
+        console.log("카테고리클릭!");
+        break;
+      default:
+        console.log("카테고리클릭! 하지만 아무일도 없었다");
+        break;
+    }
+  };
+
   ////////// 게시글 렌더링
   const renderArticles = (arr) => {
     return (
@@ -147,28 +156,12 @@ const Main = () => {
     );
   };
 
-  ////////// 사용자 정보 입력 여부
-  const isEnterUserInfo = async (userData) => {
-    if (userData.name && userData.major && userData.gender && userData.age && userData.number) {
-      console.log("사용자 정보가 모두 입력되어 있습니다.");
-    } else {
-      console.log("사용자 정보가 모두 입력되지 않았습니다.\n사용자 정보 >>\n", userData);
-      alert("사용자 정보를 모두 입력해 주세요.");
-      navigate("/MyInfo", {
-        state: { uid: userUid },
-      });
-    }
-  };
-
   ////////// 마운트
   useEffect(() => {
-    const fetchData = async () => {
-      await readUserInfo();
-      GetDocs("밥팅");
-      GetDocs("스터팅");
-      GetDocs("과팅");
-    };
-    fetchData();
+    readUserInfo();
+    GetDocs("밥팅");
+    GetDocs("스터팅");
+    GetDocs("과팅");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -251,9 +244,9 @@ export const ArticleContainer = styled.div`
   width: 330px;
   height: 570px;
   overflow: auto;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-bottom: 20px;
 
   /* Chrome, Safari, Opera*/
@@ -279,7 +272,7 @@ const CategortItemImg = styled.img`
   width: 90px;
   height: 90px;
   opacity: ${(props) => (props.isSelect ? "1" : "0.5")};
-  `;
+`;
 
 export const CategortItemButton = styled.button`
   background-color: white;
@@ -288,7 +281,7 @@ export const CategortItemButton = styled.button`
   border-radius: 10px;
   border-width: 2px;
   border-style: solid;
-  border-color: #739FF0;
+  border-color: #739ff0;
   color: ${(props) => (props.isSelect ? "#26539C" : "#767676")};
   font-size: 14px;
   font-weight: 600;

@@ -10,18 +10,26 @@ import ScrollIcon from "../components/ScrollIcon";
 import coreValueItemImg1 from "../assets/만남.png";
 import coreValueItemImg2 from "../assets/소통.png";
 import coreValueItemImg3 from "../assets/협력.png";
+import { useCookie } from "../hooks/useCookie";
 
 const SignIn = () => {
-  const navigate = useNavigate(); // 네비게이트 변수
+// useCookie 커스텀 훅
+  const { setCookie, getCookie } = useCookie();
+
+  // 네비게이트 변수
+  const navigate = useNavigate(); 
+  // '슬라이드 텍스트' 데이터
   const slideText = [
     "이번 주 토요일에 새로운 카페 탐방 갈 사람?! 낼 오후에 같이 쇼핑 갈 사람 구한다?! 담주 일욜에 같이 요가 수업 들을 사람?! 이번 주 금욜에 스파에서 마사지 받을 사람?! 낼 저녁에 같이 요리 대결할 사람?! 담주 토욜에 새로 개장한 영화관 갈 사람?! 이번 주 일욜에 새로운 레스토랑에서 점심 먹을 사람?! 낼 오후에 동네 공원에서 피크닉 할 사람?! 담주 목욜에 새로운 공연 보러 갈 사람?! 이번 주 토욜에 같이 스케이트 보드 타러 갈 사람?! ",
     "낼 저녁에 요가 수업 같이 들을 사람?! 담주 일욜에 동네 카페에서 새로운 메뉴 시식할 사람?! 이번 주 금욜에 열리는 축제 같이 갈 사람?! 낼 오후에 새로 개장한 공원에서 산책할 사람?! 담주 수욜에 새로운 카페에서 커피 한잔 할 사람?! 이번 주 토욜에 전시회 같이 갈 사람?! 낼 저녁에 새로운 레스토랑에서 저녁 같이 먹을 사람?! 담주 일욜에 오픈 마이크 이벤트 같이 갈 사람?! 이번 주 금욜에 새로 개장한 헬스장 같이 갈 사람?! 낼 오후에 다양한 음식 같이 먹을 사람?! 이번 주말에 놀이공원 같이 갈 사람?! 내일 점심에 브런치 같이 먹을 사람?! 다음 주에 같이 여행 갈 사람?! 이번 주에 같이 영화 보러 갈 사람?! 내일 저녁에 같이 술 한잔 할 사람?! 다음 주에 같이 등산 갈 사람?! 이번 주말에 같이 캠핑 갈 사람?! 내일 점심에 같이 카페 갈 사람?! 다음 주에 같이 미술관 갈 사람?! 이번 주에 같이 콘서트 갈 사람?! 이번 주말에 같이 바다 보러 갈 사람?! 내일 점심에 같이 초밥 먹으러 갈 사람?! 다음 주에 같이 미술관 갈 사람?! 이번 주에 같이 영화 보러 갈 사람?! 내일 저녁에 같이 술 한잔 할 사람?! 다음 주에 같이 캠핑 갈 사람?! 이번 주말에 같이 놀이공원 갈 사람?! 내일 점심에 같이 브런치 먹으러 갈 사람?! 다음 주에 같이 여행 갈 사람?! 이번 주에 같이 콘서트 갈 사람?! 이번 주말에 같이 드라이브 갈 사람?! 내일 점심에 같이 파스타 먹으러 갈 사람?! 다음 주에 같이 동물원 갈 사람?! 이번 주에 같이 뮤지컬 보러 갈 사람?! 내일 저녁에 같이 고기 먹으러 갈 사람?! 다음 주에 같이 수영장 갈 사람?! 이번 주말에 같이 자전거 타러 갈 사람?! 내일 점심에 같이 샐러드 먹으러 갈 사람?! 다음 주에 같이 박물관 갈 사람?! 이번 주에 같이 연극 보러 갈 사람?! 이번 주말에 같이 등산 갈 사람?! 내일 점심에 같이 떡볶이 먹으러 갈 사람?! 다음 주에 같이 스케이트장 갈 사람?! 이번 주에 같이 전시회 갈 사람?! 내일 저녁에 같이 치맥 먹으러 갈 사람?! 다음 주에 같이 놀이공원 갈 사람?! 이번 주말에 같이 낚시 갈 사람?! 내일 점심에 같이 샌드위치 먹으러 갈 사람?! 다음 주에 같이 워터파크 갈 사람?! 이번 주에 같이 음악회 갈 사람?! 이번 주말에 같이 캠핑 갈 사람?! 내일 점심에 같이 마라탕 먹으러 갈 사람?! 다음 주에 같이 스키장 갈 사람?! 이번 주에 같이 재즈바 갈 사람?! 내일 저녁에 같이 회 먹으러 갈 사람?! 다음 주에 같이 아이스링크장 갈 사람?! 이번 주말에 서핑하러 갈 사람?! 내일 점심에 같이 라멘 먹으러 갈 사람?! 다음 주에 같이 VR체험관 갈 사람?! 이번 주에 같이 뮤지컬 보러 갈 사람?! 이번 주말에 같이 자전거 타러 갈 사람?! 내일 점심에 같이 돈까스 먹으러 갈 사람?! 다음 주에 같이 볼링 치러 갈 사람?! 이번 주에 같이 도서관 갈 사람?! 내일 저녁에 같이 피자 먹으러 갈 사람?!",
-  ]; // 슬라이드 텍스트 데이터
+  ]; 
+
+  // '핵심가치' 데이터
   const coreValueItemData = [
     { label: "만남", src: coreValueItemImg1 },
     { label: "소통", src: coreValueItemImg2 },
     { label: "협력", src: coreValueItemImg3 },
-  ]; // 핵심가치 아이템 데이터
+  ]; 
 
   ////////// 구글 로그인
   const GoogleSignIn = () => {
@@ -30,9 +38,9 @@ const SignIn = () => {
         //로그인 성공 시
         // const credential = GoogleAuthProvider.credentialFromResult(result); // 모름
         // const token = credential.accessToken; // 토큰을 받는다.
-        const user = result.user; // 유저 데이터
+        const user = result.user; // 구글 로그인에서 받은 유저 데이터
         // console.log("유저 데이터!!!" + JSON.stringify(user, null, 2));
-        setCookie("uid", user.uid, 7); // 쿠키 저장(7일) // uid라는 이름으로 유저의 uid를 쿠키에 7일 동안 저장한다.
+        setCookie("uid", user.uid, 100); // 쿠키 저장(30일) // uid라는 이름으로 유저의 uid를 쿠키에 7일 동안 저장한다.
         isUserSignUp(user); // 회원가입 여부 판단
       })
       .catch((error) => {
@@ -77,41 +85,15 @@ const SignIn = () => {
     }
   };
 
-  ////////// 쿠키 저장
-  const setCookie = (name, value, daysToExpire) => {
-    let expirationDate = new Date();
-    expirationDate.setDate(expirationDate.getDate() + daysToExpire);
-
-    let cookieString =
-      name + "=" + encodeURIComponent(value) + "; expires=" + expirationDate.toUTCString() + "; path=/";
-    document.cookie = cookieString;
-  };
-
-  ////////// 쿠키 읽어오기
-  const getCookie = (name) => {
-    let cookies = document.cookie.split(";");
-    for (let i = 0; i < cookies.length; i++) {
-      let cookie = cookies[i].trim();
-      if (cookie.indexOf(name + "=") === 0) {
-        return decodeURIComponent(cookie.substring(name.length + 1));
-      }
-    }
-    return null;
-  };
-
-  // ////////// 쿠키 삭제하기
-  // function deleteCookie(name) {
-  //   document.cookie = encodeURIComponent(name) + "=; expires=Thu, 01 JAN 1999 00:00:10 GMT";
-  // }
 
   ////////// 쿠키 보유 여부
   const isHaveCookie = () => {
     // 쿠키에 저장된 uid를 가져온다
-    const userUid = getCookie("uid");
+    const uid = getCookie("uid");
     // 쿠키에 저장된 uid가 있다면 Main 페이지로 로드하면서 uid를 네비게이트 프롭스로 전달한다.
-    if (userUid) {
+    if (uid) {
       navigate("/Main", {
-        state: { uid: userUid },
+        state: { uid: uid },
       });
     }
   };
