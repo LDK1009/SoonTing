@@ -1,6 +1,5 @@
 import { collection, doc, getDocs, orderBy, query, setDoc, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import { db } from "../firebaseConfig";
 import { CategortItemButton } from "./Main";
 import styled from "styled-components";
@@ -16,16 +15,25 @@ import Header from "../components/Header";
 import { BodyBlurText, BodyText } from "./SignIn";
 import { WriteButton } from "../components/AddArticle";
 import StudentCard from "../components/StudentCard";
+import { useCookie } from "../hooks/useCookie";
 
 const MyArticle = () => {
-  const navProps = useLocation(); // useNavigate 프롭스 전달 받기
-  const Uid = navProps.state.uid; // 네비게이트로 전달 받은 uid
-  const [expiredArticles, setExpiredArticles] = useState([]); // 만료된 게시물(1차원 배열)
-  const [unExpiredArticles, setUnExpiredArticles] = useState([]); // 만료되지 않은 게시물(1차원 배열)
-  const [allApplication, setAllApplication] = useState([[], []]); // 모든 게시물의 모든 신청자 정보(2차원 배열)
-  const [allMatchingUser, setAllMatchingUser] = useState([[], []]); // 모든 게시물의 모든 매칭자 정보(2차원 배열)
-  const [isLoadExpired, setIsLoadExpired] = useState(false); // 불러올 게시물 스위치(만료 전/후)
-  const [sumApplication, setSumApplication] = useState([]); // 게시물별 총 신청인원
+  //커스텀훅 가져오기
+  const { getCookie } = useCookie();
+  // 쿠키에서 uid 가져오기
+  const uid = getCookie("uid");
+  // 만료된 게시물(1차원 배열)
+  const [expiredArticles, setExpiredArticles] = useState([]);
+  // 만료되지 않은 게시물(1차원 배열)
+  const [unExpiredArticles, setUnExpiredArticles] = useState([]);
+  // 모든 게시물의 모든 신청자 정보(2차원 배열)
+  const [allApplication, setAllApplication] = useState([[], []]);
+  // 모든 게시물의 모든 매칭자 정보(2차원 배열)
+  const [allMatchingUser, setAllMatchingUser] = useState([[], []]);
+  // 불러올 게시물 스위치(만료 전/후)
+  const [isLoadExpired, setIsLoadExpired] = useState(false);
+  // 게시물별 총 신청인원
+  const [sumApplication, setSumApplication] = useState([]);
 
   ////////// 게시글 불러오기
   const getMyArticles = async (expiration) => {
@@ -33,7 +41,7 @@ const MyArticle = () => {
     const articlesRef = collection(db, "articles"); // articles 컬렉션 참조
     const q = query(
       articlesRef,
-      where("uid", "==", Uid), // uid가 일치한 게시글
+      where("uid", "==", uid), // uid가 일치한 게시글
       where("expiration", "==", expiration), // 만료 여부
       orderBy("time", "desc") // 시간순 정렬
     ); // 최근 게시글이 최상단에 위치
