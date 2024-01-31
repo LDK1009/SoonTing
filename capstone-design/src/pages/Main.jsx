@@ -21,17 +21,17 @@ const Main = () => {
   // 네비게이트 변수
   const navigate = useNavigate();
   // 밥팅 게시물
-  const [babtingArticles, setBabtingArticles] = useState([]);
+  const [soontingArticles, setSoontingArticles] = useState([]);
   // 스터팅 게시물
-  const [stutingArticles, setStutingArticles] = useState([]); // 스터팅 게시글
+  const [thundertingArticles, setThundertingArticles] = useState([]); // 스터팅 게시글
   // 과팅 게시물
   const [gwatingArticles, setGwatingArticles] = useState([]); // 과팅 게시글
   // 현재 게시물(렌더링할 게시물)
   const [currentArticles, setCurrentArticles] = useState([]); // 카테고리 변경에 따라 현재 보여줄 게시물
   // 카테고리 상태
   const [categoryState, setCategoryState] = useState({
-    babting: true,
-    stuting: false,
+    soonting: true,
+    thunderting: false,
     gwating: false,
   });
   ////////// 유저 정보
@@ -95,11 +95,11 @@ const Main = () => {
       newData.push(doc.data());
     });
     switch (category) {
-      case "밥팅":
-        setBabtingArticles(() => newData);
+      case "순팅":
+        setSoontingArticles(() => newData);
         break;
-      case "스터팅":
-        setStutingArticles(() => newData);
+      case "번개팅":
+        setThundertingArticles(() => newData);
         break;
       case "과팅":
         setGwatingArticles(() => newData);
@@ -112,26 +112,26 @@ const Main = () => {
   ////////// 카테고리 변경
   const changeCategory = (category) => {
     switch (category) {
-      case "babting":
+      case "soonting":
         setCategoryState({
-          babting: true,
-          stuting: false,
+          soonting: true,
+          thunderting: false,
           gwating: false,
         });
         console.log("카테고리클릭!");
         break;
-      case "stuting":
+      case "thunderting":
         setCategoryState({
-          babting: false,
-          stuting: true,
+          soonting: false,
+          thunderting: true,
           gwating: false,
         });
         console.log("카테고리클릭!");
         break;
       case "gwating":
         setCategoryState({
-          babting: false,
-          stuting: false,
+          soonting: false,
+          thunderting: false,
           gwating: true,
         });
         console.log("카테고리클릭!");
@@ -158,24 +158,24 @@ const Main = () => {
   ////////// 마운트
   useEffect(() => {
     readUserInfo();
-    GetDocs("밥팅");
-    GetDocs("스터팅");
+    GetDocs("순팅");
+    GetDocs("번개팅");
     GetDocs("과팅");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   ////////// 밥팅,스터팅,과팅 게시물 모두 로드 후 & 카테고리 변경시 렌더링할(현재) 게시물 변경
   useEffect(() => {
-    if (categoryState.babting) {
-      setCurrentArticles(babtingArticles);
-    } else if (categoryState.stuting) {
-      setCurrentArticles(stutingArticles);
+    if (categoryState.soonting) {
+      setCurrentArticles(soontingArticles);
+    } else if (categoryState.thunderting) {
+      setCurrentArticles(thundertingArticles);
     } else if (categoryState.gwating) {
       setCurrentArticles(gwatingArticles);
     } else {
       console.log("카테고리 선택 오류");
     }
-  }, [babtingArticles, stutingArticles, gwatingArticles, categoryState]);
+  }, [soontingArticles, thundertingArticles, gwatingArticles, categoryState]);
 
   //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
   //////////////////////////////////////////////////렌더링//////////////////////////////////////////////////
@@ -190,16 +190,16 @@ const Main = () => {
           <CategoryItem
             label="순팅"
             src={categoryImg1}
-            isSelect={categoryState.babting}
+            isSelect={categoryState.soonting}
             propsFunc={changeCategory}
-            propsFuncParam="babting"
+            propsFuncParam="soonting"
           />
           <CategoryItem
             label="번개팅"
             src={categoryImg2}
-            isSelect={categoryState.stuting}
+            isSelect={categoryState.thunderting}
             propsFunc={changeCategory}
-            propsFuncParam="stuting"
+            propsFuncParam="thunderting"
           />
           <CategoryItem
             label="과팅"
