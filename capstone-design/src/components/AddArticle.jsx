@@ -120,8 +120,7 @@ const AddArticle = ({ userData }) => {
                 onChange={onChange}
                 label="카테고리"
               >
-                <StyledMenuItem value="밥팅">밥팅</StyledMenuItem>
-                <StyledMenuItem value="스터팅">스터팅</StyledMenuItem>
+                <StyledMenuItem value="순팅">순팅</StyledMenuItem>
                 <StyledMenuItem value="과팅">과팅</StyledMenuItem>
               </StyledSelect>
             </SelectContainer>
