@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { db } from "../firebaseConfig";
 import { doc, getDoc, collection, query, where, getDocs, orderBy } from "firebase/firestore";
 import AddArticle from "../components/AddArticle";
@@ -14,6 +14,7 @@ import { useCookie } from "../hooks/useCookie";
 
 //Vercel환경변수 적용 커밋
 const Main = () => {
+  //커스텀훅 가져오기
   const { getCookie } = useCookie();
   // 쿠키에서 uid 가져오기
   const uid = getCookie("uid");
