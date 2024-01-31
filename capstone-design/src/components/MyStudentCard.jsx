@@ -67,9 +67,7 @@ const MyStudentCard = ({children, style}) => {
   const alertFixedInfo = () => {
     alert("'내정보' 페이지에서 변경해주세요.😉");
     if (window.confirm("'내정보' 페이지로 이동할까요?🧐")) {
-      navigate("/MyInfo", {
-        state: { uid: uid },
-      });
+      navigate("/MyInfo");
     }
   };
 

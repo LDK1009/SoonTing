@@ -71,9 +71,7 @@ const Main = () => {
     } else {
       console.log("사용자 정보가 모두 입력되지 않았습니다.\n사용자 정보 >>\n", userData);
       alert("사용자 정보를 모두 입력해 주세요.");
-      navigate("/MyInfo", {
-        state: { uid: uid },
-      });
+      navigate("/MyInfo");
     }
   };
 

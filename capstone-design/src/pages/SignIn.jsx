@@ -66,9 +66,7 @@ const SignIn = () => {
     if (docSnap.exists()) {
       // Main 페이지로 로드하면서 uid를 네비게이트 프롭스로 전달한다.
       // console.log("유저 아이디" + userData.uid);
-      navigate("/Main", {
-        state: { uid: userData.uid },
-      });
+      navigate("/Main");
     }
     // 신규 유저의 경우(문서명이 유저의 uid인 문서가 존재하지 않을 경우)
     else {
@@ -79,9 +77,7 @@ const SignIn = () => {
         email: userData.email,
       });
       // 유저 정보 저장을 마친 후 Main 페이지로 로드하면서 uid를 네비게이트 프롭스로 전달한다.
-      navigate("/Main", {
-        state: { uid: userData.uid },
-      });
+      navigate("/Main");
     }
   };
 
@@ -92,9 +88,7 @@ const SignIn = () => {
     const uid = getCookie("uid");
     // 쿠키에 저장된 uid가 있다면 Main 페이지로 로드하면서 uid를 네비게이트 프롭스로 전달한다.
     if (uid) {
-      navigate("/Main", {
-        state: { uid: uid },
-      });
+      navigate("/Main");
     }
   };
 
