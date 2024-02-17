@@ -46,6 +46,9 @@ const Main = () => {
     number: "",
   });
 
+  useEffect(() => {
+    console.log(currentArticles);
+  }, [currentArticles]);
   ////////// 유저 정보 불러오기
   const readUserInfo = async () => {
     // users컬렉션에 uid인 문서가 있는지 확인하고 있다면 해당 유저 정보를 가져오기
@@ -142,13 +145,13 @@ const Main = () => {
   ////////// 게시글 렌더링
   const renderArticles = (arr) => {
     return (
-      <>
+      <div>
         {arr.map((item, index) => (
           <>
             <DetailedArticle key={index} articleInfo={item} userInfo={userData}></DetailedArticle>
           </>
         ))}
-      </>
+      </div>
     );
   };
 
@@ -258,7 +261,7 @@ export const Background = styled.div`
 // 게시물 컨테이너
 export const ArticleContainer = styled.div`
   width: 330px;
-  height: 570px;
+  height: 540px;
   overflow: auto;
   display: flex;
   flex-direction: column;

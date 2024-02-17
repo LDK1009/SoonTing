@@ -183,12 +183,12 @@ const SummaryContainer = styled.div`
 const SummaryContent = styled.div`
   margin: 0px 10px;
   width: 100%;
-`;
+  `;
 
 const SummaryInfo = styled(BodyBlurText)`
   font-size: 12px;
   color: #767676;
-`;
+  `;
 
 const SummaryInfoWrap = styled.div`
   display: flex;
