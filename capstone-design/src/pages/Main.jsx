@@ -11,11 +11,13 @@ import categoryImg2 from "../assets/번개팅.png";
 import categoryImg3 from "../assets/과팅.png";
 import { useEffect, useState } from "react";
 import { useCookie } from "../hooks/useCookie";
+import { useTime } from "../hooks/useTime";
 
 //Vercel환경변수 적용 커밋
 const Main = () => {
   //커스텀훅 가져오기
-  const { getCookie } = useCookie();
+  const { getCookie } = useCookie(); // 쿠키 가져오기 함수
+  const { currentTime } = useTime(); // 현재 시간 가져오기 함수
   // 쿠키에서 uid 가져오기
   const uid = getCookie("uid");
   // 네비게이트 변수
@@ -82,14 +84,15 @@ const Main = () => {
   const GetDocs = async (category) => {
     ////////// 게시글 불러오기
     const articlesRef = collection(db, "articles");
-    // const q = query(articlesRef, where("expiration", "==", false)); // 정렬 없음
-    // const q = query(articlesRef, where("expiration", "==", false), orderBy("time")); // 최근 게시글이 최히단에 위치
+    const todayTime = currentTime();
+    // 만남 시간 순 정렬
     const q = query(
       articlesRef,
       where("expiration", "==", false),
       where("category", "==", category),
-      orderBy("time", "desc")
-    ); // 최근 게시글이 최상단에 위치
+      where("DateTime", ">=", todayTime),
+      orderBy("DateTime", "desc"),
+    ); 
     const newData = [];
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
@@ -97,12 +100,18 @@ const Main = () => {
       // console.log(doc.id, " => ", doc.data().expiration);
       newData.push(doc.data());
     });
+    // 시간 순 정렬
+    const newData2 = newData.sort((a,b) => {
+      if(a.time.slice(0, 11) > b.time.slice(0, 11)) return -1;
+      if(a.time.slice(0, 11) < b.time.slice(0, 11)) return 1;
+      if(a.time.slice(0, 11) == b.time.slice(0, 11)) return 0;
+    });
     switch (category) {
       case "순팅":
-        setSoontingArticles(() => newData);
+        setSoontingArticles(() => newData2);
         break;
       case "과팅":
-        setGwatingArticles(() => newData);
+        setGwatingArticles(() => newData2);
         break;
       default:
         break;
