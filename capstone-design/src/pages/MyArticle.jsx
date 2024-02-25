@@ -126,10 +126,12 @@ const MyArticle = () => {
   ////////// 매칭하기
   const matching = async (docName, matchingUserInfo) => {
     // articles 컬렉션에서 문서명이 docName 인 문서를 찾아 만료 여부를 변경하고 매칭된 상대의 정보를 입력한다.
+    console.log(matchingUserInfo);
     const applicationDocRef = doc(db, `Matching/Application/${docName}`, matchingUserInfo.uid);
     await setDoc(applicationDocRef, { matching: true }, { merge: true }); // 매칭 확정
     const mathingUserDocRef = doc(db, `Matching/MatchingUser/${docName}`, matchingUserInfo.uid);
-    await setDoc(mathingUserDocRef, { ...matchingUserInfo, expiration: true }); // 매칭 확정자에 넣기
+    await setDoc(mathingUserDocRef, { ...matchingUserInfo, matching: true }, { merge: true }); // 매칭 확정자에 넣기
+    console.log(matchingUserInfo);
     alert("매칭 완료! 😘");
     getMyArticles(false);
     getMyArticles(true);
