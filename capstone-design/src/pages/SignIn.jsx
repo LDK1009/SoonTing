@@ -127,7 +127,7 @@ const SignIn = () => {
         {/* 규모 */}
         <PromotionLabel>규모</PromotionLabel>
         <MotionScaleContainer>
-          <MotionScale label="사용자" endNum={79} unit="명" />
+          <MotionScale label="사용자" endNum={162} unit="명" />
           <MotionScale label="매칭" endNum={41} unit="명" />
         </MotionScaleContainer>
         {/* 핵심가치 */}
