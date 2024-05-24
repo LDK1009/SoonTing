@@ -6,7 +6,7 @@
 ## 기술 스택
 | JavaScript | TypeScript |  React   |  Node   |
 | :--------: | :--------: | :------: | :-----: |
-|<img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/000f559f-2f91-4989-afd2-30bd29401751" width="80" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/164d1e8b-0dbb-4e88-99da-aec5e43b2d84" width="50" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/6fc480d4-b066-480a-97f4-f229f7b323ff" width="50" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/bdf8974d-4b38-4073-ad41-3346412139fa)" width="50" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/626df7d2-56d5-4dbc-b414-a25fff17c0be" width="50" height="50"/>
+|<img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/000f559f-2f91-4989-afd2-30bd29401751" width="90" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/164d1e8b-0dbb-4e88-99da-aec5e43b2d84" width="50" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/6fc480d4-b066-480a-97f4-f229f7b323ff" width="50" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/bdf8974d-4b38-4073-ad41-3346412139fa)" width="50" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/626df7d2-56d5-4dbc-b414-a25fff17c0be" width="50" height="50"/>
 
 
 <!--프로젝트 대문 이미지-->
