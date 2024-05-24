@@ -6,30 +6,21 @@
 <!--목차-->
 # 목차
 - [[1] 소개](#1-소개)
-  - [기능](#features)
+  - [기능](#기능)
   - [기술](#기술)
-- [[2] 시작하기](#2-시작하기)
-  - [전제조건](#prerequisites)
-  - [설치](#installation)
-  - [구성](#구성)
+- [[2] 시작하기](#4-시작하기)
+  - [전제조건](#5-전제조건)
+  - [설치](#6-설치)
+  - [구성](#7-구성)
 - [[3] 용도](#3-용도)
 - [[4] 기여도](#4-공헌도)
 - [[5] 확인](#5-확인)
-- [[6]연락처](#6-연락처)
-- [[7] 라이센스](#7- 라이센스)
+- [[6] 연락처](#6-연락처)
+- [[7] 라이센스](#7-라이센스)
 
 
 
-## 기술 스택
-| HTML | CSS | JS | React | Firebase | 
-| :--------: | :--------: | :--------: | :--------: | :--------: |
-|<img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/7c4eb246-5616-4685-8ff7-70ec89281881" width="50" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/164d1e8b-0dbb-4e88-99da-aec5e43b2d84" width="50" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/6fc480d4-b066-480a-97f4-f229f7b323ff" width="50" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/bdf8974d-4b38-4073-ad41-3346412139fa)" width="50" height="50"/>| <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/626df7d2-56d5-4dbc-b414-a25fff17c0be" width="50" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/87a332ed-eeea-49f8-8f96-104e38a1350e" width="50" height="50"/>
-<br/>
 
-## 라이브러리
-| Styled-components | MUI | Framer-motion | 
-| :--------: | :--------: | :--------: |
-| <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/58d31a76-4968-4e89-aa61-c7bc9aae3e59" width="50" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/391736f5-8f6f-4d32-8929-4805efb1d798" width="50" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/4ec72a7b-c179-404b-a28b-590b4576f988" width="50" height="50"/>
 
 
 
@@ -44,33 +35,45 @@
 - 무슨 프로젝트인지
 - 왜 이 프로젝트를 사용해야하는지
 
-## Features
+## 기능
 *강조하고 싶은 **주요 기능**이나 **차별성 있는 특징**을 적으세요.*
 - 최고 멋진 **README**를 쉽게 작성할 수 있도록 *이텔릭체*로 된 **가이드**를 제공
 - 뱃지로 **언어 옵션**을 제공
 
-## Technologies
-***언어, 프레임워크, 주요 라이브러리**를 **버전**과 함께 나열하세요.*
+## 기술
+| HTML5 | CSS | Javascript | React | styled-components | MUI |firebase |
+| :--------: | :--------: | :--------: | :--------: | :--------: | :--------: | :--------: |
+| - | - | 20.10.0 | 18.2.0 | 6.1.8 | 5.15.10 | 10.7.2 |
 
-- [Maven](https://maven.apache.org/) 3.6.3
-- [MySQL](https://www.mysql.com/) 8.0
-- [Spring](https://spring.io/) 2.4.3
+## 기술 스택
+| HTML5 | CSS3 | JS | React | Firebase | 
+| :--------: | :--------: | :--------: | :--------: | :--------: |
+|<img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/7c4eb246-5616-4685-8ff7-70ec89281881" width="50" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/164d1e8b-0dbb-4e88-99da-aec5e43b2d84" width="50" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/6fc480d4-b066-480a-97f4-f229f7b323ff" width="50" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/bdf8974d-4b38-4073-ad41-3346412139fa)" width="50" height="50"/>| <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/626df7d2-56d5-4dbc-b414-a25fff17c0be" width="50" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/87a332ed-eeea-49f8-8f96-104e38a1350e" width="50" height="50"/>
+<br/>
+
+## 라이브러리
+| styled-components | MUI | framer-motion | 
+| :--------: | :--------: | :--------: |
+| <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/58d31a76-4968-4e89-aa61-c7bc9aae3e59" width="50" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/391736f5-8f6f-4d32-8929-4805efb1d798" width="50" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/4ec72a7b-c179-404b-a28b-590b4576f988" width="50" height="50"/>
 
 
-
-# [2] Getting Started
+# [2] 시작하기
 *만약 운영체제에 따라 프로그램을 다르게 동작시켜야한다면, 운영체제별로 동작 방법을 설명하세요*
 
-## Prerequisites
+## 전제 조건
 *프로젝트를 동작시키기 위해 필요한 소프트웨어와 라이브러리를 나열하고 어떻게 다운받을 수 있는지 설명하세요.*
+- 홈페이지 링크<br/>
+<https://www.soonting.site/>
 
-- [OpenWeather API key](https://openweathermap.org/) (무료)
 - npm
 ```bash
-npm install npm@latest -g
+npm install
+```
+```bash
+npm start
 ```
 
-## Installation
+## 설치
 *어떻게 이 프로젝트의 소스코드를 다운받을 수 있는지 설명하세요.*
 1. Repository 클론
 ```bash
@@ -81,7 +84,7 @@ git clone https://github.com/your-username/project-repository
 npm install
 ```
 
-## Configuration
+## 구성
 *코드의 어느 부분을 채우거나 수정해야하는지 설명하세요.*
 - `config.js`에 Openweather API key를 입력
 ```bash
@@ -90,7 +93,7 @@ const API_KEY = "<Your API key>";
 
 
 
-# [3] Usage
+# [3] 요소
 ***스크린샷, 코드** 등을 통해 **사용 방법**과 **사용 예제**를 보여주세요. 사용 예제별로 h2 헤더로 나누어 설명할 수 있습니다.*
 
 ![usage](img/usage.png)
