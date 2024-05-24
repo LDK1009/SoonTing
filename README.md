@@ -1,16 +1,20 @@
-# Project Title
+# 순팅
 
-<!--배지-->
-![MIT License][license-shield] ![Repository Size][repository-size-shield] ![Issue Closed][issue-closed-shield]
+<!--프로젝트 대문 이미지-->
+![Project Title](img/project-title.png)
 
 ## 기술 스택
 | HTML | CSS | JS | React | Firebase | 
 | :--------: | :--------: | :--------: | :--------: | :--------: |
 |<img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/7c4eb246-5616-4685-8ff7-70ec89281881" width="50" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/164d1e8b-0dbb-4e88-99da-aec5e43b2d84" width="50" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/6fc480d4-b066-480a-97f4-f229f7b323ff" width="50" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/bdf8974d-4b38-4073-ad41-3346412139fa)" width="50" height="50"/>| <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/626df7d2-56d5-4dbc-b414-a25fff17c0be" width="50" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/87a332ed-eeea-49f8-8f96-104e38a1350e" width="50" height="50"/>
+<br/>
+
+## 라이브러리
+| Styled-components | MUI | Framer-motion | 
+| :--------: | :--------: | :--------: |
+| <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/58d31a76-4968-4e89-aa61-c7bc9aae3e59" width="50" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/391736f5-8f6f-4d32-8929-4805efb1d798" width="50" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/4ec72a7b-c179-404b-a28b-590b4576f988" width="50" height="50"/>
 
 
-<!--프로젝트 대문 이미지-->
-![Project Title](img/project-title.png)
 
 <!--프로젝트 버튼-->
  [![Readme in English][readme-eng-shield]][readme-eng-url] [![View Demo][view-demo-shield]][view-demo-url] [![Report bug][report-bug-shield]][report-bug-url] [![Request feature][request-feature-shield]][request-feature-url]
@@ -128,7 +132,7 @@ MIT 라이센스
 
 
 <!--Url for Badges-->
-[license-shield]: https://img.shields.io/github/license/dev-ujin/readme-template?labelColor=D8D8D8&color=04B4AE
+[license-shield]: https://img.shields.io/github/license/:user/:repo
 [repository-size-shield]: https://img.shields.io/github/repo-size/dev-ujin/readme-template?labelColor=D8D8D8&color=BE81F7
 [issue-closed-shield]: https://img.shields.io/github/issues-closed/dev-ujin/readme-template?labelColor=D8D8D8&color=FE9A2E
 
