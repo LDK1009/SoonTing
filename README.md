@@ -1,7 +1,24 @@
 # 순팅
 
 <!--프로젝트 대문 이미지-->
-![Project Title](img/project-title.png)
+![Project Title](https://github.com/LDK1009/CapstoneDesign/assets/86905679/6ba72a96-7ce7-4fd7-b867-c025d2d78693)
+
+<!--목차-->
+# 목차
+- [[1] 소개](#1-소개)
+  - [기능](#features)
+  - [기술](#기술)
+- [[2] 시작하기](#2-시작하기)
+  - [전제조건](#prerequisites)
+  - [설치](#installation)
+  - [구성](#구성)
+- [[3] 용도](#3-용도)
+- [[4] 기여도](#4-공헌도)
+- [[5] 확인](#5-확인)
+- [[6]연락처](#6-연락처)
+- [[7] 라이센스](#7- 라이센스)
+
+
 
 ## 기술 스택
 | HTML | CSS | JS | React | Firebase | 
@@ -16,27 +33,11 @@
 
 
 
-<!--프로젝트 버튼-->
- [![Readme in English][readme-eng-shield]][readme-eng-url] [![View Demo][view-demo-shield]][view-demo-url] [![Report bug][report-bug-shield]][report-bug-url] [![Request feature][request-feature-shield]][request-feature-url]
-
-<!--목차-->
-# Table of Contents
-- [[1] About the Project](#1-about-the-project)
-  - [Features](#features)
-  - [Technologies](#technologies)
-- [[2] Getting Started](#2-getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-  - [Configuration](#configuration)
-- [[3] Usage](#3-usage)
-- [[4] Contribution](#4-contribution)
-- [[5] Acknowledgement](#5-acknowledgement)
-- [[6] Contact](#6-contact)
-- [[7] License](#7-license)
 
 
 
-# [1] About the Project
+
+# [1] 소개
 *다음 내용을 고려하여 프로젝트에 대한 **전반적인 정보**를 적으세요.*
 
 - ❗️짧은❗️ 도입부/제작 동기
