@@ -4,6 +4,11 @@
 ![MIT License][license-shield] ![Repository Size][repository-size-shield] ![Issue Closed][issue-closed-shield]
 
 ## 기술 스택
+![HTML 누끼](https://github.com/LDK1009/CapstoneDesign/assets/86905679/000f559f-2f91-4989-afd2-30bd29401751)
+![CSS누끼](https://github.com/LDK1009/CapstoneDesign/assets/86905679/164d1e8b-0dbb-4e88-99da-aec5e43b2d84)
+![JS](https://github.com/LDK1009/CapstoneDesign/assets/86905679/6fc480d4-b066-480a-97f4-f229f7b323ff)
+![누끼_리액트](https://github.com/LDK1009/CapstoneDesign/assets/86905679/bdf8974d-4b38-4073-ad41-3346412139fa)
+![Firebase누끼](https://github.com/LDK1009/CapstoneDesign/assets/86905679/626df7d2-56d5-4dbc-b414-a25fff17c0be)
 
 | JavaScript | TypeScript |  React   |  Node   |
 | :--------: | :--------: | :------: | :-----: |
