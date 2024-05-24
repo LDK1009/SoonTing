@@ -1,7 +1,6 @@
 # 순팅
 
 <!--프로젝트 대문 이미지-->
-![Project Title](https://github.com/LDK1009/CapstoneDesign/assets/86905679/6ba72a96-7ce7-4fd7-b867-c025d2d78693)
 ![event-signage-displaying-soonting-in-bold-welcoming-font-surrounded-by-illustrations-of-diverse--379131268](https://github.com/LDK1009/CapstoneDesign/assets/86905679/19db0ef8-5a1c-4143-bfcb-b45d3dea8a2b)
 
 <!--목차-->
