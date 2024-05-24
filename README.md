@@ -3,6 +3,13 @@
 <!--배지-->
 ![MIT License][license-shield] ![Repository Size][repository-size-shield] ![Issue Closed][issue-closed-shield]
 
+## 기술 스택
+
+| JavaScript | TypeScript |  React   |  Node   |
+| :--------: | :--------: | :------: | :-----: |
+|   ![js]    |   ![ts]    | ![react] | ![node] |
+
+
 <!--프로젝트 대문 이미지-->
 ![Project Title](img/project-title.png)
 
