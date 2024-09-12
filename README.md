@@ -1,101 +1,142 @@
 # 순팅
 
-<!--프로젝트 대문 이미지-->
-![event-signage-displaying-soonting-in-bold-welcoming-font-surrounded-by-illustrations-of-diverse--379131268](https://github.com/LDK1009/CapstoneDesign/assets/86905679/19db0ef8-5a1c-4143-bfcb-b45d3dea8a2b)
+<a href="https://www.soonting.site/" target="_blank">
+<img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/19db0ef8-5a1c-4143-bfcb-b45d3dea8a2b" alt="배너" width="100%"/>
+</a>
 
-<!--목차-->
-# 목차
-- [[1] 소개](#1-소개)
-  - [기능](#기능)
-  - [기술](#기술)
-- [[2] 시작하기](#2-시작하기)
-  - [전제조건](#전제-조건)
-  - [설치](#설치)
-- [[3] 미리보기](#3-미리보기)
-- [[4] 연락처](#4-연락처)
-
-
-# [1] 소개
-‘순팅’은 순천향대학교 재학생들의 대면 소통 능력 향상 및 커뮤니티 형성을 위해 제작된 대면 만남 매칭 서비스입니다.<br/>
-
-**#코로나 19 회복**<br/>
-2023년에 들어서며 코로나 19 팬데믹이 많이 회복된 모습을 보였습니다.<br/>
-사회 전반적으로 일상생활이 정상화되면서 여러 활동이 재개되었습니다.<br/>
-**#교내 활동 활발**<br/>
-코로나 19 회복에 따라 교내에서도 오프라인 활동이 활발해졌습니다.<br/>
-학생들이 캠퍼스에서 다양한 활동에 참여하면서 교내 분위기가 더욱 생동감 있게 되었습니다.<br/>
-**#대면 소통 경험 부족**<br/>
-그러나 팬데믹 시절 동안 오프라인 활동의 축소로 인해 많은 학생들이 대면 소통 경험이 부족해졌습니다.<br/>
-온라인 수업과 비대면 활동에 익숙해진 학생들은 실제 대면 소통에서 어려움을 겪고 있습니다.<br/>
-**#대면 교류에 대한 부담감**<br/>
-이로 인해 학생들은 대면 소통 경험이 부족하여 대면 교류에 대해 큰 부담감을 느끼고 있습니다.<br/>
-대면 소통의 필요성은 커졌지만, 이에 대한 심리적 부담은 여전히 존재합니다.<br/>
-
-순팅은 위와 같은 문제점을 해결하기 위해 개발되었습니다.<br/>
-코로나 19 회복 이후 활발해진 교내 활동 속에서 학생들이 대면 소통에 대한 부담감을 줄이고, 원활한 대면 교류 경험을 돕는 서비스입니다.<br/>
-순팅은 학생들이 보다 자연스럽게 대면 소통을 하고, 교내에서 더 활발하게 교류할 수 있는 환경을 조성하는 것을 목표로 합니다.<br/>
-
-
-## 기능
-- 로그인
-- 매칭 신청
-- 매칭 확정
-- 내가 쓴 게시물
-- 내가 매칭신청한 게시물
-- 내 정보 수정
-
-## 기술
-| HTML5 | CSS | Javascript | React | styled-components | MUI |firebase |
-| :--------: | :--------: | :--------: | :--------: | :--------: | :--------: | :--------: |
-| - | - | 20.10.0 | 18.2.0 | 6.1.8 | 5.15.10 | 10.7.2 |
-
-### 기술 스택
-| HTML5 | CSS3 | JS | React | Firebase | 
-| :--------: | :--------: | :--------: | :--------: | :--------: |
-|<img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/7c4eb246-5616-4685-8ff7-70ec89281881" width="50" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/164d1e8b-0dbb-4e88-99da-aec5e43b2d84" width="50" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/6fc480d4-b066-480a-97f4-f229f7b323ff" width="50" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/bdf8974d-4b38-4073-ad41-3346412139fa)" width="50" height="50"/>| <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/626df7d2-56d5-4dbc-b414-a25fff17c0be" width="50" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/87a332ed-eeea-49f8-8f96-104e38a1350e" width="50" height="50"/>
+<br/>
 <br/>
 
-### 라이브러리
-| styled-components | MUI | framer-motion | 
-| :--------: | :--------: | :--------: |
-| <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/58d31a76-4968-4e89-aa61-c7bc9aae3e59" width="50" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/391736f5-8f6f-4d32-8929-4805efb1d798" width="50" height="50"/> | <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/4ec72a7b-c179-404b-a28b-590b4576f988" width="50" height="50"/>
-
-
-# [2] 시작하기
-- 홈페이지 링크<br/>
-<https://www.soonting.site/>
-- npm
+# 0. Getting Started (시작하기)
 ```bash
-npm install
+$ npm start
 ```
-```bash
-npm start
+[서비스 링크](https://www.soonting.site/)
+
+<br/>
+<br/>
+
+# 1. Project Overview (프로젝트 개요)
+- 프로젝트 이름: 순팅
+- 프로젝트 설명: ‘순팅’은 순천향대학교 재학생들의 대면 소통 능력 향상 및 커뮤니티 형성을 위해 제작된 대면 만남 매칭 서비스입니다.
+
+<br/>
+<br/>
+
+# 2. Team Members (팀원 및 팀 소개)
+| 이동규 |
+|:------:|
+| <img src="https://github.com/user-attachments/assets/c1c2b1e3-656d-4712-98ab-a15e91efa2da" alt="이동규" width="150"> |
+| FE |
+| [GitHub](https://github.com/LDK1009) |
+
+<br/>
+<br/>
+
+# 3. Key Features (주요 기능)
+- **회원가입**:
+  - google OAuth를 통해 회원가입합니다.
+  - 회원가입 시 DB에 유저정보가 등록됩니다.
+
+- **로그인**:
+  - google OAuth를 통해 로그인합니다.
+  - 사용자 인증 정보를 통해 로그인합니다.
+
+- **매칭 신청**:
+  - 게시물 상세보기에서 '매칭신청' 버튼을 클릭하면 작성자에게 매칭 신청이 됩니다.
+
+- **매칭 확정**:
+  - '매칭 확정'을 통해 매칭 신청자의 상세 정보를 확인할 수 있습니다.
+
+- **내가 쓴 게시물 조회**:
+  - 작성한 게시물을 모두 조회합니다.
+  - 게시물에 매칭 신청한 매칭 신청자를 확인할 수 있습니다.
+
+- **내가 매칭신청한 게시물**:
+  - 매칭신청한 게시물을 모두 조회 및 수정이 가능합니다.
+
+- **내 정보 수정**:
+  - 내 정보를 수정할 수 있습니다.
+
+<br/>
+<br/>
+
+# 4. Tasks & Responsibilities (작업 및 역할 분담)
+|  |  |  |
+|-----------------|-----------------|-----------------|
+| 이동규    |  <img src="https://github.com/user-attachments/assets/c1c2b1e3-656d-4712-98ab-a15e91efa2da" alt="이동규" width="100"> | <ul><li>프로젝트 계획 및 관리</li><li>컴포넌트 개발</li><li>커스텀훅 개발</li><li>Firebase API 통신</li></ul>     |
+
+
+<br/>
+<br/>
+
+# 5. Technology Stack (기술 스택)
+## 5.1 Language
+|  |  |
+|-----------------|-----------------|
+| HTML5    |<img src="https://github.com/user-attachments/assets/2e122e74-a28b-4ce7-aff6-382959216d31" alt="HTML5" width="100">| 
+| CSS3    |   <img src="https://github.com/user-attachments/assets/c531b03d-55a3-40bf-9195-9ff8c4688f13" alt="CSS3" width="100">|
+| Javascript    |  <img src="https://github.com/user-attachments/assets/4a7d7074-8c71-48b4-8652-7431477669d1" alt="Javascript" width="100"> | 
+
+<br/>
+
+## 5.2 Frotend
+|  |  |  |
+|-----------------|-----------------|-----------------|
+| React    |  <img src="https://github.com/user-attachments/assets/e3b49dbb-981b-4804-acf9-012c854a2fd2" alt="React" width="100"> | 18.2.0    |
+| StyledComponents    |  <img src="https://github.com/user-attachments/assets/c9b26078-5d79-40cc-b120-69d9b3882786" alt="StyledComponents" width="100">| 6.1.8   |
+| MaterialUI    |  <img src="https://github.com/user-attachments/assets/75a46fa7-ebc0-4a9d-b648-c589f87c4b55" alt="MUI" width="100">    | 5.15.10  |
+| DayJs    |  <img src="https://github.com/user-attachments/assets/3632d7d6-8d43-4dd5-ba7a-501a2bc3a3e4" alt="DayJs" width="100">    | 1.11.10    |
+| framer-motion    |  <img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/4ec72a7b-c179-404b-a28b-590b4576f988" width="100"/>    | 10.16.16    |
+
+
+<br/>
+
+## 5.3 Backend
+|  |  |  |
+|-----------------|-----------------|-----------------|
+| Firebase    |  <img src="https://github.com/user-attachments/assets/1694e458-9bb0-4a0b-8fe6-8efc6e675fa1" alt="Firebase" width="100">    | 10.7.2    |
+
+<br/>
+
+## 5.4 Cooperation
+|  |  |
+|-----------------|-----------------|
+| Git    |  <img src="https://github.com/user-attachments/assets/483abc38-ed4d-487c-b43a-3963b33430e6" alt="git" width="100">    |
+
+
+<br/>
+
+# 6. Project Structure (프로젝트 구조)
+```plaintext
+project/
+├── public/
+│   ├── index.html           # HTML 템플릿 파일
+│   └── favicon.ico          # 아이콘 파일
+├── src/
+│   ├── assets/              # 이미지, 폰트 등 정적 파일
+│   ├── components/          # 재사용 가능한 UI 컴포넌트
+│   ├── hooks/               # 커스텀 훅 모음
+│   ├── pages/               # 각 페이지별 컴포넌트
+│   ├── App.js               # 메인 애플리케이션 컴포넌트
+│   ├── index.js             # 엔트리 포인트 파일
+│   ├── index.css            # 전역 css 파일
+│   ├── firebaseConfig.js    # firebase 인스턴스 초기화 파일
+│   package-lock.json        # 정확한 종속성 버전이 기록된 파일로, 일관된 빌드를 보장
+│   package.json             # 프로젝트 종속성 및 스크립트 정의
+├── .gitignore               # Git 무시 파일 목록
+└── README.md                # 프로젝트 개요 및 사용법
 ```
 
-## 전제 조건
-Node.js 설치
+<br/>
+<br/>
 
-
-## 설치
-*어떻게 이 프로젝트의 소스코드를 다운받을 수 있는지 설명하세요.*
-1. Repository 클론
-```bash
-git clone https://github.com/LDK1009/CapstoneDesign.git
-```
-
-
-# [3] 미리보기
+# 7 미리보기
 ![image](https://github.com/LDK1009/CapstoneDesign/assets/86905679/16295603-b90a-4f06-bc3b-59e6f324fb26)
-![image](https://github.com/LDK1009/CapstoneDesign/assets/86905679/56498693-2f9d-4e8d-b606-30efefffa139)
-![image](https://github.com/LDK1009/CapstoneDesign/assets/86905679/ecdd7275-1cbe-4aee-86e6-53256909a1e7)
+![image](https://github.com/user-attachments/assets/c1ce9dc2-a36f-426b-bc2e-7887ba1392e6)
+![image](https://github.com/user-attachments/assets/82b1e55a-31d0-47e7-b94e-53917e5ca6a9)
 ![image](https://github.com/LDK1009/CapstoneDesign/assets/86905679/f77c2774-02a5-48e9-acb3-df16f5c41195)
 ![image](https://github.com/LDK1009/CapstoneDesign/assets/86905679/40eee04f-e779-491c-9e57-2896809ce52a)
 ![image](https://github.com/LDK1009/CapstoneDesign/assets/86905679/392b6058-5d0e-448a-aa5b-d8ea5e1a180a)
 ![image](https://github.com/LDK1009/CapstoneDesign/assets/86905679/7aa7e0af-f02c-4a3a-8d3e-43e0c8893e25)
 ![image](https://github.com/LDK1009/CapstoneDesign/assets/86905679/3924df1b-b986-439b-824d-983724e4512d)
-
-
-
-# [4] 연락처
-- 📧 m3088787@naver.com
-- 📞 010-2041-5761
