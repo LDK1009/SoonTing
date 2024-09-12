@@ -1,7 +1,7 @@
 # 순팅
 
 <a href="https://www.soonting.site/" target="_blank">
-<img src="https://github.com/LDK1009/CapstoneDesign/assets/86905679/19db0ef8-5a1c-4143-bfcb-b45d3dea8a2b" alt="배너" width="100%"/>
+<img src="https://github.com/user-attachments/assets/df6b5100-2c32-44de-8c61-c062f4bc4f19" alt="배너" width="100%"/>
 </a>
 
 <br/>
