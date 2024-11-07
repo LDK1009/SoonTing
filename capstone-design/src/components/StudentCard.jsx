@@ -4,7 +4,7 @@ import { BodyText } from "../pages/SignIn";
 
 const StudentCard = ({ info }) => {
   const smsNumber = info.number.slice(1);
-  const smsText = `안녕하세요 ${info.name}님, 저는 {이름}입니다. 만나서 반갑습니다 :) \n 이렇게 연락드리게 돼서 반갑고 설레네요. \n 천천히 서로 편한 시간에 약속 잡으면 좋을 것 같아요! \n 잘 부탁드립니다!`;
+  const smsText = encodeURIComponent(`안녕하세요 ${info.name}님, 저는 {이름}입니다. 만나서 반갑습니다 :) \n\n 이렇게 연락드리게 돼서 반갑고 설레네요. \n 천천히 서로 편한 시간에 약속 잡으면 좋을 것 같아요! \n 잘 부탁드립니다!`);
   
   return (
     <>
