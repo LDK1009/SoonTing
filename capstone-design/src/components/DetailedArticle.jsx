@@ -34,8 +34,15 @@ const DetailedArticle = ({ articleInfo, userInfo, isApply }) => {
 
   ////////// 매칭 취소하기 버튼 클릭
   const cancelMatchingApplyButtonClick = () => {
-    cancelMatchingApply();
-    deleteMatchingApplyCollection();
+    try {
+      cancelMatchingApply();
+      deleteMatchingApplyCollection();
+      alert("매칭 취소 완료!");
+      handleClose();
+    } catch (error) {
+      
+    }
+
   };
 
   ////////// 게시물 매칭자 컬렉션에 신청자 정보 추가
@@ -55,9 +62,9 @@ const DetailedArticle = ({ articleInfo, userInfo, isApply }) => {
     const docRef = doc(db, `Matching/Application/${collectionName}`, userInfo.uid);
     try {
       await deleteDoc(docRef);
-      alert("매칭 취소 완료!");
+      console.log("매칭 취소 성공!");
     } catch (error) {
-      alert("매칭 취소 실패!");
+      console.log("매칭 취소 실패!");
     }
   };
 
