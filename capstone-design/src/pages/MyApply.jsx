@@ -85,7 +85,7 @@ const MyApply = () => {
           // map 내부에서 변수 선언, 함수 호출 가능
           return (
             <>
-              <DetailedArticle key={index} articleInfo={item} userInfo={userData}></DetailedArticle>
+              <DetailedArticle isApply={true} key={index} articleInfo={item} userInfo={userData}></DetailedArticle>
             </>
           );
         })}
