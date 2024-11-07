@@ -2,7 +2,7 @@ import { React, useState } from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import styled from "styled-components";
-import { deleteDoc, doc, setDoc } from "firebase/firestore";
+import { deleteDoc, doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { WriteButton } from "./AddArticle";
 import { BodyBlurText, BodyText, EmphasisText } from "../pages/SignIn";
@@ -10,14 +10,21 @@ import MyStudentCard from "./MyStudentCard";
 import StudentCard from "./StudentCard";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
+import ReportIcon from "@mui/icons-material/Report";
 
 const DetailedArticle = ({ articleInfo, userInfo, isApply }) => {
   const [open, setOpen] = useState(false); // 모달창 열기/닫기
+  const [reportOpen, setReportOpen] = useState(false); // 신고하기 모달창 열기/닫기
   const [applicationPeople, setApplicationPeople] = useState(1); //신청인원
   ////////// 모달 열기 함수
   const handleOpen = () => setOpen(true);
   ////////// 모달 닫기 함수
   const handleClose = () => setOpen(false);
+
+  ////////// 모달 열기 함수
+  const handleReportOpen = () => setReportOpen(true);
+  ////////// 신고하기 모달 닫기 함수
+  const handleReportClose = () => setReportOpen(false);
 
   ////////// 매칭 신청하기 버튼 클릭
   const matchingApplyButtonClick = () => {
@@ -91,6 +98,24 @@ const DetailedArticle = ({ articleInfo, userInfo, isApply }) => {
   const DateTimeYM = articleInfo.DateTime.substring(DateTimeYMDStartIndex, DateTimeYMDEndIndex);
   const DateTimeHm = articleInfo.DateTime.substring(DateTimeHmStartIndex, DateTimeHmEndIndex);
   // 정규 표현식을 사용하여 "01월 05일" 부분을 추출
+
+  // 게시글 신고 함수
+  const reportArticle = async () => {
+    const reporterUid = userInfo.uid; // uid를 컬렉션명으로 설정하여 유저별로 매칭신청한 게시물 데이터 분리
+    const articleId = articleInfo.uid + "_" + articleInfo.time; // 게시물 고유 id를 문서명으로 설정
+
+    try {
+      await setDoc(doc(db, `reported-articles/${articleId}/${reporterUid}`, reporterUid), {
+        userInfo,
+        articleInfo,
+        reportTime: serverTimestamp(), // Firestore 서버 시간으로 타임스탬프 기록
+      });
+
+      alert("신고 완료🚨");
+    } catch (error) {
+      alert("오류 발생! 다시 시도해주세요.");
+    }
+  };
   ////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////
@@ -127,8 +152,18 @@ const DetailedArticle = ({ articleInfo, userInfo, isApply }) => {
       {/* 모달 */}
       <StyledModal open={open} onClose={handleClose}>
         <StyledModalBox>
+          {/* 신고하기 아이콘 */}
+          <StyledReportIcon onClick={handleReportOpen} />
+          {/* 신고하기 모달 */}
+          <StyledModal open={reportOpen} onClose={handleReportClose}>
+            <ReportModalBox>
+              <DetailedHeadline>{articleInfo.title}</DetailedHeadline>
+              <ReportButton onClick={reportArticle}>신고하기</ReportButton>
+            </ReportModalBox>
+          </StyledModal>
           {/* 제목 */}
           <DetailedHeadline>{articleInfo.title}</DetailedHeadline>
+
           {/* 내용 */}
           <DetailedContent>{articleInfo.content}</DetailedContent>
           {/* 작성자 학생증 */}
@@ -171,6 +206,17 @@ const DetailedArticle = ({ articleInfo, userInfo, isApply }) => {
   );
 };
 
+const ReportButton = styled(WriteButton)`
+  background-color: red;
+`;
+
+const StyledReportIcon = styled(ReportIcon)`
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  color: red;
+`;
+
 const StyledModal = styled(Modal)`
   &:focus-visible {
     outline: 0px;
@@ -193,6 +239,13 @@ const StyledModalBox = styled(Box)`
   background-color: white;
   border-radius: 15px;
   border: 0px;
+`;
+
+const ReportModalBox = styled(StyledModalBox)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
 `;
 
 const SummaryContainer = styled.div`
