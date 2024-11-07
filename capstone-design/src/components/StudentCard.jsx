@@ -18,12 +18,21 @@ const StudentCard = ({ info }) => {
           <Text>
             {info.gender} / {info.age}세
           </Text>
-          <Text>{info.matching && info.number.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3")}</Text>
+          <Text>
+            <MessageLink href={`sms:+82${info.number.slice(1)}?body=메시지내용`}>
+              {info.matching && info.number.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3")}
+            </MessageLink>
+          </Text>
         </TextWrap>
       </Container>
     </>
   );
 };
+
+const MessageLink = styled.a`
+  text-decoration: none;
+  color: inherit;
+`;
 
 const Container = styled.div`
   width: 220px;
