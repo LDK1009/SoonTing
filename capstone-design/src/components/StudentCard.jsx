@@ -3,6 +3,9 @@ import styled from "styled-components";
 import { BodyText } from "../pages/SignIn";
 
 const StudentCard = ({ info }) => {
+  const smsNumber = info.number.slice(1);
+  const smsText = `안녕하세요 ${info.name}님, 저는 {이름}입니다. 만나서 반갑습니다 :) \n 이렇게 연락드리게 돼서 반갑고 설레네요. \n 천천히 서로 편한 시간에 약속 잡으면 좋을 것 같아요! \n 잘 부탁드립니다!`;
+  
   return (
     <>
       <Container>
@@ -19,7 +22,7 @@ const StudentCard = ({ info }) => {
             {info.gender} / {info.age}세
           </Text>
           <Text>
-            <MessageLink href={`sms:+82${info.number.slice(1)}?body=메시지내용`}>
+            <MessageLink href={`sms:+82${smsNumber}?body=${smsText}`}>
               {info.matching && info.number.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3")}
             </MessageLink>
           </Text>
