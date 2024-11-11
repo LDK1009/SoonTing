@@ -16,7 +16,7 @@ import { useTime } from "../hooks/useTime";
 //Vercel환경변수 적용 커밋
 const Main = () => {
   //커스텀훅 가져오기
-  const { getCookie } = useCookie(); // 쿠키 가져오기 함수
+  const { getCookie, deleteCookie } = useCookie(); // 쿠키 가져오기 함수
   const { currentTime } = useTime(); // 현재 시간 가져오기 함수
   // 쿠키에서 uid 가져오기
   const uid = getCookie("uid");

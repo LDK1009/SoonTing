@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import TextField from "@mui/material/TextField";
 import styled from "styled-components";
@@ -13,7 +13,7 @@ import { useCookie } from "../hooks/useCookie";
 
 const MyInfo = () => {
   // 커스텀훅 가져오기
-  const { getCookie } = useCookie();
+  const { getCookie, deleteCookie} = useCookie();
   // 쿠키에서 uid 가져오기
   const uid = getCookie("uid");
   // 네비게이트
@@ -32,6 +32,7 @@ const MyInfo = () => {
   const [genderMale, setGenderMale] = useState(null);
   // 성별(여자)
   const [genderFemale, setGenderFemale] = useState(null);
+
 
   ////////// 유저 정보 불러오기
   const ReadUserData = async () => {
@@ -99,6 +100,25 @@ const MyInfo = () => {
     setGenderFemale((prev) => !prev);
   };
 
+  const DeleteAccount = async () => {
+    // eslint-disable-next-line no-restricted-globals
+    const result = confirm("정말 회원탈퇴 하시겠어요?");
+    const docRef = doc(db, "users", uid);
+
+    if (result) {
+      try {
+        await deleteDoc(docRef);
+        alert("회원탈퇴가 완료되었습니다!");
+        deleteCookie("uid");
+        navigate("/");
+      } catch (error) {
+        console.error("회원 탈퇴 오류 발생: ", error);
+      }
+    } else {
+      return;
+    }
+  };
+
   ////////// 성별 변경 시
   useEffect(() => {
     if (form.gender === "남자") {
@@ -163,9 +183,8 @@ const MyInfo = () => {
         <WarningText>
           입력하신 정보는<span style={{ fontWeight: "bold" }}> '순팅' </span>외에 다른 목적으로 사용되지 않습니다.
         </WarningText>
-        <ModifyButton style={{ marginBottom: "80px" }} onClick={setMyInfo}>
-          수정완료
-        </ModifyButton>
+        <ModifyButton onClick={setMyInfo}>수정완료</ModifyButton>
+        <DeleteAccountButton onClick={DeleteAccount}>회원탈퇴</DeleteAccountButton>
       </Container>
     </>
   );
@@ -180,6 +199,7 @@ const Container = styled.div`
 `;
 
 const ModifyButton = styled(WriteButton)`
+  width: 200px;
   margin-top: 30px;
 `;
 
@@ -204,4 +224,10 @@ const StyledTextField = styled(TextField)`
     margin-bottom: 30px;
   }
 `;
+
+const DeleteAccountButton = styled(ModifyButton)`
+  background-color: red;
+  margin-bottom: 40px;
+`;
+
 export default MyInfo;
